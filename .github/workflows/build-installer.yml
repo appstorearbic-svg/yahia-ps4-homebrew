@@ -1,4 +1,4 @@
-name: Build Yahia PS4 File Installer 1.53
+name: Build GTXMOD Menu 1.53
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
             https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
           tar -xzf /tmp/openorbis.tar.gz -C tools
 
-      - name: Build installer PKG
+      - name: Build GTXMOD Menu PKG
         run: |
           export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
           export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
@@ -44,12 +44,12 @@ jobs:
           make -j2
           mkdir -p "$GITHUB_WORKSPACE/finish"
           cp -f IV0000-YAHI00002_00-INSTALLER0000000.pkg \
-            "$GITHUB_WORKSPACE/finish/Yahia-PS4-File-Installer-1.53.pkg"
+            "$GITHUB_WORKSPACE/finish/GTXMOD-Menu-1.53.pkg"
 
       - name: Upload PKG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Yahia-PS4-File-Installer-1.53
-          path: finish/Yahia-PS4-File-Installer-1.53.pkg
+          name: GTXMOD-Menu-1.53
+          path: finish/GTXMOD-Menu-1.53.pkg
           if-no-files-found: error
           retention-days: 30
