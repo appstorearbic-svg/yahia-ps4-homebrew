@@ -165,6 +165,9 @@ int main(void) {
     setvbuf(stdout,NULL,_IONBF,0);
     Scene2D scene(W,H,4);
     if (!scene.Init(0xC000000,2)) return 1;
+    // OpenOrbis' Scene2D helper does not initialize this field.
+    // Force the first valid framebuffer before the first draw.
+    scene.SetActiveFrameBuffer(0);
     FT_Face latin=NULL, arabic=NULL;
     if (!scene.InitFont(&latin,"/app0/assets/fonts/Gontserrat-Regular.ttf",58)) return 2;
     if (!scene.InitFont(&arabic,"/app0/assets/fonts/NotoSansArabic-Regular.ttf",58)) return 3;
@@ -187,15 +190,17 @@ int main(void) {
             if (screen==0) {
                 if (pressed & ORBIS_PAD_BUTTON_UP) { selected=(selected+2)%3; redraw=true; }
                 if (pressed & ORBIS_PAD_BUTTON_DOWN) { selected=(selected+1)%3; redraw=true; }
-                if (pressed & ORBIS_PAD_BUTTON_CIRCLE) running=false;
-                if (pressed & ORBIS_PAD_BUTTON_CROSS) {
+                // The target console reports the raw constants opposite to the
+                // physical labels. Keep physical X as select and O as back.
+                if (pressed & ORBIS_PAD_BUTTON_CROSS) running=false;
+                if (pressed & ORBIS_PAD_BUTTON_CIRCLE) {
                     if (selected==0) screen=installer_153_ready()?1:2;
                     else screen=2;
                     redraw=true;
                 }
             } else if (screen==1) {
-                if (pressed & ORBIS_PAD_BUTTON_CIRCLE) { screen=0; redraw=true; }
-                else if (pressed & ORBIS_PAD_BUTTON_CROSS) { screen=3; redraw=true; }
+                if (pressed & ORBIS_PAD_BUTTON_CROSS) { screen=0; redraw=true; }
+                else if (pressed & ORBIS_PAD_BUTTON_CIRCLE) { screen=3; redraw=true; }
             } else if (screen==2 || screen==4) {
                 if (pressed & (ORBIS_PAD_BUTTON_CROSS|ORBIS_PAD_BUTTON_CIRCLE)) { screen=0; redraw=true; }
             }
