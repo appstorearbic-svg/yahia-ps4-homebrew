@@ -52,14 +52,15 @@ typedef struct PayloadFile { const char *source; const char *destination; } Payl
 
 static int make_payload_paths(int version, char *prx, size_t prx_cap, char files[8][PATH_CAP]) {
     const char *prx_name = version == 156 ? "GTXMOD156.prx" : version == 153 ? "GTXMOD153.prx" : NULL;
-    if (!prx_name) return -1;
-    if (snprintf(prx, prx_cap, "/app0/payload/%d/%s", version, prx_name) >= (int)prx_cap) return -1;
+    const char *folder = version == 156 ? "1.56" : version == 153 ? "1.53" : NULL;
+    if (!prx_name || !folder) return -1;
+    if (snprintf(prx, prx_cap, "/app0/payload/%s/%s", folder, prx_name) >= (int)prx_cap) return -1;
     static const char *rel[] = {
         "GTX/Ai/Ai_ok.aik", "GTX/photo/.keep", "GTX/photo/GTX.dds", "GTX/photo/GTX.otd",
         "GTX/photo/GTX.png", "GTX/photo/GTX.rpf", "GTX/script/.keep", "GTX/xml/.keep"
     };
     for (size_t i = 0; i < 8; ++i)
-        if (snprintf(files[i], PATH_CAP, "/app0/payload/%d/%s", version, rel[i]) >= PATH_CAP) return -1;
+        if (snprintf(files[i], PATH_CAP, "/app0/payload/%s/%s", folder, rel[i]) >= PATH_CAP) return -1;
     return 0;
 }
 
@@ -90,7 +91,7 @@ void installer_run_version(int version, int results[3]) {
     if (make_payload_paths(version, prx_source, sizeof(prx_source), sources) < 0) {
         results[0] = results[1] = results[2] = -1; return;
     }
-    snprintf(plugins_source, sizeof(plugins_source), "/app0/payload/%d/plugins.ini", version);
+    snprintf(plugins_source, sizeof(plugins_source), "/app0/payload/%s/plugins.ini", version == 156 ? "1.56" : "1.53");
     results[0] = install_resource(prx_source, version == 156 ? "/data/GoldHEN/plugins/GTXMOD156.prx" : "/data/GoldHEN/plugins/GTXMOD153.prx");
     results[1] = install_resource(plugins_source, "/data/GoldHEN/plugins.ini");
     results[2] = install_gtx_folder_version(version);
