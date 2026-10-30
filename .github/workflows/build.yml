@@ -40,6 +40,7 @@ jobs:
         run: |
           export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
           export PATH="/usr/bin:$PATH"
+          export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
           cd src/yahia-dialog-test
           make -j2
           mkdir -p "$GITHUB_WORKSPACE/finish"
