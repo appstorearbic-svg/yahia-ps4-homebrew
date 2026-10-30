@@ -13,7 +13,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y clang lld make git curl tar libssl3 libssl-dev
-          curl -L --fail -o /tmp/libssl1.1.deb https://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0+deb11u2_amd64.deb
+          curl -L --fail -o /tmp/libssl1.1.deb https://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0+deb11u8_amd64.deb
           sudo dpkg -i /tmp/libssl1.1.deb
           echo "LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu" >> "$GITHUB_ENV"
 
