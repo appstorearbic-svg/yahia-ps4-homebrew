@@ -25,18 +25,9 @@ static int parent_dir(const char *path, char *out, size_t cap) {
     memcpy(out, path, n + 1); char *slash = strrchr(out, '/'); if (!slash) return -1;
     if (slash == out) slash[1] = '\0'; else *slash = '\0'; return 0;
 }
-static int backup_name(const char *path, char *out, size_t cap) {
-    struct stat st; if (stat(path, &st) < 0) return errno == ENOENT ? 0 : -1;
-    for (int i = 0; i < 1000; ++i) {
-        int n = snprintf(out, cap, "%s.bak.%ld.%d", path, (long)time(NULL), i);
-        if (n < 0 || (size_t)n >= cap) return -1;
-        if (lstat(out, &st) < 0 && errno == ENOENT) return 1;
-    }
-    return -1;
-}
 static int install_resource(const char *source, const char *destination) {
-    char directory[PATH_CAP], temporary[PATH_CAP], backup[PATH_CAP]; struct stat st;
-    int in = -1, out = -1, status = -1, moved_old = 0;
+    char directory[PATH_CAP], temporary[PATH_CAP];
+    int in = -1, out = -1, status = -1;
     if (parent_dir(destination, directory, sizeof(directory)) < 0 || mkdirs(directory) < 0) return -1;
     in = open(source, O_RDONLY); if (in < 0) return -1;
     if (snprintf(temporary, sizeof(temporary), "%s.tmp", destination) >= (int)sizeof(temporary)) goto done;
@@ -50,11 +41,9 @@ static int install_resource(const char *source, const char *destination) {
     }
     if (fsync(out) < 0) goto done;
     if (close(out) < 0) { out = -1; goto done; } out = -1; close(in); in = -1;
-    int b = backup_name(destination, backup, sizeof(backup)); if (b < 0) goto done;
-    if (b == 1) {
-        if (rename(destination, backup) < 0) { if (errno != ENOENT) goto done; } else moved_old = 1;
-    } else if (stat(destination, &st) == 0) goto done;
-    if (rename(temporary, destination) < 0) { if (moved_old) rename(backup, destination); goto done; }
+    /* Replace files with the same name: remove the old one, then install the new copy. */
+    if (unlink(destination) < 0 && errno != ENOENT) goto done;
+    if (rename(temporary, destination) < 0) goto done;
     status = 0;
 done:
     if (in >= 0) close(in); if (out >= 0) close(out); if (status < 0) unlink(temporary); return status;
