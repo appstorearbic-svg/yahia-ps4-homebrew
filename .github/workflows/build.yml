@@ -1,60 +1,7 @@
-name: Build PS4 PKG
-
-on:
-  push:
-    branches: [master]
-
+name: Test Runner
+on: push
 jobs:
-  build:
-    runs-on: ubuntu-24.04
-
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y clang lld make git curl tar python3
-
-      - name: Download OpenOrbis
-        run: |
-          mkdir -p tools
-          git clone --depth=1 https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain.git tools/OpenOrbis-PS4-Toolchain
-          curl -L --fail --retry 3 -o tools/toolchain.tar.gz https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
-          tar -xzf tools/toolchain.tar.gz -C tools
-
-      - name: Prepare project
-        run: |
-          SDK="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
-          APP="$GITHUB_WORKSPACE/src/yahia-dialog-test"
-
-          cp -f "$SDK/samples/dialogs/sce_module/"* "$APP/sce_module/" 2>/dev/null || true
-          mkdir -p "$APP/sce_sys/about"
-
-          sed -i 's/^PROJDIR.*/PROJDIR     := dialogs/' "$APP/Makefile"
-          sed -i 's#eboot.bin sce_sys/about/right.sprx#eboot.bin#' "$APP/Makefile"
-
-          python3 - "$APP/dialogs/main.c" <<'PY'
-import sys
-p = sys.argv[1]
-s = open(p, encoding="utf-8").read()
-a = s.index("    // Show a message dialog")
-b = s.index("    for(;;);", a)
-r = '    show_dialog(MDIALOG_OK, "Welcome Yahya - Experimental Test");\n\n'
-open(p, "w", encoding="utf-8").write(s[:a] + r + s[b:])
-PY
-
-      - name: Build PKG
-        run: |
-          export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
-          export PATH="/usr/bin:$PATH"
-          cd src/yahia-dialog-test
-          make -j2
-          mkdir -p "$GITHUB_WORKSPACE/finish"
-          cp -f ./*.pkg "$GITHUB_WORKSPACE/finish/Yahia-Dialog-Test.pkg"
-
-      - name: Upload PKG
-        uses: actions/upload-artifact@v4
-        with:
-          name: Yahia-Dialog-Test
-          path: finish/Yahia-Dialog-Test.pkg
+      - run: echo "runner works"
