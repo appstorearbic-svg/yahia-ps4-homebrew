@@ -103,8 +103,12 @@ static int process_orbx_manifest(int pass) {
         else if (c != '\n' && c != '\r') { if (used + 1 < sizeof(line)) line[used++] = c; continue; }
         else { line[used] = '\0'; used = 0; }
         if (line[0] && line[1] == ' ') {
-            if (pass == 0 && line[0] == 'F') {
+            if (pass == 0 && (line[0] == 'F' || line[0] == 'C')) {
                 if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || (unlink(destination) < 0 && errno != ENOENT)) ok = 0;
+            } else if (pass == 0 && line[0] == 'R') {
+                if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || (rmdir(destination) < 0 && errno != ENOENT && errno != ENOTEMPTY)) ok = 0;
+            } else if (pass == 2 && line[0] == 'D') {
+                if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || mkdirs(destination) < 0) ok = 0;
             } else if (pass == 2 && line[0] == 'F') {
                 if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", line + 2) >= (int)sizeof(source) || snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || install_resource(source, destination) < 0) ok = 0;
             }
