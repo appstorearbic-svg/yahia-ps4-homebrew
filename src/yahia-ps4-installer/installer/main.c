@@ -6,8 +6,8 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <dirent.h>
 #include <unistd.h>
+#include "orbx_manifest.h"
 #define PATH_CAP 512
 
 static int mkdirs(const char *path) {
@@ -91,31 +91,28 @@ void installer_run_version(int version, int results[3]) {
     results[2] = install_gtx_folder_version(version);
 }
 
-static int join_path(const char *a, const char *b, char *out, size_t cap) {
-    int n = snprintf(out, cap, "%s/%s", a, b); return n >= 0 && (size_t)n < cap ? 0 : -1;
-}
-static int remove_tree(const char *path) {
-    struct stat st; if (lstat(path, &st) < 0) return errno == ENOENT ? 0 : -1;
-    if (!S_ISDIR(st.st_mode)) return unlink(path) == 0 || errno == ENOENT ? 0 : -1;
-    DIR *dir = opendir(path); if (!dir) return -1;
-    struct dirent *entry; int ok = 1; char child[PATH_CAP];
-    while ((entry = readdir(dir)) != NULL) {
-        if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
-        if (join_path(path, entry->d_name, child, sizeof(child)) < 0 || remove_tree(child) < 0) ok = 0;
+static int remove_orbx_tree(void) {
+    char path[PATH_CAP]; int ok = 1;
+    for (size_t i = 0; i < orbx_file_count; ++i) {
+        if (snprintf(path, sizeof(path), "/data/orbx/%s", orbx_files[i]) >= (int)sizeof(path)) { ok = 0; continue; }
+        if (unlink(path) < 0 && errno != ENOENT) ok = 0;
     }
-    closedir(dir); if (rmdir(path) < 0 && errno != ENOENT) ok = 0; return ok ? 0 : -1;
-}
-static int copy_tree(const char *source, const char *destination) {
-    if (mkdirs(destination) < 0) return -1;
-    DIR *dir = opendir(source); if (!dir) return -1;
-    struct dirent *entry; int ok = 1; char src[PATH_CAP], dst[PATH_CAP]; struct stat st;
-    while ((entry = readdir(dir)) != NULL) {
-        if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
-        if (join_path(source, entry->d_name, src, sizeof(src)) < 0 || join_path(destination, entry->d_name, dst, sizeof(dst)) < 0 || lstat(src, &st) < 0) { ok = 0; continue; }
-        if (S_ISDIR(st.st_mode)) { if (copy_tree(src, dst) < 0) ok = 0; }
-        else if (S_ISREG(st.st_mode)) { if (install_resource(src, dst) < 0) ok = 0; }
+    for (size_t i = 0; i < orbx_dir_count; ++i) {
+        if (snprintf(path, sizeof(path), "/data/orbx/%s", orbx_dirs[i]) >= (int)sizeof(path)) { ok = 0; continue; }
+        if (rmdir(path) < 0 && errno != ENOENT) ok = 0;
     }
-    closedir(dir); return ok ? 0 : -1;
+    if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = 0;
+    return ok ? 0 : -1;
+}
+static int install_orbx_tree(void) {
+    char source[PATH_CAP], destination[PATH_CAP]; int ok = 1;
+    if (mkdirs("/data/orbx") < 0) return -1;
+    for (size_t i = 0; i < orbx_file_count; ++i) {
+        if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", orbx_files[i]) >= (int)sizeof(source) ||
+            snprintf(destination, sizeof(destination), "/data/orbx/%s", orbx_files[i]) >= (int)sizeof(destination) ||
+            install_resource(source, destination) < 0) ok = 0;
+    }
+    return ok ? 0 : -1;
 }
 int installer_orbx_ready(void) {
     return resource_exists("/app0/payload/orbx.prx") && resource_exists("/app0/payload/orbx.plugins.ini") && resource_exists("/app0/payload/orbx/gta/settings.xml");
@@ -123,8 +120,8 @@ int installer_orbx_ready(void) {
 void installer_run_orbx(int results[3]) {
     results[0] = install_resource("/app0/payload/orbx.prx", "/data/GoldHEN/plugins/orbx.prx");
     results[1] = install_resource("/app0/payload/orbx.plugins.ini", "/data/GoldHEN/plugins.ini");
-    if (remove_tree("/data/orbx") < 0 && errno != ENOENT) results[2] = -1;
-    else results[2] = copy_tree("/app0/payload/orbx", "/data/orbx");
+    if (remove_orbx_tree() < 0) results[2] = -1;
+    else results[2] = install_orbx_tree();
 }
 int installer_153_ready(void) { return installer_version_ready(153); }
 int installer_156_ready(void) { return installer_version_ready(156); }
