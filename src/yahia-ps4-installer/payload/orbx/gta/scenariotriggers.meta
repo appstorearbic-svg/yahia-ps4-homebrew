@@ -1,0 +1,2603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CScenarioActionTriggers>
+  <Triggers>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_WEIRD_PED_APPROACHING</EventType>
+        </Item>
+		    <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_WEIRD_PED_APPROACHING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_WEIRD_PED_APPROACHING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_IN_DANGEROUS_VEHICLE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_IN_DANGEROUS_VEHICLE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_IN_DANGEROUS_VEHICLE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+	
+	<Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_BROKEN_GLASS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_BROKEN_GLASS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_BROKEN_GLASS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_BROKEN_GLASS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_BROKEN_GLASS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsAGangPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_BROKEN_GLASS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PROPERTY_DAMAGE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PROPERTY_DAMAGE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PROPERTY_DAMAGE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PROPERTY_DAMAGE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PROPERTY_DAMAGE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsAGangPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PROPERTY_DAMAGE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_POTENTIAL_BLAST</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionFlee" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_POTENTIAL_BLAST</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_POTENTIAL_GET_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionFlee" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_POTENTIAL_GET_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_PED_COLLISION_WITH_PLAYER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_EXPLOSION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionFlee" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_EXPLOSION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed"/>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_EXPLOSION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_ACQUAINTANCE_PED_HATE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_ACQUAINTANCE_PED_HATE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_ACQUAINTANCE_PED_WANTED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_ACQUAINTANCE_PED_WANTED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+  
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_GUN_AIMED_AT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_GUN_AIMED_AT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_NON_VIOLENT_WEAPON_AIMED_AT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_NON_VIOLENT_WEAPON_AIMED_AT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_ENGINE_REVVED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_ENGINE_REVVED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+    
+	  <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_WEAPON_THREAT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_WEAPON_THREAT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOT_FIRED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOT_FIRED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOT_FIRED_WHIZZED_BY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOT_FIRED_WHIZZED_BY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOT_FIRED_BULLET_IMPACT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOT_FIRED_BULLET_IMPACT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_INJURED_CRY_FOR_HELP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_INJURED_CRY_FOR_HELP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOUT_TARGET_POSITION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOUT_TARGET_POSITION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_MELEE_ACTION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_MELEE_ACTION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+	
+	<Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_RESPONDED_TO_THREAT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_RESPONDED_TO_THREAT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CHASE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CHASE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="0.5"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionInRange">
+          <Range value="5.0f" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionFlee"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionInRange">
+          <Range value="5.0f" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <!-- Dont have to have gang trigger for < 5, task agitated should bring them out.-->
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsAGangPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_CRASH</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_PILE_UP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="10.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="0.5"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_PILE_UP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="10.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_PILE_UP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="10.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_PILE_UP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionInRange">
+          <Range value="10.0f" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionFlee"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_CAR_PILE_UP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionInRange">
+          <Range value="10.0f" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="10.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER_EXTREME</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER_EXTREME</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER_EXTREME</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionInRange">
+          <Range value="10.0f" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER_EXTREME</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="10.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER_EXTREME</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MAD_DRIVER_BICYCLE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DRIVING_ON_PAVEMENT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DRIVING_ON_PAVEMENT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <!-- Gang peds respond with agitated, which is run on the secondary controller.-->
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DRIVING_ON_PAVEMENT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <!-- Gang response runs on secondary controller, so isn't an issue here.-->
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_RUN_OVER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionInRange">
+          <Range value="5.0f" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionInRange">
+            <Range value="5.0f" />
+          </Condition>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsAGangPed"/>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed"/>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit" />
+      <Probability value="1.0"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_PED_KILLED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed"/>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_MELEE_ACTION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_MELEE_ACTION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionResponseTask">
+            <ResponseTaskType>TASK_THREAT_RESPONSE</ResponseTaskType>
+          </Condition>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionResponseTask">
+            <ResponseTaskType>TASK_THREAT_RESPONSE</ResponseTaskType>
+          </Condition>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionResponseTask">
+            <ResponseTaskType>TASK_THREAT_RESPONSE</ResponseTaskType>
+          </Condition>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionResponseTask">
+            <ResponseTaskType>TASK_THREAT_RESPONSE</ResponseTaskType>
+          </Condition>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionResponseTask">
+            <ResponseTaskType>TASK_THREAT_RESPONSE</ResponseTaskType>
+          </Condition>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_INJURED_PED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionResponseTask">
+          <ResponseTaskType>TASK_THREAT_RESPONSE</ResponseTaskType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CAR_STOLEN</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CAR_STOLEN</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CAR_STOLEN</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CAR_STOLEN</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <!-- Peds are supposed to respond with threat response if the stealing happens in their radius, but these should only be for simple scenarios.-->
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_HELICOPTER_OVERHEAD</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_HELICOPTER_OVERHEAD</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_HELICOPTER_OVERHEAD</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PARACHUTER_OVERHEAD</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PARACHUTER_OVERHEAD</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PARACHUTER_OVERHEAD</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_KNOCKED_INTO_BY_PLAYER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_KNOCKED_INTO_BY_PLAYER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_KNOCKED_INTO_BY_PLAYER</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PLANE_FLY_BY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PLANE_FLY_BY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PLANE_FLY_BY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DANGEROUS_ANIMAL</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DANGEROUS_ANIMAL</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DEAD_BODY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DEAD_BODY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DEAD_BODY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DEAD_BODY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DEAD_BODY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <!-- Gang members respond to dead bodies by doing head track, so that is all handled by the secondary controller.-->
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_DEAD_BODY</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_HORN_SOUNDED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CONFRONTATION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CONFRONTATION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CONFRONTATION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionIsAGangPed" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_CONFRONTATION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_GANG_FIGHT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_GANG_FIGHT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="0.5f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_GANG_FIGHT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasShockingReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_SEEN_GANG_FIGHT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_EXPLOSION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_EXPLOSION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_STUDIO_BOMB</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_STUDIO_BOMB</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_STUDIO_BOMB</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_STUDIO_BOMB</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_STUDIO_BOMB</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MUGGING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact"/>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MUGGING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsACopPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsASecurityPed"/>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionIsAGangPed"/>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MUGGING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsACopPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MUGGING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsASecurityPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MUGGING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+        <Item type="CScenarioActionConditionIsAGangPed" />
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_MUGGING</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+       
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_GUN_FIGHT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_GUN_FIGHT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_GUNSHOT_FIRED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_GUNSHOT_FIRED</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_SHOT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_PED_SHOT</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_FIRE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_FIRE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_FIRE</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+	
+	<Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_POTENTIAL_BLAST</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionHasCowardReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCowardExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_POTENTIAL_BLAST</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionHasCowardReact" />
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionNormalExitThenRespondToEvent" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SHOCKING_POTENTIAL_BLAST</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_CRIME_CRY_FOR_HELP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_CRIME_CRY_FOR_HELP</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_RADIO_TARGET_POSITION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_RADIO_TARGET_POSITION</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_ENCROACHING_PED</EventType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_DAMAGE</EventType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit">
+        <BlendOutDeltaForSubtask value="-8.0f"/>
+      </Action>
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_IN_AIR</EventType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit">
+        <BlendOutDeltaForSubtask value="-8.0f"/>
+      </Action>
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_DUMMY_CONVERSION</EventType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit">
+        <BlendOutDeltaForSubtask value="-8.0f"/>
+      </Action>
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_GIVE_PED_TASK</EventType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionScriptExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_SCRIPT_COMMAND</EventType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionScriptExit"/>
+      <Probability value="1.0f"/>
+    </Item>
+	
+	<Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_FRIENDLY_FIRE_NEAR_MISS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f" />
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionEvent">
+          <EventType>EVENT_FRIENDLY_FIRE_NEAR_MISS</EventType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+
+
+    <!-- Add script force actions -->
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionFlee</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionFlee" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionFlee</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+	
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionCombatExit</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionCombatExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionCombatExit</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+	
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionCowardExit</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+	
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionThreatResponseExit</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionThreatResponseExit" />
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionThreatResponseExit</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+		
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionShockReaction</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionHasShockingReact" />
+        <Item type="CScenarioActionConditionNot">
+          <Condition type="CScenarioActionConditionCanDoQuickBlendout" />
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionShockReaction"/>
+      <Probability value="1.0f"/>
+    </Item>
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionShockReaction</ScenarioActionType>
+        </Item>
+        <Item type="CScenarioActionConditionCanDoQuickBlendout" />
+      </Conditions>
+      <Action type="CScenarioActionImmediateExit" />
+      <Probability value="1.0f" />
+    </Item>
+	
+    <Item type="CScenarioActionTrigger">
+      <Conditions>
+        <Item type="CScenarioActionConditionForceAction">
+          <ScenarioActionType>eScenarioActionHeadTrack</ScenarioActionType>
+        </Item>
+      </Conditions>
+      <Action type="CScenarioActionHeadTrack"/>
+      <Probability value="1.0f" />
+    </Item>	
+	
+	
+  </Triggers>
+</CScenarioActionTriggers>

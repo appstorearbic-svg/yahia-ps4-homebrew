@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <dirent.h>
 #include <unistd.h>
 #define PATH_CAP 512
 
@@ -40,7 +41,6 @@ static int install_resource(const char *source, const char *destination) {
     }
     if (fsync(out) < 0) goto done;
     if (close(out) < 0) { out = -1; goto done; } out = -1; close(in); in = -1;
-    /* Replace any old file with the same name. */
     if (unlink(destination) < 0 && errno != ENOENT) goto done;
     if (rename(temporary, destination) < 0) goto done;
     status = 0;
@@ -63,15 +63,12 @@ static int make_payload_paths(int version, char *prx, size_t prx_cap, char files
         if (snprintf(files[i], PATH_CAP, "/app0/payload/%s/%s", folder, rel[i]) >= PATH_CAP) return -1;
     return 0;
 }
-
 int installer_version_ready(int version) {
     char prx[PATH_CAP], files[8][PATH_CAP];
     if (make_payload_paths(version, prx, sizeof(prx), files) < 0 || !resource_exists(prx)) return 0;
-    if (!resource_exists(files[0]) || !resource_exists(files[1]) || !resource_exists(files[2]) || !resource_exists(files[3]) ||
-        !resource_exists(files[4]) || !resource_exists(files[5]) || !resource_exists(files[6]) || !resource_exists(files[7])) return 0;
+    for (size_t i = 0; i < 8; ++i) if (!resource_exists(files[i])) return 0;
     return resource_exists(version == 153 ? "/app0/payload/1.53/plugins.ini" : "/app0/payload/1.56/plugins.ini");
 }
-
 static int install_gtx_folder_version(int version) {
     char prx[PATH_CAP], sources[8][PATH_CAP];
     if (make_payload_paths(version, prx, sizeof(prx), sources) < 0) return -1;
@@ -85,16 +82,49 @@ static int install_gtx_folder_version(int version) {
     for (size_t i = 0; i < 8; ++i) if (install_resource(sources[i], destinations[i]) < 0) ok = 0;
     return ok ? 0 : -1;
 }
-
 void installer_run_version(int version, int results[3]) {
     char prx_source[PATH_CAP], sources[8][PATH_CAP], plugins_source[PATH_CAP];
-    if (make_payload_paths(version, prx_source, sizeof(prx_source), sources) < 0) {
-        results[0] = results[1] = results[2] = -1; return;
-    }
+    if (make_payload_paths(version, prx_source, sizeof(prx_source), sources) < 0) { results[0] = results[1] = results[2] = -1; return; }
     snprintf(plugins_source, sizeof(plugins_source), "/app0/payload/%s/plugins.ini", version == 156 ? "1.56" : "1.53");
     results[0] = install_resource(prx_source, version == 156 ? "/data/GoldHEN/plugins/GTXMOD156.prx" : "/data/GoldHEN/plugins/GTXMOD153.prx");
     results[1] = install_resource(plugins_source, "/data/GoldHEN/plugins.ini");
     results[2] = install_gtx_folder_version(version);
+}
+
+static int join_path(const char *a, const char *b, char *out, size_t cap) {
+    int n = snprintf(out, cap, "%s/%s", a, b); return n >= 0 && (size_t)n < cap ? 0 : -1;
+}
+static int remove_tree(const char *path) {
+    struct stat st; if (lstat(path, &st) < 0) return errno == ENOENT ? 0 : -1;
+    if (!S_ISDIR(st.st_mode)) return unlink(path) == 0 || errno == ENOENT ? 0 : -1;
+    DIR *dir = opendir(path); if (!dir) return -1;
+    struct dirent *entry; int ok = 1; char child[PATH_CAP];
+    while ((entry = readdir(dir)) != NULL) {
+        if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
+        if (join_path(path, entry->d_name, child, sizeof(child)) < 0 || remove_tree(child) < 0) ok = 0;
+    }
+    closedir(dir); if (rmdir(path) < 0 && errno != ENOENT) ok = 0; return ok ? 0 : -1;
+}
+static int copy_tree(const char *source, const char *destination) {
+    if (mkdirs(destination) < 0) return -1;
+    DIR *dir = opendir(source); if (!dir) return -1;
+    struct dirent *entry; int ok = 1; char src[PATH_CAP], dst[PATH_CAP]; struct stat st;
+    while ((entry = readdir(dir)) != NULL) {
+        if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
+        if (join_path(source, entry->d_name, src, sizeof(src)) < 0 || join_path(destination, entry->d_name, dst, sizeof(dst)) < 0 || lstat(src, &st) < 0) { ok = 0; continue; }
+        if (S_ISDIR(st.st_mode)) { if (copy_tree(src, dst) < 0) ok = 0; }
+        else if (S_ISREG(st.st_mode)) { if (install_resource(src, dst) < 0) ok = 0; }
+    }
+    closedir(dir); return ok ? 0 : -1;
+}
+int installer_orbx_ready(void) {
+    return resource_exists("/app0/payload/orbx.prx") && resource_exists("/app0/payload/orbx.plugins.ini") && resource_exists("/app0/payload/orbx/gta/settings.xml");
+}
+void installer_run_orbx(int results[3]) {
+    results[0] = install_resource("/app0/payload/orbx.prx", "/data/GoldHEN/plugins/orbx.prx");
+    results[1] = install_resource("/app0/payload/orbx.plugins.ini", "/data/GoldHEN/plugins.ini");
+    if (remove_tree("/data/orbx") < 0 && errno != ENOENT) results[2] = -1;
+    else results[2] = copy_tree("/app0/payload/orbx", "/data/orbx");
 }
 int installer_153_ready(void) { return installer_version_ready(153); }
 int installer_156_ready(void) { return installer_version_ready(156); }

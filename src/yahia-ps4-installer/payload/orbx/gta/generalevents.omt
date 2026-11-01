@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CTuningFile>
+  <Tunables>
+    <Item type="CEventPedJackingMyVehicle__Tunables">
+      <Name>CEventPedJackingMyVehicle</Name>
+      <MinDelayTimer value="0.00000000"/>
+      <MaxDelayTimer value="0.50000000"/>
+    </Item>
+    <Item type="CEventEncroachingPed__Tunables">
+      <Name>CEventEncroachingPed</Name>
+    </Item>
+    <Item type="CEventRequestHelp__Tunables">
+      <Name>CEventRequestHelp</Name>
+      <MaxRangeWithoutRadioForFistFights value="10.00000000"/>
+      <MinDelayTimer value="0.10000000"/>
+      <MaxDelayTimer value="0.40000000"/>
+    </Item>
+    <Item type="CEventCrimeCryForHelp__Tunables">
+      <Name>CEventCrimeCryForHelp</Name>
+      <MaxDistance value="0.00000000"/>
+      <MinDelayDistance value="0.00000000"/>
+      <MaxDelayDistance value="0.00000000"/>
+      <MaxDistanceDelay value="0.00000000"/>
+      <MinRandomDelay value="0.00000000"/>
+      <MaxRandomDelay value="0.00000000"/>
+    </Item>
+    <Item type="CEventSuspiciousActivity__Tunables">
+      <Name>CEventSuspiciousActivity</Name>
+      <fMinDistanceToBeConsideredSameEvent value="1.00000000"/>
+    </Item>
+    <Item type="CEventAgitated__Tunables">
+      <Name>CEventAgitated</Name>
+      <TimeToLive value="1000"/>
+      <AmbientEventLifetime value="3.00000000"/>
+      <TriggerAmbientReactionChances value="1.00000000"/>
+      <MinDistanceForAmbientReaction value="0.00000000"/>
+      <MaxDistanceForAmbientReaction value="15.00000000"/>
+      <MinTimeForAmbientReaction value="20.00000000"/>
+      <MaxTimeForAmbientReaction value="21.00000000"/>
+      <AmbientEventType>AET_Threatening</AmbientEventType>
+    </Item>
+    <Item type="CEventRespondedToThreat__Tunables">
+      <Name>CEventRespondedToThreat</Name>
+      <MinDelayTimer value="0.30000000"/>
+      <MaxDelayTimer value="0.60000000"/>
+    </Item>
+  </Tunables>
+</CTuningFile>
