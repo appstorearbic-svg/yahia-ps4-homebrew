@@ -21,7 +21,7 @@ all: $(CONTENT_ID).pkg
 $(CONTENT_ID).pkg: pkg.gp4
 	$(TOOLS)/PkgTool.Core pkg_build $< .
 pkg.gp4: eboot.bin sce_sys/param.sfo sce_sys/icon0.png $(LIBMODULES) $(ASSETS)
-	$(TOOLS)/create-gp4 -out $@ --content-id=$(CONTENT_ID) --files "$^"
+	python3 ../../tools/create_gp4_from_tree.py $@ $(CONTENT_ID)
 	python3 ../../tools/fix_gp4_dirs.py $@
 sce_sys/param.sfo: Makefile
 	$(TOOLS)/PkgTool.Core sfo_new $@
@@ -35,9 +35,9 @@ sce_sys/param.sfo: Makefile
 	$(TOOLS)/PkgTool.Core sfo_setentry $@ TITLE --type Utf8 --maxsize 128 --value '$(TITLE)'
 	$(TOOLS)/PkgTool.Core sfo_setentry $@ TITLE_ID --type Utf8 --maxsize 12 --value '$(TITLE_ID)'
 	$(TOOLS)/PkgTool.Core sfo_setentry $@ VERSION --type Utf8 --maxsize 8 --value '$(VERSION)'
-	eboot.bin: $(INTDIR) $(OBJS)
-		ld.lld $(INTDIR)/*.o -o $(INTDIR)/installer.elf $(LDFLAGS)
-		$(TOOLS)/create-fself -in=$(INTDIR)/installer.elf -out=$(INTDIR)/installer.oelf --eboot "eboot.bin" --paid 0x3800000000000011 || { rc=$$?; echo "create-fself exit=$$rc"; file $(INTDIR)/installer.elf; readelf -h $(INTDIR)/installer.elf; readelf -l $(INTDIR)/installer.elf; readelf -d $(INTDIR)/installer.elf || true; exit $$rc; }
+eboot.bin: $(INTDIR) $(OBJS)
+	ld.lld $(INTDIR)/*.o -o $(INTDIR)/installer.elf $(LDFLAGS)
+	$(TOOLS)/create-fself -in=$(INTDIR)/installer.elf -out=$(INTDIR)/installer.oelf --eboot "eboot.bin" --paid 0x3800000000000011 || { rc=$$?; echo "create-fself exit=$$rc"; file $(INTDIR)/installer.elf; readelf -h $(INTDIR)/installer.elf; readelf -l $(INTDIR)/installer.elf; readelf -d $(INTDIR)/installer.elf || true; exit $$rc; }
 $(INTDIR)/c_%.o: $(PROJDIR)/%.c | $(INTDIR)
 	clang $(CFLAGS) -o $@ $<
 $(INTDIR)/cpp_%.o: $(PROJDIR)/%.cpp | $(INTDIR)
