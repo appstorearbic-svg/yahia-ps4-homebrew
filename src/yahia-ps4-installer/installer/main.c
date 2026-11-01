@@ -92,25 +92,29 @@ void installer_run_version(int version, int results[3]) {
 }
 
 static int remove_orbx_tree(void) {
-    char path[PATH_CAP]; int ok = 1;
-    for (size_t i = 0; i < orbx_file_count; ++i) {
-        if (snprintf(path, sizeof(path), "/data/orbx/%s", orbx_files[i]) >= (int)sizeof(path)) { ok = 0; continue; }
+    char path[PATH_CAP]; int ok = 1; const char *rel = orbx_files;
+    while (rel < orbx_files + orbx_files_size - 1) {
+        if (snprintf(path, sizeof(path), "/data/orbx/%s", rel) >= (int)sizeof(path)) { ok = 0; rel += strlen(rel) + 1; continue; }
         if (unlink(path) < 0 && errno != ENOENT) ok = 0;
+        rel += strlen(rel) + 1;
     }
-    for (size_t i = 0; i < orbx_dir_count; ++i) {
-        if (snprintf(path, sizeof(path), "/data/orbx/%s", orbx_dirs[i]) >= (int)sizeof(path)) { ok = 0; continue; }
+    rel = orbx_dirs;
+    while (rel < orbx_dirs + orbx_dirs_size - 1) {
+        if (snprintf(path, sizeof(path), "/data/orbx/%s", rel) >= (int)sizeof(path)) { ok = 0; rel += strlen(rel) + 1; continue; }
         if (rmdir(path) < 0 && errno != ENOENT) ok = 0;
+        rel += strlen(rel) + 1;
     }
     if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = 0;
     return ok ? 0 : -1;
 }
 static int install_orbx_tree(void) {
-    char source[PATH_CAP], destination[PATH_CAP]; int ok = 1;
+    char source[PATH_CAP], destination[PATH_CAP]; int ok = 1; const char *rel = orbx_files;
     if (mkdirs("/data/orbx") < 0) return -1;
-    for (size_t i = 0; i < orbx_file_count; ++i) {
-        if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", orbx_files[i]) >= (int)sizeof(source) ||
-            snprintf(destination, sizeof(destination), "/data/orbx/%s", orbx_files[i]) >= (int)sizeof(destination) ||
+    while (rel < orbx_files + orbx_files_size - 1) {
+        if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", rel) >= (int)sizeof(source) ||
+            snprintf(destination, sizeof(destination), "/data/orbx/%s", rel) >= (int)sizeof(destination) ||
             install_resource(source, destination) < 0) ok = 0;
+        rel += strlen(rel) + 1;
     }
     return ok ? 0 : -1;
 }
