@@ -7,7 +7,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "orbx_manifest.h"
 #define PATH_CAP 512
 
 static int mkdirs(const char *path) {
@@ -91,32 +90,39 @@ void installer_run_version(int version, int results[3]) {
     results[2] = install_gtx_folder_version(version);
 }
 
+static void trim_line(char *line) {
+    size_t n = strlen(line); while (n && (line[n - 1] == '\n' || line[n - 1] == '\r')) line[--n] = '\0';
+}
 static int remove_orbx_tree(void) {
-    char path[PATH_CAP]; int ok = 1; const char *rel = orbx_files;
-    while (rel < orbx_files + orbx_files_size - 1) {
-        if (snprintf(path, sizeof(path), "/data/orbx/%s", rel) >= (int)sizeof(path)) { ok = 0; rel += strlen(rel) + 1; continue; }
+    FILE *manifest = fopen("/app0/payload/orbx_manifest.txt", "r");
+    if (!manifest) return -1;
+    char line[PATH_CAP], path[PATH_CAP]; int ok = 1;
+    while (fgets(line, sizeof(line), manifest)) {
+        trim_line(line); if (line[0] != 'F' || line[1] != ' ') continue;
+        if (snprintf(path, sizeof(path), "/data/orbx/%s", line + 2) >= (int)sizeof(path)) { ok = 0; continue; }
         if (unlink(path) < 0 && errno != ENOENT) ok = 0;
-        rel += strlen(rel) + 1;
     }
-    rel = orbx_dirs;
-    while (rel < orbx_dirs + orbx_dirs_size - 1) {
-        if (snprintf(path, sizeof(path), "/data/orbx/%s", rel) >= (int)sizeof(path)) { ok = 0; rel += strlen(rel) + 1; continue; }
+    rewind(manifest);
+    while (fgets(line, sizeof(line), manifest)) {
+        trim_line(line); if (line[0] != 'D' || line[1] != ' ') continue;
+        if (snprintf(path, sizeof(path), "/data/orbx/%s", line + 2) >= (int)sizeof(path)) { ok = 0; continue; }
         if (rmdir(path) < 0 && errno != ENOENT) ok = 0;
-        rel += strlen(rel) + 1;
     }
-    if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = 0;
+    fclose(manifest); if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = 0;
     return ok ? 0 : -1;
 }
 static int install_orbx_tree(void) {
-    char source[PATH_CAP], destination[PATH_CAP]; int ok = 1; const char *rel = orbx_files;
-    if (mkdirs("/data/orbx") < 0) return -1;
-    while (rel < orbx_files + orbx_files_size - 1) {
-        if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", rel) >= (int)sizeof(source) ||
-            snprintf(destination, sizeof(destination), "/data/orbx/%s", rel) >= (int)sizeof(destination) ||
+    FILE *manifest = fopen("/app0/payload/orbx_manifest.txt", "r");
+    if (!manifest) return -1;
+    char line[PATH_CAP], source[PATH_CAP], destination[PATH_CAP]; int ok = 1;
+    if (mkdirs("/data/orbx") < 0) { fclose(manifest); return -1; }
+    while (fgets(line, sizeof(line), manifest)) {
+        trim_line(line); if (line[0] != 'F' || line[1] != ' ') continue;
+        if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", line + 2) >= (int)sizeof(source) ||
+            snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) ||
             install_resource(source, destination) < 0) ok = 0;
-        rel += strlen(rel) + 1;
     }
-    return ok ? 0 : -1;
+    fclose(manifest); return ok ? 0 : -1;
 }
 int installer_orbx_ready(void) {
     return resource_exists("/app0/payload/orbx.prx") && resource_exists("/app0/payload/orbx.plugins.ini") && resource_exists("/app0/payload/orbx/gta/settings.xml");
