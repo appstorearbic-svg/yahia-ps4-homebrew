@@ -18,7 +18,7 @@
 
 1. يثبت `orbx.prx` إلى `/data/GoldHEN/plugins/orbx.prx` مع استبدال الملف القديم.
 2. يثبت `plugins.ini` الجديد إلى `/data/GoldHEN/plugins.ini` مع استبدال الملف القديم.
-3. يحذف ملفات ومجلدات `/data/orbx/` القديمة المسجلة في الحزمة ثم ينسخ مجلد Orbx الجديد إلى `/data/orbx/`.
+3. يحذف ملفات `/data/orbx/` القديمة المسجلة في الحزمة ثم ينسخ ملفات Orbx الجديدة إلى `/data/orbx/`.
 
 يستخدم المثبت ملف `payload/orbx_manifest.txt` الخارجي لتسجيل ملفات Orbx، حتى يبقى برنامج التثبيت صغيرًا ومتوافقًا مع `create-fself` في بيئة OpenOrbis.
 

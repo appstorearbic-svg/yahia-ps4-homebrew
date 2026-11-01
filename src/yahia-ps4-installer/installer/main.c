@@ -105,8 +105,6 @@ static int process_orbx_manifest(int pass) {
         if (line[0] && line[1] == ' ') {
             if (pass == 0 && line[0] == 'F') {
                 if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || (unlink(destination) < 0 && errno != ENOENT)) ok = 0;
-            } else if (pass == 1 && line[0] == 'D') {
-                if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || (rmdir(destination) < 0 && errno != ENOENT)) ok = 0;
             } else if (pass == 2 && line[0] == 'F') {
                 if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", line + 2) >= (int)sizeof(source) || snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || install_resource(source, destination) < 0) ok = 0;
             }
@@ -116,8 +114,7 @@ static int process_orbx_manifest(int pass) {
     close(fd); return ok ? 0 : -1;
 }
 static int remove_orbx_tree(void) {
-    int ok = process_orbx_manifest(0); if (process_orbx_manifest(1) < 0) ok = -1;
-    if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = -1; return ok;
+    return process_orbx_manifest(0);
 }
 static int install_orbx_tree(void) {
     if (mkdirs("/data/orbx") < 0) return -1;
