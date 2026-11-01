@@ -90,39 +90,38 @@ void installer_run_version(int version, int results[3]) {
     results[2] = install_gtx_folder_version(version);
 }
 
-static void trim_line(char *line) {
-    size_t n = strlen(line); while (n && (line[n - 1] == '\n' || line[n - 1] == '\r')) line[--n] = '\0';
+static int process_orbx_manifest(int pass) {
+    int fd = open("/app0/payload/orbx_manifest.txt", O_RDONLY); if (fd < 0) return -1;
+    char line[PATH_CAP], source[PATH_CAP], destination[PATH_CAP]; size_t used = 0; int ok = 1; char c;
+    for (;;) {
+        ssize_t n = read(fd, &c, 1);
+        if (n == 0 || (n < 0 && errno == EINTR)) {
+            if (n < 0) continue;
+            if (used) line[used] = '\0'; else line[0] = '\0';
+            n = 0;
+        } else if (n < 0) { ok = 0; break; }
+        else if (c != '\n' && c != '\r') { if (used + 1 < sizeof(line)) line[used++] = c; continue; }
+        else { line[used] = '\0'; used = 0; }
+        if (line[0] && line[1] == ' ') {
+            if (pass == 0 && line[0] == 'F') {
+                if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || (unlink(destination) < 0 && errno != ENOENT)) ok = 0;
+            } else if (pass == 1 && line[0] == 'D') {
+                if (snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || (rmdir(destination) < 0 && errno != ENOENT)) ok = 0;
+            } else if (pass == 2 && line[0] == 'F') {
+                if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", line + 2) >= (int)sizeof(source) || snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) || install_resource(source, destination) < 0) ok = 0;
+            }
+        }
+        if (n == 0) break;
+    }
+    close(fd); return ok ? 0 : -1;
 }
 static int remove_orbx_tree(void) {
-    FILE *manifest = fopen("/app0/payload/orbx_manifest.txt", "r");
-    if (!manifest) return -1;
-    char line[PATH_CAP], path[PATH_CAP]; int ok = 1;
-    while (fgets(line, sizeof(line), manifest)) {
-        trim_line(line); if (line[0] != 'F' || line[1] != ' ') continue;
-        if (snprintf(path, sizeof(path), "/data/orbx/%s", line + 2) >= (int)sizeof(path)) { ok = 0; continue; }
-        if (unlink(path) < 0 && errno != ENOENT) ok = 0;
-    }
-    rewind(manifest);
-    while (fgets(line, sizeof(line), manifest)) {
-        trim_line(line); if (line[0] != 'D' || line[1] != ' ') continue;
-        if (snprintf(path, sizeof(path), "/data/orbx/%s", line + 2) >= (int)sizeof(path)) { ok = 0; continue; }
-        if (rmdir(path) < 0 && errno != ENOENT) ok = 0;
-    }
-    fclose(manifest); if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = 0;
-    return ok ? 0 : -1;
+    int ok = process_orbx_manifest(0); if (process_orbx_manifest(1) < 0) ok = -1;
+    if (rmdir("/data/orbx") < 0 && errno != ENOENT) ok = -1; return ok;
 }
 static int install_orbx_tree(void) {
-    FILE *manifest = fopen("/app0/payload/orbx_manifest.txt", "r");
-    if (!manifest) return -1;
-    char line[PATH_CAP], source[PATH_CAP], destination[PATH_CAP]; int ok = 1;
-    if (mkdirs("/data/orbx") < 0) { fclose(manifest); return -1; }
-    while (fgets(line, sizeof(line), manifest)) {
-        trim_line(line); if (line[0] != 'F' || line[1] != ' ') continue;
-        if (snprintf(source, sizeof(source), "/app0/payload/orbx/%s", line + 2) >= (int)sizeof(source) ||
-            snprintf(destination, sizeof(destination), "/data/orbx/%s", line + 2) >= (int)sizeof(destination) ||
-            install_resource(source, destination) < 0) ok = 0;
-    }
-    fclose(manifest); return ok ? 0 : -1;
+    if (mkdirs("/data/orbx") < 0) return -1;
+    return process_orbx_manifest(2);
 }
 int installer_orbx_ready(void) {
     return resource_exists("/app0/payload/orbx.prx") && resource_exists("/app0/payload/orbx.plugins.ini") && resource_exists("/app0/payload/orbx/gta/settings.xml");
