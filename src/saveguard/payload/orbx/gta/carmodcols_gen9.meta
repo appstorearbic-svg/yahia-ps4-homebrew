@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CVehicleModColorsGen9>
+    <chameleon>
+        <Item>
+            <name>ANOD_RED</name>
+            <col value="161" />
+            <spec value="161" />
+        </Item>
+        <Item>
+            <name>ANOD_BLUE</name>
+            <col value="164" />
+            <spec value="164" />
+        </Item>
+        <Item>
+            <name>ANOD_GOLD</name>
+            <col value="170" />
+            <spec value="160" />
+        </Item>
+        <Item>
+            <name>GREEN_BLUE_FLIP</name>
+            <col value="171" />
+            <spec value="92" />
+        </Item>
+        <Item>
+            <name>PURP_GREEN_FLIP</name>
+            <col value="183" />
+            <spec value="92" />
+        </Item>
+        <Item>
+            <name>ORANG_PURP_FLIP</name>
+            <col value="191" />
+            <spec value="89" />
+        </Item>
+        <Item>
+            <name>DARKPURPLEPEARL</name>
+            <col value="199" />
+            <spec value="203" />
+        </Item>
+        <Item>
+            <name>BLUE_PEARL</name>
+            <col value="209" />
+            <spec value="208" />
+        </Item>
+        <Item>
+            <name>RED_PRISMA</name>
+            <col value="216" />
+            <spec value="216" />
+        </Item>
+        <Item>
+            <name>BLACK_PRISMA</name>
+            <col value="218" />
+            <spec value="218" />
+        </Item>
+    </chameleon>
+</CVehicleModColorsGen9>
