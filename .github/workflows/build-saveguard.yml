@@ -1,0 +1,20 @@
+name: Build SaveGuard
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup
+      run: |
+        sudo apt-get update && sudo apt-get install -y clang lld make python3 wget
+        wget -q https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/OpenOrbis-PS4-Toolchain-v0.5.4.tar.gz
+        tar -xzf OpenOrbis-PS4-Toolchain-v0.5.4.tar.gz
+        echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE/OpenOrbis-PS4-Toolchain" >> $GITHUB_ENV
+    - name: Build
+      run: cd src/saveguard && make
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: SaveGuard-PS4
+        path: src/saveguard/saveguard.pkg
