@@ -1,20 +1,35 @@
-name: Build SaveGuard
+name: Build SaveGuard PS4
 on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup
-      run: |
-        sudo apt-get update && sudo apt-get install -y clang lld make python3 wget
-        wget -q https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/OpenOrbis-PS4-Toolchain-v0.5.4.tar.gz
-        tar -xzf OpenOrbis-PS4-Toolchain-v0.5.4.tar.gz
-        echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE/OpenOrbis-PS4-Toolchain" >> $GITHUB_ENV
-    - name: Build
-      run: cd src/saveguard && make
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: SaveGuard-PS4
-        path: src/saveguard/saveguard.pkg
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld make curl tar libssl3 libssl-dev
+          curl -L --fail --retry 3 -o /tmp/libssl1.1.deb https://deb.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb
+          sudo dpkg -i /tmp/libssl1.1.deb
+          echo "LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu" >> "$GITHUB_ENV"
+      - name: Download OpenOrbis Toolchain
+        run: |
+          mkdir -p tools
+          curl -L --fail --retry 3 -o /tmp/openorbis.tar.gz https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
+          tar -xzf /tmp/openorbis.tar.gz -C tools
+      - name: Build SaveGuard PKG
+        run: |
+          export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
+          export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+          export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+          cd src/saveguard
+          make -j2
+          mkdir -p "$GITHUB_WORKSPACE/finish"
+          cp -f *.pkg "$GITHUB_WORKSPACE/finish/SaveGuard-PS4.pkg" || echo "PKG not found, checking dir..." && ls -la
+      - name: Upload PKG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SaveGuard-PS4
+          path: finish/SaveGuard-PS4.pkg
+          if-no-files-found: error
