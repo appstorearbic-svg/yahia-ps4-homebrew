@@ -55,7 +55,7 @@ app_config_t apollo_config = {
     .app_ver = {0},
     .save_db = ONLINE_URL,
     .ftp_url = "",
-    .music = 1,
+    .music = 0,
     .doSort = 1,
     .doAni = 1,
     .update = 1,
@@ -276,7 +276,7 @@ static int LoadTextures_Menu(void)
 	free_mem = (u32 *) AddFontFromBitmapArray((u8 *) console_font_10x20, (u8 *) free_mem, 0, 0xFF, 10, 20, 1, BIT7_FIRST_PIXEL);
 
 	if (TTFLoadFont(0, "/preinst/common/font/DFHEI5-SONY.ttf", NULL, 0) != SUCCESS ||
-		TTFLoadFont(2, APOLLO_APP_PATH "fonts/NanumMyeongjoExtraBold.ttf", NULL, 0) != SUCCESS ||
+		TTFLoadFont(2, APOLLO_APP_PATH "fonts/NotoSansArabic-Regular.ttf", NULL, 0) != SUCCESS ||
 		TTFLoadFont(1, "/system_ex/app/NPXS20113/bdjstack/lib/fonts/SCE-PS3-RD-R-LATIN.TTF", NULL, 0) != SUCCESS)
 		return 0;
 
@@ -487,15 +487,22 @@ void update_vmc_path(char* path)
 static void initLocalization(void)
 {
 	char path[256];
-
-	snprintf(path, sizeof(path), APOLLO_DATA_PATH "lang_%s.po", get_user_language());
+	/* SaveGuard ships with Arabic as its primary interface language. */
+	snprintf(path, sizeof(path), APOLLO_DATA_PATH "lang_ar.po");
 	if (mini18n_set_locale(path) != SUCCESS)
 	{
-		snprintf(path, sizeof(path), APOLLO_APP_PATH "misc/lang_%s.po", get_user_language());
+		snprintf(path, sizeof(path), APOLLO_APP_PATH "misc/lang_ar.po");
 		if (mini18n_set_locale(path) != SUCCESS)
-			LOG("Localization file not found: %s", path);
+		{
+			snprintf(path, sizeof(path), APOLLO_DATA_PATH "lang_%s.po", get_user_language());
+			if (mini18n_set_locale(path) != SUCCESS)
+			{
+				snprintf(path, sizeof(path), APOLLO_APP_PATH "misc/lang_%s.po", get_user_language());
+				if (mini18n_set_locale(path) != SUCCESS)
+					LOG("Localization file not found: %s", path);
+			}
+		}
 	}
-
 	hdd_saves.title = _("HDD Saves");
 	usb_saves.title = _("USB Saves");
 	trophies.title = _("Trophies");
