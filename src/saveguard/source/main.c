@@ -305,7 +305,6 @@ static int LoadTextures_Menu(void)
 	load_menu_texture(scroll_bg, png);
 	load_menu_texture(scroll_lock, png);
 	load_menu_texture(help, png);
-	load_menu_texture(buk_scr, png);
 	load_menu_texture(cat_about, png);
 	load_menu_texture(cat_cheats, png);
 	load_menu_texture(cat_opt, png);
@@ -426,6 +425,35 @@ static int LoadSounds(void* data)
 	return 0;
 }
 
+static int PlayIntroAudio(void* data)
+{
+	FILE* fp;
+	uint8_t samples[AUDIO_SAMPLES * 2 * sizeof(int16_t)];
+	char path[256];
+	(void)data;
+	snprintf(path, sizeof(path), APOLLO_APP_PATH "audio/intro_audio.pcm");
+	fp = fopen(path, "rb");
+	if (!fp || audio <= 0)
+	{
+		if (fp) fclose(fp);
+		LOG("Intro audio unavailable: %s", path);
+		return -1;
+	}
+	while (!feof(fp))
+	{
+		size_t bytes = fread(samples, 1, sizeof(samples), fp);
+		if (bytes == 0) break;
+		if (bytes < sizeof(samples)) memset(samples + bytes, 0, sizeof(samples) - bytes);
+		sceAudioOutOutput(audio, NULL);
+		if (sceAudioOutOutput(audio, samples) < 0)
+		{
+			LOG("Intro audio output failed");
+			break;
+		}
+	}
+	fclose(fp);
+	return 0;
+}
 void update_usb_path(char* path)
 {
 	if (apollo_config.usb_dev < MAX_USB_DEVICES)
@@ -709,26 +737,19 @@ s32 main(s32 argc, const char* argv[])
 		save_app_settings(&apollo_config);
 	}
 
-	// dedicated to Leon & Luna ~ in loving memory
-
-#ifndef APOLLO_ENABLE_LOGGING
-	// Splash screen logo (fade-in)
-	drawSplashLogo(1);
-#endif
-
 	// Setup font
 	SetExtraSpace(-15);
 	SetCurrentFont(font_adonais_regular);
-
 	registerSpecialChars();
 	initMenuOptions();
-
 #ifndef APOLLO_ENABLE_LOGGING
-	// Splash screen logo (fade-out)
-	drawSplashLogo(-1);
+	// Play the supplied GTX intro with its original voice and music.
+	SDL_Thread* intro_audio_thread = SDL_CreateThread(PlayIntroAudio, "intro_audio", NULL);
+	drawIntroVideo();
+	if (intro_audio_thread)
+		SDL_WaitThread(intro_audio_thread, NULL);
 #endif
-	SDL_DestroyTexture(menu_textures[buk_scr_png_index].texture);
-	
+
 	//Set options
 	update_callback(!apollo_config.update);
 

@@ -12,6 +12,7 @@
 #include "types.h"
 #include "libfont.h"
 #include "menu.h"
+#include "saves.h"
 
 #include <dbglogger.h>
 #define LOG dbglogger_log
@@ -334,43 +335,31 @@ static void drawJars(uint8_t alpha)
 	drawJar(jar_opt_png_index, label_settings_png_index, jar_opt_png_x, jar_opt_png_y, alpha);
 	drawJar(jar_about_png_index, label_about_png_index, jar_about_png_x, jar_about_png_y, alpha);
 }
-void drawSplashLogo(int mode)
+void drawIntroVideo(void)
 {
-	int ani, max;
-
-	if (mode > 0)
+	const int frame_count = 180;
+	const int fps = 15;
+	Uint32 start_ticks = SDL_GetTicks();
+	char path[256];
+	for (int frame = 0; frame < frame_count; frame++)
 	{
-		ani = 0;
-		max = MENU_ANI_MAX;
-	}
-	else
-	{
-		ani = MENU_ANI_MAX;
-		max = 0;
-	}
-
-	for (; ani != max; ani += mode)
-	{
-		// clear the current display buffer
-		SDL_RenderClear(renderer);
-		DrawBackground2D(0x000000FF);
-		
-		//------------ Backgrounds
-		int logo_a_t = ((ani < 0x20) ? 0 : ((ani - 0x20)*3));
-		if (logo_a_t > 0xFF)
-			logo_a_t = 0xFF;
-		u8 logo_a = (u8)logo_a_t;
-
-		SDL_SetTextureAlphaMod(menu_textures[buk_scr_png_index].texture, logo_a);
-
-		//App description
-		DrawTextureCentered(&menu_textures[buk_scr_png_index], SCREEN_WIDTH/2, SCREEN_HEIGHT /2, 0, menu_textures[buk_scr_png_index].width, menu_textures[buk_scr_png_index].height, 0xFFFFFF00 | logo_a);
-
-		//flush and flip
-		SDL_RenderPresent(renderer);
+		snprintf(path, sizeof(path), APOLLO_APP_PATH "images/intro_%03d.jpg", frame);
+		if (LoadMenuTexture(path, icon_png_file_index))
+		{
+			SDL_RenderClear(renderer);
+			DrawBackground2D(0x000000FF);
+			DrawTextureCentered(&menu_textures[icon_png_file_index], SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+				0, SCREEN_WIDTH, SCREEN_HEIGHT, 0xFFFFFFFF);
+			SDL_RenderPresent(renderer);
+			SDL_DestroyTexture(menu_textures[icon_png_file_index].texture);
+			menu_textures[icon_png_file_index].texture = NULL;
+		}
+		Uint32 target_ticks = start_ticks + (Uint32)(((frame + 1) * 1000) / fps);
+		Uint32 now = SDL_GetTicks();
+		if ((int32_t)(target_ticks - now) > 0)
+			SDL_Delay(target_ticks - now);
 	}
 }
-
 void drawEndLogo(void)
 {
 	SDL_Rect rect = {

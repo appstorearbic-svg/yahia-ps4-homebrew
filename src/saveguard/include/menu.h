@@ -92,7 +92,6 @@ enum texture_index
 	tag_zip_png_index,
 	tag_net_png_index,
 	tag_apply_png_index,
-	buk_scr_png_index,
 	footer_ico_circle_png_index,
 	footer_ico_cross_png_index,
 	footer_ico_square_png_index,
@@ -268,7 +267,7 @@ void LoadVmcTexture(int width, int height, uint8_t* icon);
 void initMenuOptions(void);
 
 void drawScene(void);
-void drawSplashLogo(int m);
+void drawIntroVideo(void);
 void drawEndLogo(void);
 
 int load_app_settings(app_config_t* config);
