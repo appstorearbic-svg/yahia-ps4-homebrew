@@ -6,7 +6,12 @@
 #include <orbis/Pad.h>
 #include <orbis/UserService.h>
 #include "graphics.h"
+#include <sstream>
+#include "graphics.h"
 #include "png.h"
+
+std::stringstream debugLogStream;
+Scene2D::~Scene2D() {}
 
 #define W 1920
 #define H 1080
