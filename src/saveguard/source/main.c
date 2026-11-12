@@ -345,6 +345,16 @@ static int LoadTextures_Menu(void)
 	load_menu_texture(jar_usb_hover, png);
 	load_menu_texture(logo, png);
 	load_menu_texture(logo_text, png);
+	load_menu_texture(bg_gtx, jpg);
+	load_menu_texture(tile_frame, png);
+	load_menu_texture(tile_frame_active, png);
+	load_menu_texture(ui_trophy, png);
+	load_menu_texture(ui_usb, png);
+	load_menu_texture(ui_hdd, png);
+	load_menu_texture(ui_db, png);
+	load_menu_texture(ui_bup, png);
+	load_menu_texture(ui_opt, png);
+	load_menu_texture(ui_about, png);
 	load_menu_texture(tag_lock, png);
 	load_menu_texture(tag_own, png);
 	load_menu_texture(tag_vmc, png);

@@ -121,8 +121,18 @@ enum texture_index
 	header_dot_png_index,
 	header_line_png_index,
 	cheat_png_index,
+	bg_gtx_jpg_index,
+	tile_frame_png_index,
+	tile_frame_active_png_index,
+	ui_trophy_png_index,
+	ui_usb_png_index,
+	ui_hdd_png_index,
+	ui_db_png_index,
+	ui_bup_png_index,
+	ui_opt_png_index,
+	ui_about_png_index,
 
-	TOTAL_MENU_TEXTURES
+		TOTAL_MENU_TEXTURES
 };
 
 #define RGBA_R(c)		(uint8_t)((c & 0xFF000000) >> 24)

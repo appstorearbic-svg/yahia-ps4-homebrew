@@ -288,52 +288,45 @@ void DrawTextureRotated(png_texture* tex, int x, int y, int z, int w, int h, u32
 	SDL_RenderCopyEx(renderer, tex->texture, NULL, &dest, angle, NULL, SDL_FLIP_NONE);
 }
 
-static void drawJar(uint8_t idx, uint8_t label_idx, int pos_x, int pos_y, uint8_t alpha)
+static uint8_t menuIconForJar(uint8_t idx)
 {
-	uint8_t active = (menu_sel + jar_trophy_png_index == idx);
-	DrawTexture(&menu_textures[idx], pos_x, pos_y, 0, menu_textures[idx].width, menu_textures[idx].height, 0xffffff00 | alpha);
-	//Selected
-	if (active)
-		DrawTexture(&menu_textures[idx + JAR_COLUMNS], pos_x, pos_y, 0, menu_textures[idx + JAR_COLUMNS].width, menu_textures[idx + JAR_COLUMNS].height, 0xffffff00 | alpha);
-	// Pre-shaped Arabic label textures bypass Apollo's legacy 8-bit string renderer.
-	if (alpha)
+	switch (idx)
 	{
-		uint8_t label_alpha = (alpha == 0xFF ? (active ? 0xFF : 0x20) : alpha);
-		int label_x = pos_x + (menu_textures[idx].width - menu_textures[label_idx].width) / 2;
-		int label_y = pos_y - menu_textures[label_idx].height - 10;
-		DrawTexture(&menu_textures[label_idx], label_x, label_y, 0,
-			menu_textures[label_idx].width, menu_textures[label_idx].height,
-			0xffffff00 | label_alpha);
+		case jar_trophy_png_index: return ui_trophy_png_index;
+		case jar_usb_png_index: return ui_usb_png_index;
+		case jar_hdd_png_index: return ui_hdd_png_index;
+		case jar_db_png_index: return ui_db_png_index;
+		case jar_bup_png_index: return ui_bup_png_index;
+		case jar_opt_png_index: return ui_opt_png_index;
+		default: return ui_about_png_index;
 	}
 }
-static void _drawColumn(uint8_t idx, int pos_x, int pos_y, uint8_t alpha)
-{
-	DrawTexture(&menu_textures[idx], pos_x, pos_y, 0, menu_textures[idx].width, menu_textures[idx].height, 0xffffff00 | alpha);
-}
 
-static void drawColumns(uint8_t alpha)
+static void drawJar(uint8_t idx, uint8_t label_idx, int pos_x, int pos_y, uint8_t alpha)
 {
-//	DrawTexture(&menu_textures[bg_water_png_index], bg_water_png_x - apollo_config.marginH, apollo_config.marginV + bg_water_png_y, 0, bg_water_png_w + (apollo_config.marginH * 2), bg_water_png_h, 0xffffff00 | 0xFF);
-
-	//Columns
-	_drawColumn(column_1_png_index, column_1_png_x, column_1_png_y, alpha);
-	_drawColumn(column_2_png_index, column_2_png_x, column_2_png_y, alpha);
-	_drawColumn(column_3_png_index, column_3_png_x, column_3_png_y, alpha);
-	_drawColumn(column_4_png_index, column_4_png_x, column_4_png_y, alpha);
-	_drawColumn(column_5_png_index, column_5_png_x, column_5_png_y, alpha);
-	_drawColumn(column_6_png_index, column_6_png_x, column_6_png_y, alpha);
-	_drawColumn(column_7_png_index, column_7_png_x, column_7_png_y, alpha);
+	const int card_w = 250, card_h = 334;
+	const int icon_size = 192;
+	uint8_t active = (menu_sel + jar_trophy_png_index == idx);
+	uint8_t frame = active ? tile_frame_active_png_index : tile_frame_png_index;
+	DrawTexture(&menu_textures[frame], pos_x - (active ? 6 : 0), pos_y - (active ? 8 : 0), 0,
+		card_w + (active ? 12 : 0), card_h + (active ? 16 : 0), 0xffffff00 | alpha);
+	DrawTexture(&menu_textures[menuIconForJar(idx)], pos_x + (card_w - icon_size) / 2, pos_y + 35, 0,
+		icon_size, icon_size, 0xffffff00 | alpha);
+	// Labels remain real Arabic UI assets and are drawn separately from the artwork.
+	if (alpha)
+		DrawTexture(&menu_textures[label_idx], pos_x, pos_y + 264, 0, card_w, 60, 0xffffff00 | alpha);
 }
 
 static void drawJars(uint8_t alpha)
 {
-	drawJar(jar_trophy_png_index, label_trophy_png_index, jar_empty_png_x, jar_empty_png_y, alpha);
-	drawJar(jar_usb_png_index, label_usb_png_index, jar_usb_png_x, jar_usb_png_y, alpha);
-	drawJar(jar_hdd_png_index, label_hdd_png_index, jar_hdd_png_x, jar_hdd_png_y, alpha);
-	drawJar(jar_db_png_index, apollo_config.online_opt ? label_ftp_png_index : label_online_png_index, jar_db_png_x, jar_db_png_y, alpha);
-	drawJar(jar_bup_png_index, label_user_png_index, jar_bup_png_x, jar_bup_png_y, alpha);
-	drawJar(jar_opt_png_index, label_settings_png_index, jar_opt_png_x, jar_opt_png_y, alpha);
-	drawJar(jar_about_png_index, label_about_png_index, jar_about_png_x, jar_about_png_y, alpha);
+	const int first_x = 25, top_y = 650, step = 267;
+	drawJar(jar_trophy_png_index, label_trophy_png_index, first_x + 0 * step, top_y, alpha);
+	drawJar(jar_usb_png_index, label_usb_png_index, first_x + 1 * step, top_y, alpha);
+	drawJar(jar_hdd_png_index, label_hdd_png_index, first_x + 2 * step, top_y, alpha);
+	drawJar(jar_db_png_index, apollo_config.online_opt ? label_ftp_png_index : label_online_png_index, first_x + 3 * step, top_y, alpha);
+	drawJar(jar_bup_png_index, label_user_png_index, first_x + 4 * step, top_y, alpha);
+	drawJar(jar_opt_png_index, label_settings_png_index, first_x + 5 * step, top_y, alpha);
+	drawJar(jar_about_png_index, label_about_png_index, first_x + 6 * step, top_y, alpha);
 }
 void drawIntroVideo(void)
 {
@@ -397,22 +390,18 @@ void drawEndLogo(void)
 	}
 }
 
+static void drawGTXMainBackground(uint8_t alpha)
+{
+	if (menu_textures[bg_gtx_jpg_index].texture)
+		DrawTexture(&menu_textures[bg_gtx_jpg_index], 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0xffffff00 | alpha);
+	else
+		DrawBackground2D(0x08111FFF);
+}
+
 static void _draw_MainMenu(uint8_t alpha)
 {
-	//------------ Backgrounds
-
-	//Background
-	DrawBackgroundTexture(0, 0xFF);
-	
-	//App logo
-	DrawTexture(&menu_textures[logo_png_index], logo_png_x, logo_png_y, 0, logo_png_w, logo_png_h, 0xFFFFFFFF);
-	
-	//App description
-	DrawTextureCenteredX(&menu_textures[logo_text_png_index], SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 40, 0, menu_textures[logo_text_png_index].width * 3/2, menu_textures[logo_text_png_index].height * 3/2, 0xFFFFFF00 | 0xFF);
-
-	drawColumns(alpha);
-
-	//------------ Icons
+	drawGTXMainBackground(0xFF);
+	DrawTextureCenteredX(&menu_textures[logo_text_png_index], SCREEN_WIDTH / 2, 82, 0, 760, 124, 0xFFFFFF00 | 0xFF);
 	drawJars(alpha);
 }
 
@@ -433,14 +422,9 @@ void Draw_MainMenu_Ani(void)
 			logo_a_t = 0xFF;
 		u8 logo_a = (u8)logo_a_t;
 		
-		//Background
-		DrawBackgroundTexture(0, bg_a);
-		
-		//App logo
-		DrawTexture(&menu_textures[logo_png_index], logo_png_x, logo_png_y, 0, logo_png_w, logo_png_h, 0xFFFFFF00 | logo_a);
-		
-		//App description
-		DrawTextureCenteredX(&menu_textures[logo_text_png_index], SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 40, 0, menu_textures[logo_text_png_index].width * 3/2, menu_textures[logo_text_png_index].height * 3/2, 0xFFFFFF00 | logo_a);
+			// Fade in the GTX backdrop and wordmark before showing the seven menu cards.
+			drawGTXMainBackground(bg_a);
+			DrawTextureCenteredX(&menu_textures[logo_text_png_index], SCREEN_WIDTH / 2, 82, 0, 760, 124, 0xFFFFFF00 | logo_a);
 
 		SDL_RenderPresent(renderer);
 	}
