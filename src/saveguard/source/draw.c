@@ -287,19 +287,24 @@ void DrawTextureRotated(png_texture* tex, int x, int y, int z, int w, int h, u32
 	SDL_RenderCopyEx(renderer, tex->texture, NULL, &dest, angle, NULL, SDL_FLIP_NONE);
 }
 
-static void drawJar(uint8_t idx, int pos_x, int pos_y, const char* text, uint8_t alpha)
+static void drawJar(uint8_t idx, uint8_t label_idx, int pos_x, int pos_y, uint8_t alpha)
 {
 	uint8_t active = (menu_sel + jar_trophy_png_index == idx);
 	DrawTexture(&menu_textures[idx], pos_x, pos_y, 0, menu_textures[idx].width, menu_textures[idx].height, 0xffffff00 | alpha);
-
 	//Selected
 	if (active)
 		DrawTexture(&menu_textures[idx + JAR_COLUMNS], pos_x, pos_y, 0, menu_textures[idx + JAR_COLUMNS].width, menu_textures[idx + JAR_COLUMNS].height, 0xffffff00 | alpha);
-
-	SetFontColor(APP_FONT_MENU_COLOR | (alpha == 0xFF ? (active ? 0xFF : 0x20) : alpha), 0);
-	DrawStringMono(pos_x + (menu_textures[idx].width / 2), pos_y - 50, text);
+	// Pre-shaped Arabic label textures bypass Apollo's legacy 8-bit string renderer.
+	if (alpha)
+	{
+		uint8_t label_alpha = (alpha == 0xFF ? (active ? 0xFF : 0x20) : alpha);
+		int label_x = pos_x + (menu_textures[idx].width - menu_textures[label_idx].width) / 2;
+		int label_y = pos_y - menu_textures[label_idx].height - 10;
+		DrawTexture(&menu_textures[label_idx], label_x, label_y, 0,
+			menu_textures[label_idx].width, menu_textures[label_idx].height,
+			0xffffff00 | label_alpha);
+	}
 }
-
 static void _drawColumn(uint8_t idx, int pos_x, int pos_y, uint8_t alpha)
 {
 	DrawTexture(&menu_textures[idx], pos_x, pos_y, 0, menu_textures[idx].width, menu_textures[idx].height, 0xffffff00 | alpha);
@@ -321,34 +326,14 @@ static void drawColumns(uint8_t alpha)
 
 static void drawJars(uint8_t alpha)
 {
-	SetFontAlign(FONT_ALIGN_CENTER);
-	SetFontSize(APP_FONT_SIZE_JARS);
-	SetCurrentFont(font_adonais_regular);
-
-	//Trophies
-	drawJar(jar_trophy_png_index, jar_empty_png_x, jar_empty_png_y, (alpha == 0xFF ? _("Trophies") : ""), alpha);
-
-	//USB save
-	drawJar(jar_usb_png_index, jar_usb_png_x, jar_usb_png_y, (alpha == 0xFF ? _("USB Saves") : ""), alpha);
-	
-	//HDD save
-	drawJar(jar_hdd_png_index, jar_hdd_png_x, jar_hdd_png_y, (alpha == 0xFF ? _("HDD Saves") : ""), alpha);
-
-	//Online cheats
-	drawJar(jar_db_png_index, jar_db_png_x, jar_db_png_y, (alpha == 0xFF ? (apollo_config.online_opt ? _("FTP Server") : _("Online Database")) : ""), alpha);
-	
-	//User Backup
-	drawJar(jar_bup_png_index, jar_bup_png_x, jar_bup_png_y, (alpha == 0xFF ? _("User Tools") : ""), alpha);
-
-	//Options
-	drawJar(jar_opt_png_index, jar_opt_png_x, jar_opt_png_y, (alpha == 0xFF ? _("Settings") : ""), alpha);
-	
-	//About
-	drawJar(jar_about_png_index, jar_about_png_x, jar_about_png_y, (alpha == 0xFF ? _("About") : ""), alpha);
-
-	SetFontAlign(FONT_ALIGN_LEFT);
+	drawJar(jar_trophy_png_index, label_trophy_png_index, jar_empty_png_x, jar_empty_png_y, alpha);
+	drawJar(jar_usb_png_index, label_usb_png_index, jar_usb_png_x, jar_usb_png_y, alpha);
+	drawJar(jar_hdd_png_index, label_hdd_png_index, jar_hdd_png_x, jar_hdd_png_y, alpha);
+	drawJar(jar_db_png_index, apollo_config.online_opt ? label_ftp_png_index : label_online_png_index, jar_db_png_x, jar_db_png_y, alpha);
+	drawJar(jar_bup_png_index, label_user_png_index, jar_bup_png_x, jar_bup_png_y, alpha);
+	drawJar(jar_opt_png_index, label_settings_png_index, jar_opt_png_x, jar_opt_png_y, alpha);
+	drawJar(jar_about_png_index, label_about_png_index, jar_about_png_x, jar_about_png_y, alpha);
 }
-
 void drawSplashLogo(int mode)
 {
 	int ani, max;

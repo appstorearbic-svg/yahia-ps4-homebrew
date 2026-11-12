@@ -335,6 +335,14 @@ static int LoadTextures_Menu(void)
 	load_menu_texture(jar_opt, png);
 	load_menu_texture(jar_opt_hover, png);
 	load_menu_texture(jar_usb, png);
+	load_menu_texture(label_trophy, png);
+	load_menu_texture(label_usb, png);
+	load_menu_texture(label_hdd, png);
+	load_menu_texture(label_online, png);
+	load_menu_texture(label_ftp, png);
+	load_menu_texture(label_user, png);
+	load_menu_texture(label_settings, png);
+	load_menu_texture(label_about, png);
 	load_menu_texture(jar_usb_hover, png);
 	load_menu_texture(logo, png);
 	load_menu_texture(logo_text, png);
