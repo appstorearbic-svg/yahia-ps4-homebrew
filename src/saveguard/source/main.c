@@ -284,7 +284,6 @@ static int LoadTextures_Menu(void)
 	set_ttf_window(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WIN_SKIP_LF);
 	
 	//Init Main Menu textures
-	load_menu_texture(bgimg, jpg);
 	load_menu_texture(cheat, png);
 	load_menu_texture(leon_luna, jpg);
 

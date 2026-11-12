@@ -2,6 +2,8 @@
 #include <threads.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <mini18n.h>
+#include <SDL2/SDL.h>
 
 #define STBI_ASSERT(x)
 #define STB_IMAGE_IMPLEMENTATION
@@ -214,7 +216,28 @@ void DrawHeader(int icon, int xOff, const char * hdrTitle, const char * headerSu
 
 void DrawBackgroundTexture(int x, u8 alpha)
 {
-	DrawTexture(&menu_textures[bgimg_jpg_index], x, 0, 0, SCREEN_WIDTH - x, SCREEN_HEIGHT, 0xFFFFFF00 | alpha);
+	/* SaveGuard uses a clean dark canvas; the old Apollo background image is removed. */
+	(void)x;
+	(void)alpha;
+	DrawBackground2D(0x08111FFF);
+}
+static void drawTelegramWatermarks(void)
+{
+	/* Ten small, 50%-transparent Telegram labels travel bottom-left to top-right. */
+	static const char *label = "Telegram  @h_y_88";
+	const int span = SCREEN_WIDTH + 420;
+	const int speed = (int)(SDL_GetTicks() / 14);
+	SetFontAlign(FONT_ALIGN_CENTER);
+	SetFontSize(APP_FONT_SIZE_DESCRIPTION);
+	SetFontColor(0xFFFFFF80, 0);
+	for (int i = 0; i < 10; i++)
+	{
+		int along = (speed + (i * (span / 10))) % span;
+		int x = along - 210;
+		int y = SCREEN_HEIGHT + 30 - ((along * (SCREEN_HEIGHT + 100)) / span);
+		DrawString(x, y, label);
+	}
+	SetFontAlign(FONT_ALIGN_LEFT);
 }
 
 void DrawTexture(png_texture* tex, int x, int y, int z, int w, int h, u32 rgba)
@@ -303,25 +326,25 @@ static void drawJars(uint8_t alpha)
 	SetCurrentFont(font_adonais_regular);
 
 	//Trophies
-	drawJar(jar_trophy_png_index, jar_empty_png_x, jar_empty_png_y, (alpha == 0xFF ? "Trophies" : ""), alpha);
+	drawJar(jar_trophy_png_index, jar_empty_png_x, jar_empty_png_y, (alpha == 0xFF ? _("Trophies") : ""), alpha);
 
 	//USB save
-	drawJar(jar_usb_png_index, jar_usb_png_x, jar_usb_png_y, (alpha == 0xFF ? "USB Saves" : ""), alpha);
+	drawJar(jar_usb_png_index, jar_usb_png_x, jar_usb_png_y, (alpha == 0xFF ? _("USB Saves") : ""), alpha);
 	
 	//HDD save
-	drawJar(jar_hdd_png_index, jar_hdd_png_x, jar_hdd_png_y, (alpha == 0xFF ? "HDD Saves" : ""), alpha);
+	drawJar(jar_hdd_png_index, jar_hdd_png_x, jar_hdd_png_y, (alpha == 0xFF ? _("HDD Saves") : ""), alpha);
 
 	//Online cheats
-	drawJar(jar_db_png_index, jar_db_png_x, jar_db_png_y, (alpha == 0xFF ? (apollo_config.online_opt ? "FTP Server" : "Online DB") : ""), alpha);
+	drawJar(jar_db_png_index, jar_db_png_x, jar_db_png_y, (alpha == 0xFF ? (apollo_config.online_opt ? _("FTP Server") : _("Online Database")) : ""), alpha);
 	
 	//User Backup
-	drawJar(jar_bup_png_index, jar_bup_png_x, jar_bup_png_y, (alpha == 0xFF ? "User Tools" : ""), alpha);
+	drawJar(jar_bup_png_index, jar_bup_png_x, jar_bup_png_y, (alpha == 0xFF ? _("User Tools") : ""), alpha);
 
 	//Options
-	drawJar(jar_opt_png_index, jar_opt_png_x, jar_opt_png_y, (alpha == 0xFF ? "Settings" : ""), alpha);
+	drawJar(jar_opt_png_index, jar_opt_png_x, jar_opt_png_y, (alpha == 0xFF ? _("Settings") : ""), alpha);
 	
 	//About
-	drawJar(jar_about_png_index, jar_about_png_x, jar_about_png_y, (alpha == 0xFF ? "About" : ""), alpha);
+	drawJar(jar_about_png_index, jar_about_png_x, jar_about_png_y, (alpha == 0xFF ? _("About") : ""), alpha);
 
 	SetFontAlign(FONT_ALIGN_LEFT);
 }
