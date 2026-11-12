@@ -168,7 +168,7 @@ static void ftp_url_callback(int sel)
 		FILE* fp = fopen(APOLLO_LOCAL_CACHE "users.ftp", "w");
 		if (fp)
 		{
-			fprintf(fp, "; Apollo Save Tool (" APOLLO_PLATFORM ") v" APOLLO_VERSION "\r\n%s\r\n", tmp);
+			fprintf(fp, "; GTX MOD SAVE (" APOLLO_PLATFORM ") v" APOLLO_VERSION "\r\n%s\r\n", tmp);
 			fclose(fp);
 		}
 
@@ -341,7 +341,7 @@ int save_app_settings(app_config_t* config)
 	mount.blocks = ORBIS_SAVE_DATA_BLOCKS_MIN2;
 	mount.mountMode = (ORBIS_SAVE_DATA_MOUNT_MODE_CREATE2 | ORBIS_SAVE_DATA_MOUNT_MODE_RDWR | ORBIS_SAVE_DATA_MOUNT_MODE_COPY_ICON);
 
-	LOG("Apollo Save Tool %s v%s - Patch Engine v%s", APOLLO_PLATFORM, APOLLO_VERSION, APOLLO_LIB_VERSION);
+	LOG("GTX MOD SAVE %s v%s - Patch Engine v%s", APOLLO_PLATFORM, APOLLO_VERSION, APOLLO_LIB_VERSION);
 	if (sceSaveDataMount2(&mount, &mountResult) < 0) {
 		LOG("sceSaveDataMount2 ERROR");
 		return 0;
@@ -351,7 +351,7 @@ int save_app_settings(app_config_t* config)
 	snprintf(filePath, sizeof(filePath), APOLLO_SETTING_PATH "settings.bin", mountResult.mountPathName);
 	write_buffer(filePath, (uint8_t*) config, sizeof(app_config_t));
 
-	updateSaveParams(mountResult.mountPathName, "Apollo Save Tool", _("User Settings"), "www.bucanero.com.ar", 0);
+	updateSaveParams(mountResult.mountPathName, "GTX MOD SAVE", _("User Settings"), "www.bucanero.com.ar", 0);
 	if (sceSaveDataUmount((void*)&mountResult.mountPathName) < 0)
 	{
 		LOG("UMOUNT ERROR");

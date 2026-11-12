@@ -51,7 +51,7 @@ void update_db_path(char *p);
 void update_vmc_path(char *p);
 
 app_config_t apollo_config = {
-    .app_name = "APOLLO",
+    .app_name = "GTX MOD SAVE",
     .app_ver = {0},
     .save_db = ONLINE_URL,
     .ftp_url = "",

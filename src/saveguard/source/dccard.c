@@ -437,7 +437,7 @@ int dccard_export_vmi(int idx, const char* out_dir)
 		desc = vms.desc_dc;
 
 	get_resource_name(out_dir, ent.filename, resource);
-	vmi_encode(&ent, resource, desc, "Apollo Save Tool (PS4)", (uint32_t)len, vmi);
+	vmi_encode(&ent, resource, desc, "GTX MOD SAVE (PS4)", (uint32_t)len, vmi);
 
 	snprintf(path, sizeof(path), "%s%s.VMS", out_dir, resource);
 	r = write_buffer(path, data, len);
