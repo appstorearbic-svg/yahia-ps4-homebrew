@@ -1,0 +1,1200 @@
+# German translations for apollo-ps package.
+# Copyright (C) 2025 THE apollo-ps'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the apollo-ps package.
+#  <40393784+SoftwareRat@users.noreply.github.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: apollo-ps 4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-02 13:16+0000\n"
+"PO-Revision-Date: 2025-12-30 19:48+0000\n"
+"Last-Translator:  <40393784+SoftwareRat@users.noreply.github.com>\n"
+"Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: exec_cmd.c:52 exec_cmd.c:104 exec_cmd.c:156 exec_cmd.c:547 exec_cmd.c:895
+#: exec_cmd.c:985 exec_cmd.c:1400 exec_cmd.c:1676
+msgid "Error! Export folder is not available:"
+msgstr "Fehler! Export-Ordner ist nicht verfügbar:"
+
+#: exec_cmd.c:58 exec_cmd.c:224
+msgid "Error downloading save game from:"
+msgstr "Fehler beim Herunterladen des Spielstands von:"
+
+#: exec_cmd.c:63 exec_cmd.c:279
+msgid "Save game successfully downloaded to:"
+msgstr "Spielstand erfolgreich heruntergeladen nach:"
+
+#: exec_cmd.c:65 exec_cmd.c:235 exec_cmd.c:270
+msgid "Error extracting save game!"
+msgstr "Fehler beim Extrahieren des Spielstands!"
+
+#: exec_cmd.c:108
+msgid "Exporting save game..."
+msgstr "Exportiere Spielstand..."
+
+#: exec_cmd.c:136
+msgid "Error! Can't export save game to:"
+msgstr "Fehler! Spielstand kann nicht exportiert werden nach:"
+
+#: exec_cmd.c:140 exec_cmd.c:1691
+msgid "Zip file successfully saved to:"
+msgstr "Zip-Datei erfolgreich gespeichert unter:"
+
+#: exec_cmd.c:150 exec_cmd.c:385
+msgid "Copy operation cancelled!"
+msgstr "Kopiervorgang abgebrochen!"
+
+#: exec_cmd.c:150 exec_cmd.c:385
+msgid "Same source and destination."
+msgstr "Quelle und Ziel sind identisch."
+
+#: exec_cmd.c:160
+msgid "Copying files..."
+msgstr "Kopiere Dateien..."
+
+#: exec_cmd.c:169 exec_cmd.c:394
+msgid "Files successfully copied to:"
+msgstr "Dateien erfolgreich kopiert nach:"
+
+#: exec_cmd.c:171
+msgid "Error! Can't copy save game to:"
+msgstr "Fehler! Spielstand kann nicht kopiert werden nach:"
+
+#: exec_cmd.c:250 exec_cmd.c:639
+msgid "Save game already exists:"
+msgstr "Spielstand existiert bereits:"
+
+#: exec_cmd.c:250 exec_cmd.c:639
+msgid "Overwrite?"
+msgstr "Überschreiben?"
+
+#: exec_cmd.c:255
+msgid "Error mounting save game folder!"
+msgstr "Fehler beim Einbinden des Spielstand-Ordners!"
+
+#: exec_cmd.c:261
+msgid "Error creating save game folder!"
+msgstr "Fehler beim Erstellen des Spielstand-Ordners!"
+
+#: exec_cmd.c:281
+msgid "Error! Can't update save game:"
+msgstr "Fehler! Spielstand kann nicht aktualisiert werden:"
+
+#: exec_cmd.c:389
+msgid "Copying save game..."
+msgstr "Kopiere Spielstand..."
+
+#: exec_cmd.c:396
+msgid "Error! Can't copy Save-game folder:"
+msgstr "Fehler! Spielstand-Ordner kann nicht kopiert werden:"
+
+#: exec_cmd.c:407 exec_cmd.c:899
+msgid "Copying all saves..."
+msgstr "Kopiere alle Spielstände..."
+
+#: exec_cmd.c:425
+msgid "Saves copied to HDD"
+msgstr "Spielstände auf HDD kopiert"
+
+#: exec_cmd.c:461
+msgid "All files extracted to:"
+msgstr "Alle Dateien extrahiert nach:"
+
+#: exec_cmd.c:463
+#, c-format
+msgid "Error: %s couldn't be extracted"
+msgstr "Fehler: %s konnte nicht extrahiert werden"
+
+#: exec_cmd.c:476
+msgid "Error! Keystone file is not available:"
+msgstr "Fehler! Keystone-Datei ist nicht verfügbar:"
+
+#: exec_cmd.c:485
+msgid "keystone fingerprint:"
+msgstr "Keystone-Fingerabdruck:"
+
+#: exec_cmd.c:505 exec_cmd.c:1567
+msgid "Applying changes..."
+msgstr "Änderungen werden angewendet..."
+
+#: exec_cmd.c:534
+msgid "Trophies successfully updated!"
+msgstr "Trophäen erfolgreich aktualisiert!"
+
+#: exec_cmd.c:536
+msgid "Error! Couldn't update trophies"
+msgstr "Fehler! Trophäen konnten nicht aktualisiert werden"
+
+#: exec_cmd.c:551
+msgid "Exporting Trophies..."
+msgstr "Exportiere Trophäen..."
+
+#: exec_cmd.c:569
+msgid "Trophies successfully saved to:"
+msgstr "Trophäen erfolgreich gespeichert unter:"
+
+#: exec_cmd.c:580
+msgid "Dumping all fingerprints..."
+msgstr "Extrahiere alle Fingerabdrücke..."
+
+#: exec_cmd.c:605
+msgid "All fingerprints dumped to:"
+msgstr "Alle Fingerabdrücke extrahiert nach:"
+
+#: exec_cmd.c:614
+msgid "Enter the Account ID"
+msgstr "Konto-ID eingeben"
+
+#: exec_cmd.c:619
+msgid "Error! Account ID is not valid"
+msgstr "Fehler! Konto-ID ist ungültig"
+
+#: exec_cmd.c:626
+msgid "Error! Couldn't activate user account"
+msgstr "Fehler! Benutzerkonto konnte nicht aktiviert werden"
+
+#: exec_cmd.c:630
+msgid "Account successfully activated!"
+msgstr "Konto erfolgreich aktiviert!"
+
+#: exec_cmd.c:630
+msgid "A system reboot is required"
+msgstr "Ein Systemneustart ist erforderlich"
+
+#: exec_cmd.c:645
+msgid "Encrypted save copied successfully!"
+msgstr "Verschlüsselter Spielstand erfolgreich kopiert!"
+
+#: exec_cmd.c:649
+msgid "Error: can't create HDD save"
+msgstr "Fehler: HDD-Spielstand kann nicht erstellt werden"
+
+#: exec_cmd.c:653 exec_cmd.c:657
+msgid "Error: can't copy file"
+msgstr "Fehler: Datei kann nicht kopiert werden"
+
+#: exec_cmd.c:661
+msgid "Error! Can't mount encrypted save."
+msgstr "Fehler! Verschlüsselter Spielstand kann nicht eingebunden werden."
+
+#: exec_cmd.c:661
+msgid "(incompatible save-game firmware version)"
+msgstr "(inkompatible Spielstand-Firmware-Version)"
+
+#: exec_cmd.c:665
+#, c-format
+msgid "Error: can't copy save %s"
+msgstr "Fehler: Spielstand %s kann nicht kopiert werden"
+
+#: exec_cmd.c:686
+msgid "Keystone successfully copied to:"
+msgstr "Keystone erfolgreich kopiert nach:"
+
+#: exec_cmd.c:688
+msgid "Error! Keystone couldn't be copied"
+msgstr "Fehler! Keystone konnte nicht kopiert werden"
+
+#: exec_cmd.c:876
+msgid "Web Server listening on:"
+msgstr "Webserver hört auf:"
+
+#: exec_cmd.c:876
+msgid "Press OK to stop the Server."
+msgstr "OK drücken, um den Server zu stoppen."
+
+#: exec_cmd.c:879
+msgid "Error starting Web Server!"
+msgstr "Fehler beim Starten des Webservers!"
+
+#: exec_cmd.c:920
+msgid "Saves copied to:"
+msgstr "Spielstände kopiert nach:"
+
+#: exec_cmd.c:932
+msgid "Exporting all VMC saves..."
+msgstr "Exportiere alle VMC-Spielstände..."
+
+#: exec_cmd.c:952
+msgid "Saves exported to:"
+msgstr "Spielstände exportiert nach:"
+
+#: exec_cmd.c:972 exec_cmd.c:1028
+msgid "Save successfully exported to:"
+msgstr "Spielstand erfolgreich exportiert nach:"
+
+#: exec_cmd.c:974 exec_cmd.c:1030
+msgid "Error exporting save:"
+msgstr "Fehler beim Exportieren des Spielstands:"
+
+#: exec_cmd.c:992
+msgid "Memory card successfully exported to:"
+msgstr "Speicherkarte erfolgreich exportiert nach:"
+
+#: exec_cmd.c:994
+msgid "Error! Failed to export PS1 memory card"
+msgstr "Fehler! PS1-Speicherkarte konnte nicht exportiert werden"
+
+#: exec_cmd.c:1037
+msgid "Importing PS2 save..."
+msgstr "Importiere PS2-Spielstand..."
+
+#: exec_cmd.c:1069
+msgid "Successfully imported to VMC:"
+msgstr "Erfolgreich in VMC importiert:"
+
+#: exec_cmd.c:1071
+msgid "Error importing save:"
+msgstr "Fehler beim Importieren des Spielstands:"
+
+#: exec_cmd.c:1079
+#, c-format
+msgid "Do you want to delete %s?"
+msgstr "Möchten Sie %s löschen?"
+
+#: exec_cmd.c:1109
+msgid "Save successfully deleted:"
+msgstr "Spielstand erfolgreich gelöscht:"
+
+#: exec_cmd.c:1111
+msgid "Error! Couldn't delete save:"
+msgstr "Fehler! Spielstand konnte nicht gelöscht werden:"
+
+#: exec_cmd.c:1225
+msgid "Preparing upload..."
+msgstr "Vorbereitung des Uploads..."
+
+#: exec_cmd.c:1301
+msgid "Updating games index..."
+msgstr "Aktualisiere Spieleindex..."
+
+#: exec_cmd.c:1316 exec_cmd.c:1320
+msgid "Sync with FTP Server..."
+msgstr "Synchronisiere mit FTP-Server..."
+
+#: exec_cmd.c:1335
+#, c-format
+msgid "Do you want to upload %s?"
+msgstr "Möchten Sie %s hochladen?"
+
+#: exec_cmd.c:1344
+msgid "Save successfully uploaded:"
+msgstr "Spielstand erfolgreich hochgeladen:"
+
+#: exec_cmd.c:1346
+msgid "Error! Couldn't upload save:"
+msgstr "Fehler! Spielstand konnte nicht hochgeladen werden:"
+
+#: exec_cmd.c:1358
+msgid "Do you want to upload the selected saves to FTP?"
+msgstr "Möchten Sie die ausgewählten Spielstände auf FTP hochladen?"
+
+#: exec_cmd.c:1388
+msgid "Saves uploaded to FTP"
+msgstr "Spielstände wurden auf FTP hochgeladen"
+
+#: exec_cmd.c:1406
+msgid "Exporting PS2 memory card..."
+msgstr "Exportiere PS2-Speicherkarte..."
+
+#: exec_cmd.c:1411
+msgid "File successfully saved to:"
+msgstr "Datei erfolgreich gespeichert unter:"
+
+#: exec_cmd.c:1413
+msgid "Error! Failed to export PS2 memory card"
+msgstr "Fehler! PS2-Speicherkarte konnte nicht exportiert werden"
+
+#: exec_cmd.c:1425
+msgid "Error getting PS4 user list!"
+msgstr "Fehler beim Abrufen der PS4-Benutzerliste!"
+
+#: exec_cmd.c:1434
+#, c-format
+msgid "Database rebuild for user %s failed!"
+msgstr "Datenbankwiederherstellung für Benutzer %s fehlgeschlagen!"
+
+#: exec_cmd.c:1439
+msgid "Database rebuilt successfully!"
+msgstr "Datenbank erfolgreich wiederhergestellt!"
+
+#: exec_cmd.c:1439 exec_cmd.c:1983
+msgid "Log out for changes to take effect"
+msgstr "Zum Übernehmen der Änderungen abmelden"
+
+#: exec_cmd.c:1620
+msgid "Error! Account changes couldn't be applied"
+msgstr "Fehler! Kontoänderungen konnten nicht angewendet werden"
+
+#: exec_cmd.c:1624
+msgid "Error! Cheat codes couldn't be applied"
+msgstr "Fehler! Cheat-Codes konnten nicht angewendet werden"
+
+#: exec_cmd.c:1626
+#, c-format
+msgid "Save %s successfully modified!"
+msgstr "Spielstand %s erfolgreich geändert!"
+
+#: exec_cmd.c:1643
+msgid "Resigning all saves..."
+msgstr "Signiere alle Spielstände neu..."
+
+#: exec_cmd.c:1663
+#, c-format
+msgid "Error: %d Saves couldn't be resigned"
+msgstr "Fehler: %d Spielstände konnten nicht neu signiert werden"
+
+#: exec_cmd.c:1665
+msgid "All saves successfully resigned!"
+msgstr "Alle Spielstände erfolgreich neu signiert!"
+
+#: exec_cmd.c:1686
+msgid "Exporting system database..."
+msgstr "Exportiere Systemdatenbank..."
+
+#: exec_cmd.c:1702
+#, c-format
+msgid "DB Backup %s successfully restored!"
+msgstr "DB-Backup %s erfolgreich wiederhergestellt!"
+
+#: exec_cmd.c:1704
+#, c-format
+msgid "Error! Backup %s couldn't be restored"
+msgstr "Fehler! Backup %s konnte nicht wiederhergestellt werden"
+
+#: exec_cmd.c:1727
+msgid "File successfully exported to:"
+msgstr "Datei erfolgreich exportiert nach:"
+
+#: exec_cmd.c:1729
+#, c-format
+msgid "Error! File %s couldn't be exported"
+msgstr "Fehler! Datei %s konnte nicht exportiert werden"
+
+#: exec_cmd.c:1739
+msgid "Error! Can't find decrypted save-game file:"
+msgstr "Fehler! Entschlüsselte Spielstand-Datei nicht gefunden:"
+
+#: exec_cmd.c:1747
+msgid "File successfully imported to:"
+msgstr "Datei erfolgreich importiert nach:"
+
+#: exec_cmd.c:1749
+#, c-format
+msgid "Error! File %s couldn't be imported"
+msgstr "Fehler! Datei %s konnte nicht importiert werden"
+
+#: exec_cmd.c:1757
+msgid "Download URL"
+msgstr "Download-URL"
+
+#: exec_cmd.c:1764
+msgid "File successfully downloaded to:"
+msgstr "Datei erfolgreich heruntergeladen nach:"
+
+#: exec_cmd.c:1766
+msgid "Error! File couldn't be downloaded"
+msgstr "Fehler! Datei konnte nicht heruntergeladen werden"
+
+#: exec_cmd.c:1776
+msgid "Enable Browser history?"
+msgstr "Browserverlauf aktivieren?"
+
+#: exec_cmd.c:1777
+msgid "Browser history enabled"
+msgstr "Browserverlauf aktiviert"
+
+#: exec_cmd.c:1782
+msgid "Disable Browser history?"
+msgstr "Browserverlauf deaktivieren?"
+
+#: exec_cmd.c:1787
+msgid "Browser history disabled"
+msgstr "Browserverlauf deaktiviert"
+
+#: exec_cmd.c:1983
+msgid "DLC database fixed successfully!"
+msgstr "DLC-Datenbank erfolgreich repariert!"
+
+#: exec_cmd.c:1985
+msgid "DLC Database rebuild failed!"
+msgstr "DLC-Datenbankwiederherstellung fehlgeschlagen!"
+
+#: exec_cmd.c:2027
+msgid "Save successfully imported:"
+msgstr "Spielstand erfolgreich importiert:"
+
+#: exec_cmd.c:2029
+msgid "Error! Couldn't import save:"
+msgstr "Fehler! Spielstand konnte nicht importiert werden:"
+
+#: http.c:122
+msgid "Downloading..."
+msgstr "Wird heruntergeladen..."
+
+#: http.c:256
+msgid "Uploading..."
+msgstr "Wird hochgeladen..."
+
+#: main.c:180 main.c:184 main.c:189 main.c:199
+msgid "Select"
+msgstr "Auswählen"
+
+#: main.c:180 main.c:184 main.c:189 main.c:195 main.c:199
+msgid "Back"
+msgstr "Zurück"
+
+#: main.c:180 menu_cheats.c:253
+msgid "Details"
+msgstr "Details"
+
+#: main.c:180 main.c:184
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: main.c:199
+msgid "View Code"
+msgstr "Code anzeigen"
+
+#: main.c:203
+msgid "Value Up"
+msgstr "Wert erhöhen"
+
+#: main.c:203
+msgid "Value Down"
+msgstr "Wert verringern"
+
+#: main.c:203
+msgid "Search"
+msgstr "Suchen"
+
+#: main.c:203
+msgid "Exit"
+msgstr "Beenden"
+
+#: main.c:484
+msgid "HDD Saves"
+msgstr "HDD-Spielstände"
+
+#: main.c:485
+msgid "USB Saves"
+msgstr "USB-Spielstände"
+
+#: main.c:486 saves.c:688
+msgid "Trophies"
+msgstr "Trophäen"
+
+#: main.c:487
+msgid "User Tools"
+msgstr "Benutzer-Tools"
+
+#: main.c:488
+msgid "Online Database"
+msgstr "Online-Datenbank"
+
+#: main.c:489
+msgid "PS1 Virtual Memory Card"
+msgstr "PS1 Virtuelle Speicherkarte"
+
+#: main.c:490
+msgid "PS2 Virtual Memory Card"
+msgstr "PS2 Virtuelle Speicherkarte"
+
+#: main.c:666
+msgid "Debug Logging Enabled"
+msgstr "Debug-Protokollierung aktiviert"
+
+#: main.c:675
+msgid "Successfully installed local application data"
+msgstr "Lokale Anwendungsdaten erfolgreich installiert"
+
+#: menu_about.c:103
+msgid "Console details:"
+msgstr "Konsolendetails:"
+
+#: menu_about.c:142 menu_about.c:166
+msgid "About"
+msgstr "Über"
+
+#: menu_cheats.c:111 menu_cheats.c:141 menu_cheats.c:161
+msgid "Options"
+msgstr "Optionen"
+
+#: menu_cheats.c:207
+msgid "Target File:"
+msgstr "Zieldatei:"
+
+#: menu_cheats.c:512
+msgid "Saves"
+msgstr "Spielstände"
+
+#: menu_cheats.c:516
+msgid "Games"
+msgstr "Spiele"
+
+#: menu_cheats.c:520
+msgid "Trophy Sets"
+msgstr "Trophäensammlungen"
+
+#: menu_cheats.c:524
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#: menu_cheats.c:528
+msgid "PS1 Saves"
+msgstr "PS1-Spielstände"
+
+#: menu_cheats.c:532
+msgid "PS2 Saves"
+msgstr "PS2-Spielstände"
+
+#: menu_hex.c:52 menu_hex.c:72
+msgid "Hex Editor"
+msgstr "Hex-Editor"
+
+#: menu_main.c:67
+msgid "Loading save games..."
+msgstr "Lade Spielstände..."
+
+#: menu_main.c:90
+msgid "No save-games found"
+msgstr "Keine Spielstände gefunden"
+
+#: menu_main.c:165
+msgid "Saving PS2 Memory Card..."
+msgstr "Speichere PS2-Speicherkarte..."
+
+#: menu_main.c:368 menu_main.c:773
+msgid "Patch view"
+msgstr "Patch-Ansicht"
+
+#: menu_main.c:496
+msgid "No data found in folder:"
+msgstr "Keine Daten im Ordner gefunden:"
+
+#: menu_main.c:548
+msgid "Exit to XMB?"
+msgstr "Zurück zum XMB?"
+
+#: menu_main.c:688
+#, c-format
+msgid "Save changes to %s?"
+msgstr "Änderungen in %s speichern?"
+
+#: menu_main.c:721
+msgid "Search bytes (hex)"
+msgstr "Bytes suchen (hex)"
+
+#: menu_main.c:737
+msgid "Value not found: 0x"
+msgstr "Wert nicht gefunden: 0x"
+
+#: menu_main.c:810
+msgid "Failed to load:"
+msgstr "Laden fehlgeschlagen:"
+
+#: menu_options.c:66 menu_options.c:86
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: saves.c:67
+msgid "Warning! Save couldn't be unmounted!"
+msgstr "Warnung! Spielstand konnte nicht ausgehängt werden!"
+
+#: saves.c:373
+msgid "Apply Changes & Resign"
+msgstr "Änderungen anwenden & neu signieren"
+
+#: saves.c:376 saves.c:519 saves.c:813 saves.c:968
+msgid "View Save Details"
+msgstr "Spielstand-Details anzeigen"
+
+#: saves.c:379 saves.c:816 saves.c:971
+msgid "Delete Save Game"
+msgstr "Spielstand löschen"
+
+#: saves.c:383 saves.c:656
+msgid "File Backup"
+msgstr "Datei-Backup"
+
+#: saves.c:388
+msgid "Copy save game to USB"
+msgstr "Spielstand auf USB kopieren"
+
+#: saves.c:389
+msgid "Copy Save to USB"
+msgstr "Spielstand auf USB kopieren"
+
+#: saves.c:394 saves.c:825 saves.c:980
+msgid "Upload save backup to FTP"
+msgstr "Spielstand-Backup auf FTP hochladen"
+
+#: saves.c:400
+msgid "Copy save game to HDD"
+msgstr "Spielstand auf HDD kopieren"
+
+#: saves.c:404
+msgid "Export save game to Zip"
+msgstr "Spielstand als Zip exportieren"
+
+#: saves.c:405
+msgid "Export Zip to USB"
+msgstr "Zip auf USB exportieren"
+
+#: saves.c:407
+msgid "Export Zip to HDD"
+msgstr "Zip auf HDD exportieren"
+
+#: saves.c:412
+msgid "Export decrypted save files"
+msgstr "Entschlüsselte Spielstand-Dateien exportieren"
+
+#: saves.c:417
+msgid "Import decrypted save files"
+msgstr "Entschlüsselte Spielstand-Dateien importieren"
+
+#: saves.c:422
+msgid "Hex Edit save game files"
+msgstr "Spielstand-Dateien hexadezimal bearbeiten"
+
+#: saves.c:470
+msgid "Keystone Backup"
+msgstr "Keystone-Backup"
+
+#: saves.c:473
+msgid "Export Keystone"
+msgstr "Keystone exportieren"
+
+#: saves.c:476
+msgid "Import Keystone"
+msgstr "Keystone importieren"
+
+#: saves.c:479
+msgid "Show Keystone Fingerprint"
+msgstr "Keystone-Fingerabdruck anzeigen"
+
+#: saves.c:524
+msgid "Encrypted save requires firmware"
+msgstr "Verschlüsselter Spielstand erfordert Firmware"
+
+#: saves.c:566
+msgid "Error Mounting Save!"
+msgstr "Fehler beim Einbinden des Spielstands!"
+
+#: saves.c:582
+msgid "Cheats"
+msgstr "Cheats"
+
+#: saves.c:585
+msgid "View Raw Patch File"
+msgstr "Rohe Patch-Datei anzeigen"
+
+#: saves.c:639
+msgid "Error Mounting Trophy Set!"
+msgstr "Fehler beim Einbinden der Trophäensammlung!"
+
+#: saves.c:646
+msgid "Apply Changes to Trophy Set"
+msgstr "Änderungen auf Trophäensammlung anwenden"
+
+#: saves.c:649
+msgid "View Trophy Set Details"
+msgstr "Trophäensammlungs-Details anzeigen"
+
+#: saves.c:652
+msgid "Delete Trophy Set"
+msgstr "Trophäensammlung löschen"
+
+#: saves.c:659
+msgid "Backup Trophy files to USB"
+msgstr "Trophäen-Dateien auf USB sichern"
+
+#: saves.c:661
+msgid "Copy Trophy to USB"
+msgstr "Trophäe auf USB kopieren"
+
+#: saves.c:664
+msgid "Export Trophy files to Zip"
+msgstr "Trophäen-Dateien als Zip exportieren"
+
+#: saves.c:666 saves.c:2178
+msgid "Save .Zip to USB"
+msgstr ".Zip auf USB speichern"
+
+#: saves.c:668
+msgid "Save .Zip to HDD"
+msgstr ".Zip auf HDD speichern"
+
+#: saves.c:673
+msgid "Export decrypted trophy files"
+msgstr "Entschlüsselte Trophäen-Dateien exportieren"
+
+#: saves.c:678
+msgid "Import decrypted trophy files"
+msgstr "Entschlüsselte Trophäen-Dateien importieren"
+
+#: saves.c:820 saves.c:975
+msgid "Save Game Backup"
+msgstr "Spielstand-Backup"
+
+#: saves.c:829
+msgid "Export save game to .MCS format"
+msgstr "Spielstand im .MCS-Format exportieren"
+
+#: saves.c:830
+msgid "Copy .MCS Save to USB"
+msgstr ".MCS-Spielstand auf USB kopieren"
+
+#: saves.c:832
+msgid "Copy .MCS Save to HDD"
+msgstr ".MCS-Spielstand auf HDD kopieren"
+
+#: saves.c:838 saves.c:993
+msgid "Export save game to .PSV format"
+msgstr "Spielstand im .PSV-Format exportieren"
+
+#: saves.c:839
+msgid "Copy .PSV Save to USB"
+msgstr ".PSV-Spielstand auf USB kopieren"
+
+#: saves.c:841
+msgid "Copy .PSV Save to HDD"
+msgstr ".PSV-Spielstand auf HDD kopieren"
+
+#: saves.c:847
+msgid "Export save game to .PSX format"
+msgstr "Spielstand im .PSX-Format exportieren"
+
+#: saves.c:848
+msgid "Copy .PSX Save to USB"
+msgstr ".PSX-Spielstand auf USB kopieren"
+
+#: saves.c:850
+msgid "Copy .PSX Save to HDD"
+msgstr ".PSX-Spielstand auf HDD kopieren"
+
+#: saves.c:984
+msgid "Export save game to .PSU format"
+msgstr "Spielstand im .PSU-Format exportieren"
+
+#: saves.c:985
+msgid "Export .PSU save to USB"
+msgstr ".PSU-Spielstand auf USB exportieren"
+
+#: saves.c:987
+msgid "Export .PSU save to HDD"
+msgstr ".PSU-Spielstand auf HDD exportieren"
+
+#: saves.c:994
+msgid "Export .PSV save to USB"
+msgstr ".PSV-Spielstand auf USB exportieren"
+
+#: saves.c:996
+msgid "Export .PSV save to HDD"
+msgstr ".PSV-Spielstand auf HDD exportieren"
+
+#: saves.c:1055
+msgid "Download to USB"
+msgstr "Auf USB herunterladen"
+
+#: saves.c:1057
+msgid "Download to HDD"
+msgstr "Auf HDD herunterladen"
+
+#: saves.c:1085
+msgid "Extract Archives (RAR, Zip, 7z)"
+msgstr "Archive extrahieren (RAR, Zip, 7z)"
+
+#: saves.c:1090
+msgid "Activate PS4 Accounts"
+msgstr "PS4-Konten aktivieren"
+
+#: saves.c:1095
+msgid "App.db Database Management"
+msgstr "App.db-Datenbankverwaltung"
+
+#: saves.c:1101
+msgid "Network Tools (Downloader, Web Server)"
+msgstr "Netzwerk-Tools (Downloader, Webserver)"
+
+#: saves.c:1106
+msgid "Show Parental Security Passcode"
+msgstr "Kindersicherungs-Passcode anzeigen"
+
+#: saves.c:1145
+msgid "URL link Downloader (http, https, ftp, ftps)"
+msgstr "URL-Link-Downloader (http, https, ftp, ftps)"
+
+#: saves.c:1147
+msgid "Local Web Server (full system access)"
+msgstr "Lokaler Webserver (voller Systemzugriff)"
+
+#: saves.c:1149
+msgid "Toggle Web Browser history"
+msgstr "Webbrowser-Verlauf umschalten"
+
+#: saves.c:1156
+msgid "Rebuild App.db Database (Restore missing XMB items)"
+msgstr "App.db-Datenbank neu aufbauen (Fehlende XMB-Elemente wiederherstellen)"
+
+#: saves.c:1160
+msgid "Rebuild DLC Database (addcont.db)"
+msgstr "DLC-Datenbank neu aufbauen (addcont.db)"
+
+#: saves.c:1164
+msgid "Backup System Database Folder"
+msgstr "Systemdatenbank-Ordner sichern"
+
+#: saves.c:1167
+msgid "Restore System Database Backup"
+msgstr "Systemdatenbank-Backup wiederherstellen"
+
+#: saves.c:1188
+msgid "Activate Offline Account"
+msgstr "Offline-Konto aktivieren"
+
+#: saves.c:1218
+msgid "Extract"
+msgstr "Extrahieren"
+
+#: saves.c:1732 saves.c:1787
+msgid "Bulk Save Management"
+msgstr "Massenverwaltung von Spielständen"
+
+#: saves.c:1740
+msgid "Resign selected Saves"
+msgstr "Ausgewählte Spielstände neu signieren"
+
+#: saves.c:1743
+msgid "Resign all decrypted Saves"
+msgstr "Alle entschlüsselten Spielstände neu signieren"
+
+#: saves.c:1746
+msgid "Copy selected Saves to HDD"
+msgstr "Ausgewählte Spielstände auf HDD kopieren"
+
+#: saves.c:1749
+msgid "Copy all Saves to HDD"
+msgstr "Alle Spielstände auf HDD kopieren"
+
+#: saves.c:1752 saves.c:1812
+msgid "Start local Web Server"
+msgstr "Lokalen Webserver starten"
+
+#: saves.c:1755
+msgid "Dump all decrypted Save Fingerprints"
+msgstr "Alle entschlüsselten Spielstand-Fingerabdrücke extrahieren"
+
+#: saves.c:1795 saves.c:1939 saves.c:2044
+msgid "Copy selected Saves to USB"
+msgstr "Ausgewählte Spielstände auf USB kopieren"
+
+#: saves.c:1796 saves.c:1800
+msgid "Copy Saves to USB"
+msgstr "Spielstände auf USB kopieren"
+
+#: saves.c:1799 saves.c:1942 saves.c:2047
+msgid "Copy all Saves to USB"
+msgstr "Alle Spielstände auf USB kopieren"
+
+#: saves.c:1805
+msgid "Upload selected Saves to FTP"
+msgstr "Ausgewählte Spielstände auf FTP hochladen"
+
+#: saves.c:1808
+msgid "Upload all Saves to FTP"
+msgstr "Alle Spielstände auf FTP hochladen"
+
+#: saves.c:1815
+msgid "Dump all Save Fingerprints"
+msgstr "Alle Spielstand-Fingerabdrücke extrahieren"
+
+#: saves.c:1929 saves.c:2034
+msgid "Memory Card Management"
+msgstr "Speicherkartenverwaltung"
+
+#: saves.c:1938 saves.c:2043
+msgid "Export selected Saves to USB"
+msgstr "Ausgewählte Spielstände auf USB exportieren"
+
+#: saves.c:1941 saves.c:2046
+msgid "Export all Saves to USB"
+msgstr "Alle Spielstände auf USB exportieren"
+
+#: saves.c:1946 saves.c:2052
+msgid "Virtual Memory Card"
+msgstr "Virtuelle Speicherkarte"
+
+#: saves.c:1949
+msgid "Export Memory Card to .VM1 format"
+msgstr "Speicherkarte im .VM1-Format exportieren"
+
+#: saves.c:1951
+msgid "Save .VM1 Memory Card to USB"
+msgstr ".VM1-Speicherkarte auf USB speichern"
+
+#: saves.c:1953
+msgid "Save .VM1 Memory Card to HDD"
+msgstr ".VM1-Speicherkarte auf HDD speichern"
+
+#: saves.c:1958
+msgid "Export Memory Card to .VMP format"
+msgstr "Speicherkarte im .VMP-Format exportieren"
+
+#: saves.c:1960
+msgid "Save .VMP Memory Card to USB"
+msgstr ".VMP-Speicherkarte auf USB speichern"
+
+#: saves.c:1962
+msgid "Save .VMP Memory Card to HDD"
+msgstr ".VMP-Speicherkarte auf HDD speichern"
+
+#: saves.c:1968 saves.c:1981 saves.c:2073 saves.c:2085
+msgid "Import Saves to Virtual MemCard"
+msgstr "Spielstände in virtuelle Speicherkarte importieren"
+
+#: saves.c:2055
+msgid "Export Memory Card to .VM2 format"
+msgstr "Speicherkarte im .VM2-Format exportieren"
+
+#: saves.c:2057
+msgid "Save .VM2 Memory Card to USB"
+msgstr ".VM2-Speicherkarte auf USB speichern"
+
+#: saves.c:2059
+msgid "Save .VM2 Memory Card to HDD"
+msgstr ".VM2-Speicherkarte auf HDD speichern"
+
+#: saves.c:2064
+msgid "Export Memory Card to .VMC format (No ECC)"
+msgstr "Speicherkarte im .VMC-Format exportieren (Ohne ECC)"
+
+#: saves.c:2066
+msgid "Save .VMC Memory Card to USB"
+msgstr ".VMC-Speicherkarte auf USB speichern"
+
+#: saves.c:2068
+msgid "Save .VMC Memory Card to HDD"
+msgstr ".VMC-Speicherkarte auf HDD speichern"
+
+#: saves.c:2161
+msgid "Export Trophies"
+msgstr "Trophäen exportieren"
+
+#: saves.c:2169
+msgid "Backup selected Trophies to USB"
+msgstr "Ausgewählte Trophäen auf USB sichern"
+
+#: saves.c:2170 saves.c:2174
+msgid "Save Trophies to USB"
+msgstr "Trophäen auf USB speichern"
+
+#: saves.c:2173
+msgid "Backup all Trophies to USB"
+msgstr "Alle Trophäen auf USB sichern"
+
+#: saves.c:2177
+msgid "Export all encrypted Trophies to .Zip"
+msgstr "Alle verschlüsselten Trophäen als .Zip exportieren"
+
+#: settings.c:19
+msgid "Online DB"
+msgstr "Online-DB"
+
+#: settings.c:19
+msgid "FTP Server"
+msgstr "FTP-Server"
+
+#: settings.c:20
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+#: settings.c:20
+msgid "by Name"
+msgstr "nach Name"
+
+#: settings.c:20
+msgid "by Title ID"
+msgstr "nach Titel-ID"
+
+#: settings.c:20
+msgid "by Type"
+msgstr "nach Typ"
+
+#: settings.c:21
+msgid "Fake USB"
+msgstr "Fake-USB"
+
+#: settings.c:21
+msgid "Auto-detect"
+msgstr "Automatisch erkennen"
+
+#: settings.c:34
+msgid "Background Music"
+msgstr "Hintergrundmusik"
+
+#: settings.c:40
+msgid "Menu Animations"
+msgstr "Menüanimationen"
+
+#: settings.c:46
+msgid "Sort Saves"
+msgstr "Spielstände sortieren"
+
+#: settings.c:52
+msgid "USB Saves Source"
+msgstr "USB-Spielstände-Quelle"
+
+#: settings.c:58
+msgid "Version Update Check"
+msgstr "Versionsaktualisierung prüfen"
+
+#: settings.c:64
+msgid "Set User FTP Server URL"
+msgstr "Benutzer-FTP-Server-URL festlegen"
+
+#: settings.c:71
+msgid "Online Saves Server"
+msgstr "Online-Spielstände-Server"
+
+#: settings.c:77
+msgid "Update Application Data"
+msgstr "Anwendungsdaten aktualisieren"
+
+#: settings.c:83
+msgid "Change Online Database URL"
+msgstr "Online-Datenbank-URL ändern"
+
+#: settings.c:89
+msgid "Clear Local Cache"
+msgstr "Lokalen Cache leeren"
+
+#: settings.c:96
+msgid "Enable Debug Log"
+msgstr "Debug-Protokoll aktivieren"
+
+#: settings.c:134
+msgid "Enter the Online Database URL"
+msgstr "Online-Datenbank-URL eingeben"
+
+#: settings.c:140
+msgid "Online database URL changed to:"
+msgstr "Online-Datenbank-URL geändert zu:"
+
+#: settings.c:150
+msgid "Enter the FTP server URL"
+msgstr "FTP-Server-URL eingeben"
+
+#: settings.c:160
+msgid "Testing connection..."
+msgstr "Verbindung wird getestet..."
+
+#: settings.c:184
+msgid "FTP server URL changed to:"
+msgstr "FTP-Server-URL geändert zu:"
+
+#: settings.c:187
+msgid "Error! Couldn't connect to FTP server"
+msgstr "Fehler! Verbindung zum FTP-Server fehlgeschlagen"
+
+#: settings.c:187
+msgid "Check debug logs for more information"
+msgstr "Debug-Protokolle für weitere Informationen prüfen"
+
+#: settings.c:195
+msgid "Local cache folder cleaned:"
+msgstr "Lokaler Cache-Ordner geleert:"
+
+#: settings.c:203
+msgid "Error! Can't download data update file!"
+msgstr "Fehler! Datenaktualisierungsdatei kann nicht heruntergeladen werden!"
+
+#: settings.c:206
+#, c-format
+msgid "Successfully updated %d save patch files!"
+msgstr "Erfolgreich %d Spielstand-Patch-Dateien aktualisiert!"
+
+#: settings.c:208
+msgid "Error! Can't extract data update file!"
+msgstr "Fehler! Datenaktualisierungsdatei kann nicht extrahiert werden!"
+
+#: settings.c:275
+msgid "New version available! Download update?"
+msgstr "Neue Version verfügbar! Update herunterladen?"
+
+#: settings.c:279
+#, c-format
+msgid "Update downloaded to %s"
+msgstr "Update heruntergeladen nach %s"
+
+#: settings.c:281
+msgid "Download error!"
+msgstr "Download-Fehler!"
+
+#: settings.c:296
+msgid "Debug Logging Disabled"
+msgstr "Debug-Protokollierung deaktiviert"
+
+#: settings.c:301
+msgid "Debug Logging Enabled!"
+msgstr "Debug-Protokollierung aktiviert!"
+
+#: settings.c:354
+msgid "User Settings"
+msgstr "Benutzereinstellungen"
+
+#: zip_util.c:168 zip_util.c:249 zip_util.c:289
+msgid "Extracting files..."
+msgstr "Extrahiere Dateien..."
+
+#~ msgid "Error! Couldn't zip save:"
+#~ msgstr "Fehler! Spielstand konnte nicht gezippt werden:"
+
+#: main.c
+msgid "DC Virtual Memory Card"
+msgstr "Virtuelle DC-Speicherkarte"
+
+#: menu_cheats.c
+msgid "Dreamcast Saves"
+msgstr "Dreamcast-Spielstände"
+
+#: saves.c
+msgid "Export save game to .DCI format"
+msgstr "Spielstand im .DCI-Format exportieren"
+
+#: saves.c
+msgid "Copy .DCI Save to USB"
+msgstr ".DCI-Spielstand auf USB kopieren"
+
+#: saves.c
+msgid "Copy .DCI Save to HDD"
+msgstr ".DCI-Spielstand auf HDD kopieren"
+
+#: saves.c
+msgid "Export save game to .VMI/.VMS format"
+msgstr "Spielstand im .VMI/.VMS-Format exportieren"
+
+#: saves.c
+msgid "Copy .VMI/.VMS Save to USB"
+msgstr ".VMI/.VMS-Spielstand auf USB kopieren"
+
+#: saves.c
+msgid "Copy .VMI/.VMS Save to HDD"
+msgstr ".VMI/.VMS-Spielstand auf HDD kopieren"
+
+#: saves.c
+msgid "Export Memory Card to raw .BIN"
+msgstr "Speicherkarte als rohes .BIN exportieren"
+
+#: saves.c
+msgid "Export Memory Card to Nexus .DCM"
+msgstr "Speicherkarte als Nexus .DCM exportieren"
+
+#: exec_cmd.c
+msgid "Error exporting memory card:"
+msgstr "Fehler beim Exportieren der Speicherkarte:"
