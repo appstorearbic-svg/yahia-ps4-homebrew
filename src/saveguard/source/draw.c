@@ -341,8 +341,16 @@ void drawIntroVideo(void)
 	const int fps = 15;
 	Uint32 start_ticks = SDL_GetTicks();
 	char path[256];
-	for (int frame = 0; frame < frame_count; frame++)
+	for (int frame = 0; frame < frame_count;)
 	{
+		// Keep playback tied to elapsed time; skip frames if decoding is slower than real time.
+		Uint32 elapsed = SDL_GetTicks() - start_ticks;
+		int scheduled_frame = (int)((elapsed * fps + 500) / 1000);
+		if (scheduled_frame > frame)
+			frame = scheduled_frame;
+		if (frame >= frame_count)
+			break;
+
 		snprintf(path, sizeof(path), APOLLO_APP_PATH "images/intro_%03d.jpg", frame);
 		if (LoadMenuTexture(path, icon_png_file_index))
 		{
@@ -354,7 +362,8 @@ void drawIntroVideo(void)
 			SDL_DestroyTexture(menu_textures[icon_png_file_index].texture);
 			menu_textures[icon_png_file_index].texture = NULL;
 		}
-		Uint32 target_ticks = start_ticks + (Uint32)(((frame + 1) * 1000) / fps);
+		frame++;
+		Uint32 target_ticks = start_ticks + (Uint32)((frame * 1000) / fps);
 		Uint32 now = SDL_GetTicks();
 		if ((int32_t)(target_ticks - now) > 0)
 			SDL_Delay(target_ticks - now);
