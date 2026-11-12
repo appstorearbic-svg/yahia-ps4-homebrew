@@ -1,7 +1,7 @@
 TITLE       := SaveGuard PS4
 VERSION     := 01.00
-TITLE_ID    := SAVEG00001
-CONTENT_ID  := IV0000-SAVEG00001_00-SAVEGUARD000000
+TITLE_ID    := SG0000001
+CONTENT_ID  := IV0000-SG0000001_00-SAVEGUARD000000
 LIBS        := -lc -lkernel -lc++ -lSceVideoOut -lScePad -lSceUserService -lSceSysmodule -lSceFreeType
 TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
 PROJDIR     := installer
