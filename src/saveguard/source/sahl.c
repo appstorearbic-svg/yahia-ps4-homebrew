@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <orbis/SaveData.h>
 #include "saves.h"
 #include "common.h"
 #include "menu.h"
@@ -39,7 +40,7 @@ static int sahl_copy_to_folder(const save_entry_t *save)
     ret = copy_directory(source, source, target);
     orbis_SaveUmount(mount);
     if (ret == SUCCESS)
-        show_message(_("تم نسخ ملف الحفظ إلى مجلد المنسوخ") "\n%s", target);
+		show_message("%s\n%s", _("تم نسخ ملف الحفظ إلى مجلد المنسوخ"), target);
     return ret;
 }
 
@@ -98,7 +99,7 @@ int sahl_restore_from_folder(const save_entry_t *save)
         return FAILED;
     if (sahl_find_source(save, source, sizeof(source)) != SUCCESS)
     {
-        show_message(_("لا يوجد ملف حفظ مطابق لهذه اللعبة داخل مجلد الماخوذ") "\n%s%s", SAHL_TAKEN_PATH, save->title_id);
+		show_message("%s\n%s%s", _("لا يوجد ملف حفظ مطابق لهذه اللعبة داخل مجلد الماخوذ"), SAHL_TAKEN_PATH, save->title_id);
         return FAILED;
     }
     if (!show_dialog(DIALOG_TYPE_YESNO, _("استبدال حفظ اللعبة بالملف الموجود في السهل؟\nأغلق اللعبة قبل المتابعة.")))
