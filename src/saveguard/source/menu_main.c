@@ -37,6 +37,29 @@ int last_menu_id[TOTAL_MENU_IDS] = { 0 };						// Last menu id called (for retur
 save_entry_t* selected_entry;
 code_entry_t* selected_centry;
 int option_index = 0;
+static save_list_t sahl_menu;
+static int sahl_mode = 0; /* 1=copy, 2=restore */
+static void init_sahl_menu(void)
+{
+    if (sahl_menu.list)
+        UnloadGameList(sahl_menu.list);
+    sahl_menu.id = MENU_SAHL;
+    sahl_menu.title = _("السهل");
+    sahl_menu.list = list_alloc();
+    save_entry_t *copy = calloc(1, sizeof(save_entry_t));
+    save_entry_t *restore = calloc(1, sizeof(save_entry_t));
+    copy->name = strdup(_("نسخ ملفات اللعبة إلى SsS"));
+    copy->type = FILE_TYPE_MENU;
+    copy->flags = SAVE_FLAG_PS4;
+    copy->path = strdup(_("ينسخ الحفظ إلى /data/SsS/السهل/المنسوخ/"));
+    restore->name = strdup(_("ضع ملف الحفظ من SsS"));
+    restore->type = FILE_TYPE_MENU;
+    restore->flags = SAVE_FLAG_PS4;
+    restore->path = strdup(_("يقرأ الحفظ من /data/SsS/السهل/الماخوذ/"));
+    list_append(sahl_menu.list, copy);
+    list_append(sahl_menu.list, restore);
+}
+
 static hexedit_data_t hex_data;
 
 void initMenuOptions(void)
@@ -204,6 +227,8 @@ static void SetMenu(int id)
 			break;
 
 		case MENU_SETTINGS: //Options Menu
+		case MENU_SAHL:
+		case MENU_SAHL_GAMES:
 		case MENU_CREDITS: //About Menu
 			break;
 
@@ -354,8 +379,15 @@ static void SetMenu(int id)
 				Draw_UserCheatsMenu_Ani(&vmu_saves);
 			break;
 
-		case MENU_CREDITS: //About Menu
-			if (apollo_config.doAni)
+		case MENU_SAHL:
+            init_sahl_menu();
+            break;
+        case MENU_SAHL_GAMES:
+            if (!hdd_saves.list && !ReloadUserSaves(&hdd_saves))
+                return;
+            break;
+MENU_CREDITS: //About Menu
+(apollo_config.doAni)
 				Draw_AboutMenu_Ani();
 			break;
 
@@ -588,6 +620,57 @@ static void doSaveMenu(save_list_t * save_list)
 	Draw_UserCheatsMenu(save_list, menu_sel, 0xFF);
 }
 
+static void doSahlMenu(void)
+{
+    if (updatePadSelection(list_count(sahl_menu.list)))
+        ;
+    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
+    {
+        SetMenu(MENU_MAIN_SCREEN);
+        return;
+    }
+    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
+    {
+        sahl_mode = menu_sel + 1;
+        SetMenu(MENU_SAHL_GAMES);
+        return;
+    }
+    Draw_UserCheatsMenu(&sahl_menu, menu_sel, 0xFF);
+}
+static void doSahlGamesMenu(void)
+{
+    int count = hdd_saves.list ? list_count(hdd_saves.list) : 0;
+    if (!count)
+    {
+        SetMenu(MENU_SAHL);
+        return;
+    }
+    if (updatePadSelection(count))
+        ;
+    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
+    {
+        SetMenu(MENU_SAHL);
+        return;
+    }
+    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
+    {
+        selected_entry = list_get_item(hdd_saves.list, menu_sel);
+        if (!selected_entry || selected_entry->type == FILE_TYPE_MENU)
+        {
+            show_message(_("اختر لعبة فعلية من القائمة"));
+            return;
+        }
+        if (sahl_mode == 1)
+            sahl_copy_save(selected_entry);
+        else
+            sahl_restore_from_folder(selected_entry);
+        return;
+    }
+    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_SQUARE))
+        ReloadUserSaves(&hdd_saves);
+    hdd_saves.title = (sahl_mode == 1) ? _("نسخ ملفات اللعبة إلى SsS") : _("ضع ملف الحفظ من SsS");
+    Draw_UserCheatsMenu(&hdd_saves, menu_sel, 0xFF);
+}
 static void doMainMenu(void)
 {
 	// Check the pads.
@@ -1050,6 +1133,12 @@ void drawScene(void)
 
 		case MENU_HDD_SAVES: //HDD Saves Menu
 			doSaveMenu(&hdd_saves);
+			break;
+		case MENU_SAHL:
+			doSahlMenu();
+			break;
+		case MENU_SAHL_GAMES:
+			doSahlGamesMenu();
 			break;
 
 		case MENU_ONLINE_DB: //Online Cheats Menu

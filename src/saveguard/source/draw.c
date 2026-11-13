@@ -302,31 +302,40 @@ static uint8_t menuIconForJar(uint8_t idx)
 	}
 }
 
-static void drawJar(uint8_t idx, uint8_t label_idx, int pos_x, int pos_y, uint8_t alpha)
+static void drawJar(uint8_t idx, uint8_t label_idx, int pos_x, int pos_y, uint8_t alpha, int slot)
 {
 	const int card_w = 250, card_h = 334;
 	const int icon_size = 192;
-	uint8_t active = (menu_sel + jar_trophy_png_index == idx);
+	uint8_t active = (menu_sel == slot);
 	uint8_t frame = active ? tile_frame_active_png_index : tile_frame_png_index;
 	DrawTexture(&menu_textures[frame], pos_x - (active ? 6 : 0), pos_y - (active ? 8 : 0), 0,
 		card_w + (active ? 12 : 0), card_h + (active ? 16 : 0), 0xffffff00 | alpha);
-	DrawTexture(&menu_textures[menuIconForJar(idx)], pos_x + (card_w - icon_size) / 2, pos_y + 35, 0,
+	uint8_t icon = (idx == 0xFE) ? ui_sahl_png_index : menuIconForJar(idx);
+	DrawTexture(&menu_textures[icon], pos_x + (card_w - icon_size) / 2, pos_y + 35, 0,
 		icon_size, icon_size, 0xffffff00 | alpha);
-	// Labels remain real Arabic UI assets and are drawn separately from the artwork.
-	if (alpha)
+	if (idx == 0xFE)
+	{
+		SetFontAlign(FONT_ALIGN_CENTER);
+		SetFontSize(APP_FONT_SIZE_JARS);
+		SetFontColor(APP_FONT_COLOR | alpha, 0);
+		DrawString(pos_x + card_w / 2, pos_y + 282, _("السهل"));
+		SetFontAlign(FONT_ALIGN_LEFT);
+	}
+	else if (alpha)
 		DrawTexture(&menu_textures[label_idx], pos_x, pos_y + 264, 0, card_w, 60, 0xffffff00 | alpha);
 }
-
 static void drawJars(uint8_t alpha)
 {
-	const int first_x = 25, top_y = 650, step = 267;
-	drawJar(jar_trophy_png_index, label_trophy_png_index, first_x + 0 * step, top_y, alpha);
-	drawJar(jar_usb_png_index, label_usb_png_index, first_x + 1 * step, top_y, alpha);
-	drawJar(jar_hdd_png_index, label_hdd_png_index, first_x + 2 * step, top_y, alpha);
-	drawJar(jar_db_png_index, apollo_config.online_opt ? label_ftp_png_index : label_online_png_index, first_x + 3 * step, top_y, alpha);
-	drawJar(jar_bup_png_index, label_user_png_index, first_x + 4 * step, top_y, alpha);
-	drawJar(jar_opt_png_index, label_settings_png_index, first_x + 5 * step, top_y, alpha);
-	drawJar(jar_about_png_index, label_about_png_index, first_x + 6 * step, top_y, alpha);
+const int xs[4] = {25, 510, 995, 1480};
+const int top[2] = {350, 700};
+drawJar(jar_trophy_png_index, label_trophy_png_index, xs[0], top[0], alpha, 0);
+drawJar(jar_usb_png_index, label_usb_png_index, xs[1], top[0], alpha, 1);
+drawJar(jar_hdd_png_index, label_hdd_png_index, xs[2], top[0], alpha, 2);
+drawJar(jar_db_png_index, apollo_config.online_opt ? label_ftp_png_index : label_online_png_index, xs[3], top[0], alpha, 3);
+drawJar(jar_bup_png_index, label_user_png_index, xs[0], top[1], alpha, 4);
+drawJar(0xFE, 0, xs[1], top[1], alpha, 5);
+drawJar(jar_opt_png_index, label_settings_png_index, xs[2], top[1], alpha, 6);
+drawJar(jar_about_png_index, label_about_png_index, xs[3], top[1], alpha, 7);
 }
 void drawIntroVideo(void)
 {

@@ -18,6 +18,8 @@ enum menu_screen_ids
 	MENU_HDD_SAVES,			/* 3 - HDD Menu (User List) */
 	MENU_ONLINE_DB,			/* 4 - Online Menu (Online List) */
 	MENU_USER_BACKUP,		/* 5 - User Backup */
+	MENU_SAHL,			/* 6 - Easy save copy/restore */
+	MENU_SAHL_GAMES,		/* 7 - Games for easy save */
 	MENU_SETTINGS,			/* 6 - Options Menu */
 	MENU_CREDITS,			/* 7 - About Menu */
 	MENU_PATCHES,			/* 8 - Code Menu (Select Cheats) */

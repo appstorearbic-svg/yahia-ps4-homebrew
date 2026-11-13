@@ -326,6 +326,9 @@ int init_loading_screen(const char* message);
 void stop_loading_screen(void);
 
 void execCodeCommand(code_entry_t* code, const char* codecmd);
+void sahl_init_dirs(void);
+int sahl_copy_save(const save_entry_t *save);
+int sahl_restore_from_folder(const save_entry_t *save);
 
 void* open_sqlite_db(const char* db_path);
 int save_sqlite_db(void* db, const char* db_path);

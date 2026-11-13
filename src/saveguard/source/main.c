@@ -355,6 +355,7 @@ static int LoadTextures_Menu(void)
 	load_menu_texture(ui_bup, png);
 	load_menu_texture(ui_opt, png);
 	load_menu_texture(ui_about, png);
+	load_menu_texture(ui_sahl, png);
 	load_menu_texture(tag_lock, png);
 	load_menu_texture(tag_own, png);
 	load_menu_texture(tag_vmc, png);
@@ -692,6 +693,7 @@ s32 main(s32 argc, const char* argv[])
 
 	mkdirs(APOLLO_DATA_PATH);
 	mkdirs(APOLLO_LOCAL_CACHE);
+	sahl_init_dirs();
 	
 	// Load freetype
 	if (sceSysmoduleLoadModule(ORBIS_SYSMODULE_FREETYPE_OL) < 0)
