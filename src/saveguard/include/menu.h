@@ -133,6 +133,7 @@ enum texture_index
 	ui_bup_png_index,
 	ui_opt_png_index,
 	ui_about_png_index,
+	ui_sahl_png_index,
 
 		TOTAL_MENU_TEXTURES
 };
