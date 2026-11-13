@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <time.h>
 #include <orbis/SaveData.h>
 #include "saves.h"
 #include "common.h"
@@ -35,7 +36,7 @@ static int sahl_copy_to_folder(const save_entry_t *save)
         return FAILED;
     if (!orbis_SaveMount(save, ORBIS_SAVE_DATA_MOUNT_MODE_RDONLY, mount))
         return FAILED;
-    snprintf(source, sizeof(source), APOLLO_SANDBOX_PATH "%s/", mount);
+		snprintf(source, sizeof(source), APOLLO_SANDBOX_PATH, mount);
     snprintf(target, sizeof(target), SAHL_COPIED_PATH "%s/%s/", save->title_id, save->dir_name);
     ret = copy_directory(source, source, target);
     orbis_SaveUmount(mount);
@@ -109,7 +110,7 @@ int sahl_restore_from_folder(const save_entry_t *save)
         show_message(_("تعذر تركيب ملف الحفظ للكتابة"));
         return FAILED;
     }
-    snprintf(target, sizeof(target), APOLLO_SANDBOX_PATH "%s/", mount);
+		snprintf(target, sizeof(target), APOLLO_SANDBOX_PATH, mount);
     init_loading_screen(_("جاري وضع ملف الحفظ من السهل..."));
     ret = copy_directory(source, source, target);
     stop_loading_screen();
