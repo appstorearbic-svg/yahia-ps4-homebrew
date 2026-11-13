@@ -386,9 +386,9 @@ static void SetMenu(int id)
             if (!hdd_saves.list && !ReloadUserSaves(&hdd_saves))
                 return;
             break;
-MENU_CREDITS: //About Menu
-(apollo_config.doAni)
-				Draw_AboutMenu_Ani();
+		case MENU_CREDITS: //About Menu
+			if (apollo_config.doAni)
+					Draw_AboutMenu_Ani();
 			break;
 
 		case MENU_SETTINGS: //Options Menu
