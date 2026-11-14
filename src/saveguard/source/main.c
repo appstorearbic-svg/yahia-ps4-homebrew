@@ -1,4 +1,4 @@
-/* 
+/*
 	Apollo PS4 main.c
 */
 
@@ -33,11 +33,21 @@
 
 //Sound
 #include <s3m.h>
+#include <math.h>
+#include <string.h>
 #define SAMPLING_FREQ          48000 /* 48khz. */
 #define AUDIO_SAMPLES          256   /* audio samples */
 
 // Audio handle
 static int32_t audio = 0;
+static volatile int ui_tone_kind = 0;
+static volatile int ui_tone_samples = 0;
+
+void PlayUISound(int kind)
+{
+	ui_tone_kind = kind;
+	ui_tone_samples = (kind == 1) ? 2600 : (kind == 2 ? 4200 : 5200);
+}
 
 
 #define load_menu_texture(name, type) \
@@ -267,10 +277,10 @@ static int LoadTextures_Menu(void)
 {
 	texture_mem = malloc(256 * 32 * 4);
 	menu_textures = (png_texture *)calloc(TOTAL_MENU_TEXTURES, sizeof(png_texture));
-	
+
 	if(!texture_mem || !menu_textures)
 		return 0; // fail!
-	
+
 	ResetFont();
 	free_mem = (u32 *) AddFontFromBitmapArray((u8 *) data_font_Adonais, (u8 *) texture_mem, 0x20, 0x7e, 32, 31, 1, BIT7_FIRST_PIXEL);
 	free_mem = (u32 *) AddFontFromBitmapArray((u8 *) console_font_10x20, (u8 *) free_mem, 0, 0xFF, 10, 20, 1, BIT7_FIRST_PIXEL);
@@ -282,7 +292,7 @@ static int LoadTextures_Menu(void)
 
 	free_mem = (u32*) init_ttf_table((u8*) free_mem);
 	set_ttf_window(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WIN_SKIP_LF);
-	
+
 	//Init Main Menu textures
 	load_menu_texture(cheat, png);
 	load_menu_texture(leon_luna, jpg);
@@ -404,20 +414,42 @@ static int LoadSounds(void* data)
 	// Play the song in a loop
 	while (!close_app)
 	{
-		if (!apollo_config.music)
+		if (!apollo_config.music && ui_tone_samples <= 0)
 		{
 			usleep(0x1000);
 			continue;
 		}
 
-		if (!s3m.rt.playing)
+		if (apollo_config.music && !s3m.rt.playing)
 		{
 			// If we reach the end of the file, seek back to the beginning.
 			s3m_play(&s3m);
 		}
 
-		// Decode the wav into pSampleData
-		s3m_sound_callback(NULL, pSampleData, AUDIO_SAMPLES * 2 * sizeof(int16_t));
+		// Decode the background song, or create silence when only a UI tone is needed.
+		if (apollo_config.music)
+			s3m_sound_callback(NULL, pSampleData, AUDIO_SAMPLES * 2 * sizeof(int16_t));
+		else
+			memset(pSampleData, 0, AUDIO_SAMPLES * 2 * sizeof(int16_t));
+
+		/* Mix a short tactile UI tone into both stereo channels. */
+		if (ui_tone_samples > 0)
+		{
+			int kind = ui_tone_kind;
+			float freq = (kind == 1) ? 760.0f : (kind == 2 ? 1040.0f : 380.0f);
+			for (int i = 0; i < AUDIO_SAMPLES && ui_tone_samples > 0; i++, ui_tone_samples--)
+			{
+				int elapsed = (kind == 1 ? 2600 : (kind == 2 ? 4200 : 5200)) - ui_tone_samples;
+				float env = (elapsed < 180) ? (elapsed / 180.0f) : (ui_tone_samples < 900 ? ui_tone_samples / 900.0f : 1.0f);
+				int16_t tone = (int16_t)(sinf((float)elapsed * freq * 6.2831853f / SAMPLING_FREQ) * 4200.0f * env);
+				int16_t *stereo = (int16_t *)pSampleData;
+				int pos = i * 2;
+				int left = stereo[pos] + tone;
+				int right = stereo[pos + 1] + tone;
+				stereo[pos] = (int16_t)(left > 32767 ? 32767 : (left < -32768 ? -32768 : left));
+				stereo[pos + 1] = (int16_t)(right > 32767 ? 32767 : (right < -32768 ? -32768 : right));
+			}
+		}
 
 		/* Output audio */
 		sceAudioOutOutput(audio, NULL);	// NULL: wait for completion
@@ -694,7 +726,7 @@ s32 main(s32 argc, const char* argv[])
 	mkdirs(APOLLO_DATA_PATH);
 	mkdirs(APOLLO_LOCAL_CACHE);
 	sahl_init_dirs();
-	
+
 	// Load freetype
 	if (sceSysmoduleLoadModule(ORBIS_SYSMODULE_FREETYPE_OL) < 0)
 	{
@@ -719,7 +751,7 @@ s32 main(s32 argc, const char* argv[])
 
 	// register exit callback
 	atexit(terminate);
-	
+
 	// Load texture
 	if (!LoadTextures_Menu())
 	{

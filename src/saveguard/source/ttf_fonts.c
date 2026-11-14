@@ -1,5 +1,6 @@
 #include <proto-include.h>
 #include <SDL2/SDL.h>
+#include <stdint.h>
 
 #include "types.h"
 #include "ttf_render.h"
@@ -11,13 +12,108 @@
 
 static int ttf_inited = 0;
 
+/* The renderer draws UTF-8 glyphs one by one.  Arabic therefore needs a
+ * small presentation-form shaper before it reaches FreeType. */
+typedef struct arabic_form {
+	uint32_t base, isolated, final, initial, medial;
+	int join_left, join_right;
+} arabic_form_t;
+
+static const arabic_form_t arabic_forms[] = {
+	{0x0627,0xFE8D,0xFE8E,0,0,0,1},{0x0628,0xFE8F,0xFE90,0xFE91,0xFE92,1,1},
+	{0x0629,0xFE93,0xFE94,0,0,0,1},{0x062A,0xFE95,0xFE96,0xFE97,0xFE98,1,1},
+	{0x062B,0xFE99,0xFE9A,0xFE9B,0xFE9C,1,1},{0x062C,0xFE9D,0xFE9E,0xFE9F,0xFEA0,1,1},
+	{0x062D,0xFEA1,0xFEA2,0xFEA3,0xFEA4,1,1},{0x062E,0xFEA5,0xFEA6,0xFEA7,0xFEA8,1,1},
+	{0x062F,0xFEA9,0xFEAA,0,0,0,1},{0x0630,0xFEAB,0xFEAC,0,0,0,1},
+	{0x0631,0xFEAD,0xFEAE,0,0,0,1},{0x0632,0xFEAF,0xFEB0,0,0,0,1},
+	{0x0633,0xFEB1,0xFEB2,0xFEB3,0xFEB4,1,1},{0x0634,0xFEB5,0xFEB6,0xFEB7,0xFEB8,1,1},
+	{0x0635,0xFEB9,0xFEBA,0xFEBB,0xFEBC,1,1},{0x0636,0xFEBD,0xFEBE,0xFEBF,0xFEC0,1,1},
+	{0x0637,0xFEC1,0xFEC2,0xFEC3,0xFEC4,1,1},{0x0638,0xFEC5,0xFEC6,0xFEC7,0xFEC8,1,1},
+	{0x0639,0xFEC9,0xFECA,0xFECB,0xFECC,1,1},{0x063A,0xFECD,0xFECE,0xFECF,0xFED0,1,1},
+	{0x0641,0xFED1,0xFED2,0xFED3,0xFED4,1,1},{0x0642,0xFED5,0xFED6,0xFED7,0xFED8,1,1},
+	{0x0643,0xFED9,0xFEDA,0xFEDB,0xFEDC,1,1},{0x0644,0xFEDD,0xFEDE,0xFEDF,0xFEE0,1,1},
+	{0x0645,0xFEE1,0xFEE2,0xFEE3,0xFEE4,1,1},{0x0646,0xFEE5,0xFEE6,0xFEE7,0xFEE8,1,1},
+	{0x0647,0xFEE9,0xFEEA,0xFEEB,0xFEEC,1,1},{0x0648,0xFEED,0xFEEE,0,0,0,1},
+	{0x0649,0xFEEF,0xFEF0,0,0,0,1},{0x064A,0xFEF1,0xFEF2,0xFEF3,0xFEF4,1,1},
+	{0x0671,0xFB50,0xFB51,0,0,0,1},{0x067E,0xFB56,0xFB57,0xFB58,0xFB59,1,1},
+	{0x0686,0xFB7A,0xFB7B,0xFB7C,0xFB7D,1,1},{0x06A9,0xFEDA,0xFED9,0xFEE0,0,1,1},
+	{0x06AF,0xFB92,0xFB93,0xFB94,0xFB95,1,1},{0x06CC,0xFBFC,0xFBFD,0xFBFE,0xFBFF,1,1},
+};
+
+static const arabic_form_t *arabic_form(uint32_t c)
+{
+	for (unsigned i = 0; i < sizeof(arabic_forms) / sizeof(arabic_forms[0]); i++)
+		if (arabic_forms[i].base == c) return &arabic_forms[i];
+	return NULL;
+}
+
+static int arabic_is_mark(uint32_t c)
+{
+	return (c >= 0x064B && c <= 0x065F) || (c >= 0x0670 && c <= 0x0670);
+}
+
+static int arabic_decode(const char **src, uint32_t *out)
+{
+	const unsigned char *p = (const unsigned char *)*src;
+	if (!*p) return 0;
+	if (*p < 0x80) { *out = *p++; *src = (const char *)p; return 1; }
+	if ((*p & 0xE0) == 0xC0) { *out = (*p++ & 0x1F) << 6; *out |= *p++ & 0x3F; }
+	else if ((*p & 0xF0) == 0xE0) { *out = (*p++ & 0x0F) << 12; *out |= (*p++ & 0x3F) << 6; *out |= *p++ & 0x3F; }
+	else { *out = (*p++ & 7) << 18; *out |= (*p++ & 0x3F) << 12; *out |= (*p++ & 0x3F) << 6; *out |= *p++ & 0x3F; }
+	*src = (const char *)p;
+	return 1;
+}
+
+static int arabic_encode(char *out, int at, int cap, uint32_t c)
+{
+	if (c < 0x80) { if (at + 1 >= cap) return at; out[at++] = (char)c; }
+	else if (c < 0x800) { if (at + 2 >= cap) return at; out[at++] = (char)(0xC0 | (c >> 6)); out[at++] = (char)(0x80 | (c & 63)); }
+	else if (c < 0x10000) { if (at + 3 >= cap) return at; out[at++] = (char)(0xE0 | (c >> 12)); out[at++] = (char)(0x80 | ((c >> 6) & 63)); out[at++] = (char)(0x80 | (c & 63)); }
+	return at;
+}
+
+static int arabic_prepare(const char *input, char *output, int cap)
+{
+	uint32_t cp[768], shaped[768];
+	int n = 0, at = 0;
+	const char *p = input;
+	while (*p && n < 767) arabic_decode(&p, &cp[n++]);
+	for (int i = 0; i < n;) {
+		int begin = i, end = i, has_ar = 0;
+		while (end < n && (arabic_form(cp[end]) || arabic_is_mark(cp[end]) || cp[end] == ' ' || cp[end] == '\t')) {
+			if (arabic_form(cp[end])) has_ar = 1;
+			end++;
+		}
+		if (!has_ar) { at = arabic_encode(output, at, cap, cp[i++]); continue; }
+		for (int j = begin; j < end; j++) {
+			const arabic_form_t *f = arabic_form(cp[j]);
+			if (!f) { shaped[j] = cp[j]; continue; }
+			int prev = j - 1, next = j + 1;
+			while (prev >= begin && arabic_is_mark(cp[prev])) prev--;
+			while (next < end && arabic_is_mark(cp[next])) next++;
+			const arabic_form_t *pf = (prev >= begin) ? arabic_form(cp[prev]) : NULL;
+			const arabic_form_t *nf = (next < end) ? arabic_form(cp[next]) : NULL;
+			int join_prev = pf && pf->join_left && f->join_right;
+			int join_next = nf && f->join_left && nf->join_right;
+			if (join_prev && join_next && f->medial) shaped[j] = f->medial;
+			else if (join_prev) shaped[j] = f->final;
+			else if (join_next) shaped[j] = f->initial;
+			else shaped[j] = f->isolated;
+		}
+		for (int j = end - 1; j >= begin; j--) at = arabic_encode(output, at, cap, shaped[j]);
+		i = end;
+	}
+	output[at < cap ? at : cap - 1] = 0;
+	return at;
+}
+
 static FT_Library freetype;
 static FT_Face face[4];
 static int f_face[4] = {0, 0, 0, 0};
 
 int TTFLoadFont(int set, const char * path, void * from_memory, int size_from_memory)
 {
-   
+
     if(!ttf_inited)
         FT_Init_FreeType(&freetype);
     ttf_inited = 1;
@@ -59,37 +155,37 @@ void TTF_to_Bitmap(uint8_t chr, uint8_t * bitmap, short *w, short *h, short *y_c
     if(f_face[1]) FT_Set_Pixel_Sizes(face[1], (*w), (*h));
     if(f_face[2]) FT_Set_Pixel_Sizes(face[2], (*w), (*h));
     if(f_face[3]) FT_Set_Pixel_Sizes(face[3], (*w), (*h));
-    
+
     FT_GlyphSlot slot;
 
     memset(bitmap, 0, (*w) * (*h));
 
     FT_UInt index;
 
-    if(f_face[0] && (index = FT_Get_Char_Index(face[0], (char) chr))!=0 
+    if(f_face[0] && (index = FT_Get_Char_Index(face[0], (char) chr))!=0
         && !FT_Load_Glyph(face[0], index, FT_LOAD_RENDER )) slot = face[0]->glyph;
-    else if(f_face[1] && (index = FT_Get_Char_Index(face[1], (char) chr))!=0 
+    else if(f_face[1] && (index = FT_Get_Char_Index(face[1], (char) chr))!=0
         && !FT_Load_Glyph(face[1], index, FT_LOAD_RENDER )) slot = face[1]->glyph;
-    else if(f_face[2] && (index = FT_Get_Char_Index(face[2], (char) chr))!=0 
+    else if(f_face[2] && (index = FT_Get_Char_Index(face[2], (char) chr))!=0
         && !FT_Load_Glyph(face[2], index, FT_LOAD_RENDER )) slot = face[2]->glyph;
-    else if(f_face[3] && (index = FT_Get_Char_Index(face[3], (char) chr))!=0 
+    else if(f_face[3] && (index = FT_Get_Char_Index(face[3], (char) chr))!=0
         && !FT_Load_Glyph(face[3], index, FT_LOAD_RENDER )) slot = face[3]->glyph;
     else {(*w) = 0; return;}
 
     int n, m, ww;
 
     *y_correction = (*h) - 1 - slot->bitmap_top;
-    
+
     ww = 0;
 
     for(n = 0; n < slot->bitmap.rows; n++) {
         for (m = 0; m < slot->bitmap.width; m++) {
 
             if(m >= (*w) || n >= (*h)) continue;
-            
+
             bitmap[m] = (u8) slot->bitmap.buffer[ww + m];
         }
-    
+
     bitmap += *w;
 
     ww += slot->bitmap.width;
@@ -139,22 +235,22 @@ int Render_String_UTF8(u16 * bitmap, int w, int h, u8 *string, int sw, int sh)
                     if((*string & 0xc0) != 0x80) break; // error!
                     ttf_char = (ttf_char <<6) |((u32) (*(string++) & 63));
              }
-           
+
             if((n != m) && !*string) break;
-        
+
         } else ttf_char = (u32) *(string++);
 
         if(ttf_char == 13 || ttf_char == 10) ttf_char='/';
 
         FT_UInt index;
 
-        if(f_face[0] && (index = FT_Get_Char_Index(face[0], ttf_char))!=0 
+        if(f_face[0] && (index = FT_Get_Char_Index(face[0], ttf_char))!=0
             && !FT_Load_Glyph(face[0], index, FT_LOAD_RENDER )) slot = face[0]->glyph;
-        else if(f_face[1] && (index = FT_Get_Char_Index(face[1], ttf_char))!=0 
+        else if(f_face[1] && (index = FT_Get_Char_Index(face[1], ttf_char))!=0
             && !FT_Load_Glyph(face[1], index, FT_LOAD_RENDER )) slot = face[1]->glyph;
-        else if(f_face[2] && (index = FT_Get_Char_Index(face[2], ttf_char))!=0 
+        else if(f_face[2] && (index = FT_Get_Char_Index(face[2], ttf_char))!=0
             && !FT_Load_Glyph(face[2], index, FT_LOAD_RENDER )) slot = face[2]->glyph;
-        else if(f_face[3] && (index = FT_Get_Char_Index(face[3], ttf_char))!=0 
+        else if(f_face[3] && (index = FT_Get_Char_Index(face[3], ttf_char))!=0
             && !FT_Load_Glyph(face[3], index, FT_LOAD_RENDER )) slot = face[3]->glyph;
         else ttf_char = 0;
 
@@ -170,17 +266,17 @@ int Render_String_UTF8(u16 * bitmap, int w, int h, u8 *string, int sw, int sh)
                 for (m = 0; m < slot->bitmap.width; m++) {
 
                     if(m + posx >= w) continue;
-                    
+
                     color = (u8) slot->bitmap.buffer[ww + m];
-                    
+
                     if(color) bitmap[posx + m + ww2] = (color<<8) | 0xfff;
                 }
-            
+
             ww2 += w;
 
             ww += slot->bitmap.width;
             }
-            
+
         }
 
         if(slot) posx+= slot->bitmap.width;
@@ -228,7 +324,7 @@ void set_ttf_window(int x, int y, int width, int height, u32 mode)
     Win_flag = mode;
     Y_ttf = 0.0f;
     Z_ttf = 0.0f;
-   
+
 }
 
 u16 * init_ttf_table(u8 *texture)
@@ -249,7 +345,7 @@ void reset_ttf_frame(void)
     int n;
 
     for(n = 0; n < MAX_CHARS; n++) {
-        
+
         ttf_font_datas[n].flags &= 1;
 
     }
@@ -270,8 +366,8 @@ static void DrawBox_ttf(float x, float y, float z, float w, float h, u32 rgba)
     SDL_RenderFillRectF(renderer, &rect);
 /*
     tiny3d_SetPolygon(TINY3D_QUADS);
-    
-   
+
+
     tiny3d_VertexPos(x    , y    , z);
     tiny3d_VertexColor(rgba);
 
@@ -322,7 +418,9 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
     int l,n, m, ww, ww2;
     u8 colorc;
     u32 ttf_char;
-    u8 *ustring = (u8 *) string;
+    char arabic_buffer[3072];
+    arabic_prepare(string, arabic_buffer, sizeof(arabic_buffer));
+    u8 *ustring = (u8 *) arabic_buffer;
 
     int lenx = 0;
 
@@ -353,9 +451,9 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
                 }
                 ttf_char = (ttf_char <<6) |((u32) (*(ustring++) & 63));
              }
-           
+
             if((n != m) && !*ustring) break;
-        
+
         } else ttf_char = (u32) *(ustring++);
 
 
@@ -376,7 +474,7 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
                 posx += resx;
                 continue;
             }
-            else 
+            else
                 ttf_char='?';
         }
 
@@ -385,10 +483,10 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
         else {
             m= 0;
             int rel=0;
-            
+
             for(n= 128; n < MAX_CHARS; n++) {
                 if(!(ttf_font_datas[n].flags & 1)) m= n;
-                
+
                 if((ttf_font_datas[n].flags & 3)==1) {
                     int trel= r_use - ttf_font_datas[n].r_use;
                     if(m==0) {m= n;rel = trel;}
@@ -405,7 +503,7 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
         if(n >= MAX_CHARS) {ttf_font_datas[m].flags = 0; l= m;} else l=n;
 
         // building the character
-        if(!(ttf_font_datas[l].flags & 1)) { 
+        if(!(ttf_font_datas[l].flags & 1)) {
 
             if(f_face[0]) FT_Set_Pixel_Sizes(face[0], TTF_UX, TTF_UY);
             if(f_face[1]) FT_Set_Pixel_Sizes(face[1], TTF_UX, TTF_UY);
@@ -421,13 +519,13 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
 
             FT_UInt index;
 
-            if(f_face[0] && (index = FT_Get_Char_Index(face[0], ttf_char))!=0 
+            if(f_face[0] && (index = FT_Get_Char_Index(face[0], ttf_char))!=0
                 && !FT_Load_Glyph(face[0], index, FT_LOAD_RENDER )) slot = face[0]->glyph;
-            else if(f_face[1] && (index = FT_Get_Char_Index(face[1], ttf_char))!=0 
+            else if(f_face[1] && (index = FT_Get_Char_Index(face[1], ttf_char))!=0
                 && !FT_Load_Glyph(face[1], index, FT_LOAD_RENDER )) slot = face[1]->glyph;
-            else if(f_face[2] && (index = FT_Get_Char_Index(face[2], ttf_char))!=0 
+            else if(f_face[2] && (index = FT_Get_Char_Index(face[2], ttf_char))!=0
                 && !FT_Load_Glyph(face[2], index, FT_LOAD_RENDER )) slot = face[2]->glyph;
-            else if(f_face[3] && (index = FT_Get_Char_Index(face[3], ttf_char))!=0 
+            else if(f_face[3] && (index = FT_Get_Char_Index(face[3], ttf_char))!=0
                 && !FT_Load_Glyph(face[3], index, FT_LOAD_RENDER )) slot = face[3]->glyph;
             else ttf_char = 0;
 
@@ -442,19 +540,19 @@ int display_ttf_string(int posx, int posy, const char *string, u32 color, u32 bk
                 ttf_font_datas[l].height = slot->bitmap.rows;
                 ttf_font_datas[l].width = slot->bitmap.width;
                 ttf_font_datas[l].ttf = ttf_char;
-                
+
 
                 for(n = 0; n < slot->bitmap.rows; n++) {
                     if(n >= TEX_SZ) break;
                     for (m = 0; m < slot->bitmap.width; m++) {
 
                         if(m >= TEX_SZ) continue;
-                        
+
                         colorc = (u8) slot->bitmap.buffer[ww + m];
-                        
+
                         if(colorc) bitmap[m + ww2] = colorc; //(colorc<<8) | 0xfff;
                     }
-                
+
                 ww2 += TEX_SZ;
 
                 ww += slot->bitmap.width;

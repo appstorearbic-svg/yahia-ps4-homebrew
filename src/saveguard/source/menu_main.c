@@ -25,6 +25,7 @@ extern save_list_t vmc2_saves;
 extern save_list_t vmu_saves;
 
 extern int close_app;
+extern void PlayUISound(int kind); /* 1 move, 2 confirm, 3 back */
 
 int menu_options_maxopt = 0;
 int * menu_options_maxsel;
@@ -89,7 +90,7 @@ void initMenuOptions(void)
 
 static int ReloadUserSaves(save_list_t* save_list)
 {
-	init_loading_screen(_("Loading save games..."));
+	init_loading_screen(_("جاري فحص الألعاب وملفات الحفظ..."));
 
 	if (save_list->list)
 	{
@@ -112,7 +113,7 @@ static int ReloadUserSaves(save_list_t* save_list)
 
 	if (!save_list->list)
 	{
-		show_message(_("No save-games found"));
+		show_message(_("لم يتم العثور على ملفات حفظ."));
 		return 0;
 	}
 
@@ -217,7 +218,7 @@ static void SetMenu(int id)
 				online_saves.list = NULL;
 			}
 			break;
-	
+
 		case MENU_MAIN_SCREEN: //Main Menu
 		case MENU_TROPHIES:
 		case MENU_USB_SAVES: //USB Saves Menu
@@ -309,7 +310,7 @@ static void SetMenu(int id)
 			last_menu_id[menu_id] = id;
 			break;
 	}
-	
+
 	switch (id) //going to menu
 	{
 		case MENU_MAIN_SCREEN: //Main Menu
@@ -328,7 +329,7 @@ static void SetMenu(int id)
 		case MENU_USB_SAVES: //USB saves Menu
 			if (!usb_saves.list && !ReloadUserSaves(&usb_saves))
 				return;
-			
+
 			if (apollo_config.doAni)
 				Draw_UserCheatsMenu_Ani(&usb_saves);
 			break;
@@ -336,7 +337,7 @@ static void SetMenu(int id)
 		case MENU_HDD_SAVES: //HDD saves Menu
 			if (!hdd_saves.list && !ReloadUserSaves(&hdd_saves))
 				return;
-			
+
 			if (apollo_config.doAni)
 				Draw_UserCheatsMenu_Ani(&hdd_saves);
 			break;
@@ -475,12 +476,12 @@ static void SetMenu(int id)
 				Draw_HexEditor_Ani(&hex_data);
 			break;
 	}
-	
+
 	menu_old_sel[menu_id] = menu_sel;
 	if (last_menu_id[menu_id] != id)
 		last_menu_id[id] = menu_id;
 	menu_id = id;
-	
+
 	menu_sel = menu_old_sel[menu_id];
 }
 
@@ -504,6 +505,7 @@ static void move_selection_fwd(int game_count, int steps)
 
 static int updatePadSelection(int total)
 {
+	int before = menu_sel;
 	if(orbisPadGetButtonHold(ORBIS_PAD_BUTTON_UP))
 		move_selection_back(total, 1);
 
@@ -529,6 +531,8 @@ static int updatePadSelection(int total)
 		menu_sel = total - 1;
 
 	else return 0;
+	if (before != menu_sel)
+		PlayUISound(1);
 
 	return 1;
 }
@@ -540,6 +544,7 @@ static void doSaveMenu(save_list_t * save_list)
 
 	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
 	{
+		PlayUISound(3);
 		SetMenu(MENU_MAIN_SCREEN);
 		return;
 	}
@@ -624,14 +629,16 @@ static void doSahlMenu(void)
 {
     if (updatePadSelection(list_count(sahl_menu.list)))
         ;
-    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
-    {
-        SetMenu(MENU_MAIN_SCREEN);
+	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
+	{
+		PlayUISound(3);
+		SetMenu(MENU_MAIN_SCREEN);
         return;
     }
-    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
-    {
-        sahl_mode = menu_sel + 1;
+	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
+	{
+		PlayUISound(2);
+		sahl_mode = menu_sel + 1;
         SetMenu(MENU_SAHL_GAMES);
         return;
     }
@@ -647,14 +654,16 @@ static void doSahlGamesMenu(void)
     }
     if (updatePadSelection(count))
         ;
-    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
-    {
-        SetMenu(MENU_SAHL);
+	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
+	{
+		PlayUISound(3);
+		SetMenu(MENU_SAHL);
         return;
     }
-    else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
-    {
-        selected_entry = list_get_item(hdd_saves.list, menu_sel);
+	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
+	{
+		PlayUISound(2);
+		selected_entry = list_get_item(hdd_saves.list, menu_sel);
         if (!selected_entry || selected_entry->type == FILE_TYPE_MENU)
         {
             show_message(_("اختر لعبة فعلية من القائمة"));
@@ -674,22 +683,32 @@ static void doSahlGamesMenu(void)
 static void doMainMenu(void)
 {
 	// Check the pads.
-	if(orbisPadGetButtonHold(ORBIS_PAD_BUTTON_LEFT))
-		move_selection_back(MENU_CREDITS, 1);
+		if(orbisPadGetButtonHold(ORBIS_PAD_BUTTON_LEFT))
+		{
+			move_selection_back(MENU_CREDITS, 1);
+			PlayUISound(1);
+		}
 
-	else if(orbisPadGetButtonHold(ORBIS_PAD_BUTTON_RIGHT))
-		move_selection_fwd(MENU_CREDITS, 1);
+		else if(orbisPadGetButtonHold(ORBIS_PAD_BUTTON_RIGHT))
+		{
+			move_selection_fwd(MENU_CREDITS, 1);
+			PlayUISound(1);
+		}
 
-	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
-	{
-		SetMenu(menu_sel+1);
+		else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CROSS))
+		{
+			PlayUISound(2);
+			SetMenu(menu_sel+1);
 		drawScene();
 		return;
 	}
 
-	else if(orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE) && show_dialog(DIALOG_TYPE_YESNO, _("Exit to XMB?")))
-		close_app = 1;
-	
+		else if(orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE) && show_dialog(DIALOG_TYPE_YESNO, _("Exit to XMB?")))
+		{
+			PlayUISound(3);
+			close_app = 1;
+		}
+
 	Draw_MainMenu();
 }
 
@@ -743,7 +762,7 @@ static void doOptionsMenu(void)
 		}
 		else if (menu_options[menu_sel].type == APP_OPTION_INC)
 			(*menu_options[menu_sel].value)--;
-		
+
 		if (menu_options[menu_sel].type != APP_OPTION_CALL)
 			menu_options[menu_sel].callback(*menu_options[menu_sel].value);
 	}
@@ -770,7 +789,7 @@ static void doOptionsMenu(void)
 		else if (menu_options[menu_sel].type == APP_OPTION_CALL)
 			menu_options[menu_sel].callback(0);
 	}
-	
+
 	Draw_OptionsMenu();
 }
 
@@ -922,7 +941,7 @@ static void doPatchViewMenu(void)
 		SetMenu(last_menu_id[MENU_PATCH_VIEW]);
 		return;
 	}
-	
+
 	Draw_CheatsMenu_View(_("Patch view"));
 }
 
@@ -997,7 +1016,7 @@ static void doCodeOptionsMenu(void)
 		}
 
 		option_index++;
-		
+
 		if (option_index >= code->options_count)
 		{
 			SetMenu(last_menu_id[MENU_CODE_OPTIONS]);
@@ -1006,7 +1025,7 @@ static void doCodeOptionsMenu(void)
 		else
 			menu_sel = 0;
 	}
-	
+
 	Draw_CheatsMenu_Options();
 }
 
@@ -1023,7 +1042,7 @@ static void doSaveDetailsMenu(void)
 		SetMenu(last_menu_id[MENU_SAVE_DETAILS]);
 		return;
 	}
-	
+
 	Draw_CheatsMenu_View(selected_entry->name);
 }
 
@@ -1102,7 +1121,7 @@ static void doPatchMenu(void)
 			SetMenu(MENU_SAVE_DETAILS);
 			return;
 		}
-		
+
 		if (selected_centry->type == PATCH_GAMEGENIE || selected_centry->type == PATCH_BSD || selected_centry->type == PATCH_PYTHON ||
 			selected_centry->type == PATCH_TROP_LOCK || selected_centry->type == PATCH_TROP_UNLOCK)
 		{
@@ -1110,7 +1129,7 @@ static void doPatchMenu(void)
 			return;
 		}
 	}
-	
+
 	Draw_CheatsMenu_Selection(menu_sel, 0xFFFFFFFF);
 }
 

@@ -125,7 +125,7 @@ void DrawHeader_Ani(int icon, const char * hdrTitle, const char * headerSubTitle
 	snprintf(headerTitle, sizeof(headerTitle), "%.40s%s", hdrTitle, (strlen(hdrTitle) > 40 ? "..." : ""));
 
 	//------------ Backgrounds
-	
+
 	//Background
 	DrawBackgroundTexture(0, (u8)bgrgba);
 
@@ -308,6 +308,14 @@ static void drawJar(uint8_t idx, uint8_t label_idx, int pos_x, int pos_y, uint8_
 	const int icon_size = 192;
 	uint8_t active = (menu_sel == slot);
 	uint8_t frame = active ? tile_frame_active_png_index : tile_frame_png_index;
+	if (active)
+	{
+		/* A soft pulse makes the focus follow the selected card, including Sahl. */
+		Uint32 tick = SDL_GetTicks() % 1000;
+		uint8_t pulse = (uint8_t)(70 + ((tick < 500 ? tick : 1000 - tick) * 90 / 500));
+		DrawTexture(&menu_textures[tile_frame_active_png_index], pos_x - 14, pos_y - 16, 0,
+			card_w + 28, card_h + 32, 0xFF2020A0 | pulse);
+	}
 	DrawTexture(&menu_textures[frame], pos_x - (active ? 6 : 0), pos_y - (active ? 8 : 0), 0,
 		card_w + (active ? 12 : 0), card_h + (active ? 16 : 0), 0xffffff00 | alpha);
 	uint8_t icon = (idx == 0xFE) ? ui_sahl_png_index : menuIconForJar(idx);
@@ -421,7 +429,7 @@ void Draw_MainMenu_Ani(void)
 	{
 		SDL_RenderClear(renderer);
 		DrawBackground2D(0xFFFFFFFF);
-		
+
 		//------------ Backgrounds
 		u8 bg_a = (u8)(ani * 2);
 		if (bg_a < 0x20)
@@ -430,25 +438,25 @@ void Draw_MainMenu_Ani(void)
 		if (logo_a_t > 0xFF)
 			logo_a_t = 0xFF;
 		u8 logo_a = (u8)logo_a_t;
-		
+
 			// Fade in the GTX backdrop and wordmark before showing the seven menu cards.
 			drawGTXMainBackground(bg_a);
 			DrawTextureCenteredX(&menu_textures[logo_text_png_index], SCREEN_WIDTH / 2, 82, 0, 760, 124, 0xFFFFFF00 | logo_a);
 
 		SDL_RenderPresent(renderer);
 	}
-	
+
 	max = MENU_ANI_MAX / 2;
 	int rate = (0x100 / max);
 	for (ani = 0; ani < max; ani++)
 	{
 		SDL_RenderClear(renderer);
 		DrawBackground2D(0xFFFFFFFF);
-		
+
 		u8 icon_a = (u8)(((ani * rate) > 0xFF) ? 0xFF : (ani * rate));
-		
+
 		_draw_MainMenu(icon_a);
-		
+
 		SDL_RenderPresent(renderer);
 
 		if (icon_a == 32)
