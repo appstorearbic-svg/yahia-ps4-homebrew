@@ -38,7 +38,7 @@ jobs:
           cd src/gtxmod-mod-installer
           make -j2
           mkdir -p "$GITHUB_WORKSPACE/finish"
-          cp -f IV0000-YAHI00004_00-GTXMODSAFEVIDEO01.pkg \
+          cp -f IV0000-YAHI00004_00-GTXMODSAFEVID001.pkg \
             "$GITHUB_WORKSPACE/finish/GTXMOD-Safe-Video-Test.pkg"
       - name: Upload PKG artifact
         uses: actions/upload-artifact@v4
