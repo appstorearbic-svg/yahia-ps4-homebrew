@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CSettingsManager__Presets>
+  <low>
+    <graphics>
+      <Tessellation value="false" />
+      <LodScale value="1.8" />
+      <PedLodBias value="0.2" />
+      <VehicleLodBias value="0.15" />
+      <ShadowQuality>Ultra</ShadowQuality>
+      <ReflectionQuality>Ultra</ReflectionQuality>
+      <SSAO value="true" />
+      <AnisotropicFiltering value="0" />
+      <MSAA value="0" />
+      <FXAA>Ultra</FXAA>
+      <TextureQuality>Ultra</TextureQuality>
+      <ParticleQuality>Ultra</ParticleQuality>
+      <WaterQuality>Ultra</WaterQuality>
+      <LightingQuality>Ultra</LightingQuality>
+      <GrassQuality>Ultra</GrassQuality>
+      <ChromaticAberration value="false" />
+      <ShaderQuality>Ultra</ShaderQuality>
+      <MulticoreRendering value="false" />
+      <Shadow_SoftShadows>Medium</Shadow_SoftShadows>
+      <Shadow_ParticleShadows value="true" />
+      <Shadow_SceneLights value="true" />
+      <Shadow_Headlights value="true" />
+      <Shadow_Distance value="2.5" />
+	    <Shadow_LongShadows value="true" />
+      <Shadow_SplitZStart value="0.98" />
+      <Shadow_SplitZEnd value="0.89" />
+      <Shadow_aircraftExpWeight value="0.99" />
+      <Reflection_MipBlur value="true" />
+      <ReflectionPlaceholder3 value="4.000000" />
+      <FXAA_Enabled value="true" />
+      <FXAAPlaceholder2 value="4" />
+      <FXAAPlaceholder3 value="4.000000" />
+      <Texture_QualityLevel value="2" />
+      <Texture_MipLodBias value="0" />
+      <TexturePlaceholder3 value="4.000000" />
+      <ParticlePlaceholder1 value="4" />
+      <ParticlePlaceholder2 value="true" />
+      <ParticlePlaceholder3 value="4.000000" />
+      <WaterPlaceholder1 value="4" />
+      <WaterPlaceholder2 value="true" />
+      <WaterPlaceholder3 value="4.000000" />
+      <Lighting_FogVolumes value="true" />
+      <LightingPlaceholder2 value="true" />
+      <LightingPlaceholder3 value="4.000000" />
+      <Shader_SSA value="true" />
+      <ShaderPlaceholder1 value="4" />
+      <ShaderPlaceholder3 value="4.000000" />
+    </graphics>
+    <system>
+      <numBytesPerReplayBlock value="12000000" />
+      <numReplayBlocks value="11" />
+      <maxSizeOfStreamingReplay value="2048" />
+    </system>
+    <audio>
+      <Audio3d value="false" />
+    </audio>
+    <video>
+      <AdapterIndex value="0" />
+      <OutputIndex value="0" />
+      <ScreenWidth value="1280" />
+      <ScreenHeight value="780" />
+      <RefreshRate value="60" />
+      <Windowed value="false" />
+      <VSync value="false" />
+    </video>
+  </low>
+  <medium>
+    <graphics>
+      <Tessellation value="false" />
+      <LodScale value="1.8" />
+      <PedLodBias value="0.2" />
+      <VehicleLodBias value="0.15" />
+      <ShadowQuality>Ultra</ShadowQuality>
+      <ReflectionQuality>Ultra</ReflectionQuality>
+      <SSAO value="true" />
+      <AnisotropicFiltering value="0" />
+      <MSAA value="0" />
+      <FXAA>Ultra</FXAA>
+      <TextureQuality>Ultra</TextureQuality>
+      <ParticleQuality>Ultra</ParticleQuality>
+      <WaterQuality>Ultra</WaterQuality>
+      <LightingQuality>Ultra</LightingQuality>
+      <GrassQuality>Ultra</GrassQuality>
+      <ChromaticAberration value="false" />
+      <ShaderQuality>Ultra</ShaderQuality>
+      <MulticoreRendering value="false" />
+      <Shadow_SoftShadows>Medium</Shadow_SoftShadows>
+      <Shadow_ParticleShadows value="true" />
+      <Shadow_SceneLights value="true" />
+      <Shadow_Headlights value="true" />
+      <Shadow_Distance value="2.5" />
+	    <Shadow_LongShadows value="true" />
+      <Shadow_SplitZStart value="0.98" />
+      <Shadow_SplitZEnd value="0.89" />
+      <Shadow_aircraftExpWeight value="0.99" />
+      <Reflection_MipBlur value="true" />
+      <ReflectionPlaceholder3 value="4.000000" />
+      <FXAA_Enabled value="true" />
+      <FXAAPlaceholder2 value="4" />
+      <FXAAPlaceholder3 value="4.000000" />
+      <Texture_QualityLevel value="2" />
+      <Texture_MipLodBias value="0" />
+      <TexturePlaceholder3 value="4.000000" />
+      <ParticlePlaceholder1 value="4" />
+      <ParticlePlaceholder2 value="true" />
+      <ParticlePlaceholder3 value="4.000000" />
+      <WaterPlaceholder1 value="4" />
+      <WaterPlaceholder2 value="true" />
+      <WaterPlaceholder3 value="4.000000" />
+      <Lighting_FogVolumes value="true" />
+      <LightingPlaceholder2 value="true" />
+      <LightingPlaceholder3 value="4.000000" />
+      <Shader_SSA value="true" />
+      <ShaderPlaceholder1 value="4" />
+      <ShaderPlaceholder3 value="4.000000" />
+    </graphics>
+    <system>
+      <numBytesPerReplayBlock value="12000000" />
+      <numReplayBlocks value="11" />
+      <maxSizeOfStreamingReplay value="2048" />
+    </system>
+    <audio>
+      <Audio3d value="false" />
+    </audio>
+    <video>
+      <AdapterIndex value="0" />
+      <OutputIndex value="0" />
+      <ScreenWidth value="1280" />
+      <ScreenHeight value="780" />
+      <RefreshRate value="60" />
+      <Windowed value="false" />
+      <VSync value="false" />
+    </video>
+  </medium>
+  <high>
+    <graphics>
+      <Tessellation value="false" />
+      <LodScale value="1.8" />
+      <PedLodBias value="0.2" />
+      <VehicleLodBias value="0.15" />
+      <ShadowQuality>Ultra</ShadowQuality>
+      <ReflectionQuality>Ultra</ReflectionQuality>
+      <SSAO value="true" />
+      <AnisotropicFiltering value="0" />
+      <MSAA value="0" />
+      <FXAA>Ultra</FXAA>
+      <TextureQuality>Ultra</TextureQuality>
+      <ParticleQuality>Ultra</ParticleQuality>
+      <WaterQuality>Ultra</WaterQuality>
+      <LightingQuality>Ultra</LightingQuality>
+      <GrassQuality>Ultra</GrassQuality>
+      <ChromaticAberration value="false" />
+      <ShaderQuality>Ultra</ShaderQuality>
+      <MulticoreRendering value="false" />
+      <Shadow_SoftShadows>Medium</Shadow_SoftShadows>
+      <Shadow_ParticleShadows value="true" />
+      <Shadow_SceneLights value="true" />
+      <Shadow_Headlights value="true" />
+      <Shadow_Distance value="2.5" />
+	    <Shadow_LongShadows value="true" />
+      <Shadow_SplitZStart value="0.98" />
+      <Shadow_SplitZEnd value="0.89" />
+      <Shadow_aircraftExpWeight value="0.99" />
+      <Reflection_MipBlur value="true" />
+      <ReflectionPlaceholder3 value="4.000000" />
+      <FXAA_Enabled value="true" />
+      <FXAAPlaceholder2 value="4" />
+      <FXAAPlaceholder3 value="4.000000" />
+      <Texture_QualityLevel value="2" />
+      <Texture_MipLodBias value="0" />
+      <TexturePlaceholder3 value="4.000000" />
+      <ParticlePlaceholder1 value="4" />
+      <ParticlePlaceholder2 value="true" />
+      <ParticlePlaceholder3 value="4.000000" />
+      <WaterPlaceholder1 value="4" />
+      <WaterPlaceholder2 value="true" />
+      <WaterPlaceholder3 value="4.000000" />
+      <Lighting_FogVolumes value="true" />
+      <LightingPlaceholder2 value="true" />
+      <LightingPlaceholder3 value="4.000000" />
+      <Shader_SSA value="true" />
+      <ShaderPlaceholder1 value="4" />
+      <ShaderPlaceholder3 value="4.000000" />
+    </graphics>
+    <system>
+      <numBytesPerReplayBlock value="12000000" />
+      <numReplayBlocks value="11" />
+      <maxSizeOfStreamingReplay value="2048" />
+    </system>
+    <audio>
+      <Audio3d value="false" />
+    </audio>
+    <video>
+      <AdapterIndex value="0" />
+      <OutputIndex value="0" />
+      <ScreenWidth value="1280" />
+      <ScreenHeight value="780" />
+      <RefreshRate value="60" />
+      <Windowed value="false" />
+      <VSync value="false" />
+    </video>
+  </high>
+  <ultra>
+    <graphics>
+      <Tessellation value="false" />
+      <LodScale value="1.8" />
+      <PedLodBias value="0.2" />
+      <VehicleLodBias value="0.15" />
+      <ShadowQuality>Ultra</ShadowQuality>
+      <ReflectionQuality>Ultra</ReflectionQuality>
+      <SSAO value="true" />
+      <AnisotropicFiltering value="0" />
+      <MSAA value="0" />
+      <FXAA>Ultra</FXAA>
+      <TextureQuality>Ultra</TextureQuality>
+      <ParticleQuality>Ultra</ParticleQuality>
+      <WaterQuality>Ultra</WaterQuality>
+      <LightingQuality>Ultra</LightingQuality>
+      <GrassQuality>Ultra</GrassQuality>
+      <ChromaticAberration value="false" />
+      <ShaderQuality>Ultra</ShaderQuality>
+      <MulticoreRendering value="false" />
+      <Shadow_SoftShadows>Medium</Shadow_SoftShadows>
+      <Shadow_ParticleShadows value="true" />
+      <Shadow_SceneLights value="true" />
+      <Shadow_Headlights value="true" />
+      <Shadow_Distance value="2.5" />
+	    <Shadow_LongShadows value="true" />
+      <Shadow_SplitZStart value="0.98" />
+      <Shadow_SplitZEnd value="0.89" />
+      <Shadow_aircraftExpWeight value="0.99" />
+      <Reflection_MipBlur value="true" />
+      <ReflectionPlaceholder3 value="4.000000" />
+      <FXAA_Enabled value="true" />
+      <FXAAPlaceholder2 value="4" />
+      <FXAAPlaceholder3 value="4.000000" />
+      <Texture_QualityLevel value="2" />
+      <Texture_MipLodBias value="0" />
+      <TexturePlaceholder3 value="4.000000" />
+      <ParticlePlaceholder1 value="4" />
+      <ParticlePlaceholder2 value="true" />
+      <ParticlePlaceholder3 value="4.000000" />
+      <WaterPlaceholder1 value="4" />
+      <WaterPlaceholder2 value="true" />
+      <WaterPlaceholder3 value="4.000000" />
+      <Lighting_FogVolumes value="true" />
+      <LightingPlaceholder2 value="true" />
+      <LightingPlaceholder3 value="4.000000" />
+      <Shader_SSA value="true" />
+      <ShaderPlaceholder1 value="4" />
+      <ShaderPlaceholder3 value="4.000000" />
+    </graphics>
+    <system>
+      <numBytesPerReplayBlock value="12000000" />
+      <numReplayBlocks value="11" />
+      <maxSizeOfStreamingReplay value="2048" />
+    </system>
+    <audio>
+      <Audio3d value="false" />
+    </audio>
+    <video>
+      <AdapterIndex value="0" />
+      <OutputIndex value="0" />
+      <ScreenWidth value="1280" />
+      <ScreenHeight value="780" />
+      <RefreshRate value="60" />
+      <Windowed value="false" />
+      <VSync value="false" />
+    </video>
+  </ultra>
+</CSettingsManager__Presets>

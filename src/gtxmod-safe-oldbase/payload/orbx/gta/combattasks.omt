@@ -1,0 +1,3643 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CTuningFile>
+  <Tunables>
+    <Item type="CCombatTaskManager__Tunables">
+      <Name>CCombatTaskManager</Name>
+      <fTimeBetweenUpdates value="1.12000000"/>
+      <iMaxPedsInCombatTask value="12"/>
+    </Item>
+    <Item type="CTaskAnimatedHitByExplosion__Tunables">
+      <Name>CTaskAnimatedHitByExplosion</Name>
+      <InitialRagdollDelay value="0.15000000"/>
+      <AllowPitchAndRoll value="false"/>
+    </Item>
+    <Item type="CTaskStandGuard__Tunables">
+      <Name>CTaskStandGuard</Name>
+      <MinStandWaitTimeMS value="2000"/>
+      <MaxStandWaitTimeMS value="5000"/>
+      <MinDefendPointWaitTimeMS value="5000"/>
+      <MaxDefendPointWaitTimeMS value="10000"/>
+      <MinNavmeshPatrolRadiusFactor value="0.40000000"/>
+      <MaxNavmeshPatrolRadiusFactor value="0.80000000"/>
+      <RouteRadiusFactor value="1.50000000"/>
+    </Item>
+    <Item type="CTaskCombatAdditionalTask__Tunables">
+      <Name>CTaskCombatAdditionalTask</Name>
+      <iBulletEventResponseLengthMs value="6000"/>
+      <fChanceOfDynamicRun value="0.70000000"/>
+      <fMaxDynamicStrafeDistance value="10.00000000"/>
+      <fMinTimeInState value="1.50000000"/>
+      <fMoveBlendRatioLerpTime value="2.00000000"/>
+      <fMinDistanceToClearCorner value="1.00000000"/>
+      <fMaxDistanceFromCorner value="5.25000000"/>
+      <fMaxLeavingCornerDistance value="2.50000000"/>
+      <fBlockedLosAimTime value="3.50000000"/>
+      <fStartAimingDistance value="17.50000000"/>
+      <fStopAimingDistance value="22.50000000"/>
+      <fMinOtherPedDistanceDiff value="2.00000000"/>
+      <fMinTimeBetweenRunDirectlyChecks value="0.75000000"/>
+      <fMaxTimeStrafing value="4.75000000"/>
+      <fMinTimeRunning value="3.50000000"/>
+      <fForceStrafeDistance value="17.50000000"/>
+      <fMaxLosBlockedTimeToForceClearLos value="0.00000000"/>
+    </Item>
+    <Item type="CTaskCombatFlank__Tunables">
+      <Name>CTaskCombatFlank</Name>
+      <fInfluenceSphereInnerWeight value="5.00000000"/>
+      <fInfluenceSphereOuterWeight value="5.00000000"/>
+      <fInfluenceSphereRequestRadius value="20.00000000"/>
+      <fInfluenceSphereCheckRouteRadius value="15.00000000"/>
+      <fSmallInfluenceSphereRadius value="10.00000000"/>
+      <fDistanceBetweenInfluenceSpheres value="12.00000000"/>
+      <fAbsoluteMinDistanceToTarget value="7.00000000"/>
+      <fCoverPointScoreMultiplier value="1.35000000"/>
+    </Item>
+    <Item type="CTaskHelicopterStrafe__Tunables">
+      <Name>CTaskHelicopterStrafe</Name>
+      <FlightHeightAboveTarget value="20"/>
+      <MinHeightAboveTerrain value="20"/>
+      <TargetDirectionMinDot value="0.75000000"/>
+      <TargetOffset value="60.00000000"/>
+      <TargetMinSpeedToIgnore value="5.00000000"/>
+      <TargetMaxSpeedToStrafe value="10.00000000"/>
+      <TimeToAvoidTargetAfterDamaged value="10.00000000"/>
+      <AvoidOffsetXY value="35.00000000"/>
+      <AvoidOffsetZ value="20.00000000"/>
+      <MinDotToBeConsideredInFront value="0.70700000"/>
+      <BehindRotateAngleLookAhead value="0.00000000"/>
+      <SearchRotateAngleLookAhead value="30.00000000"/>
+      <CircleRotateAngleLookAhead value="0.00000000"/>
+      <BehindTargetAngle value="90.00000000"/>
+      <TargetOffsetFilter value="5.00000000"/>
+      <MinTimeBetweenStrafeDirectionChanges value="5.00000000"/>
+    </Item>
+    <Item type="CTaskMeleeActionResult__Tunables">
+      <Name>CTaskMeleeActionResult</Name>
+      <ActionModeTime value="5.00000000"/>
+      <ForceRunDelayTime value="5.00000000"/>
+    </Item>
+    <Item type="CTaskMoveCombatMounted__Tunables">
+      <Name>CTaskMoveCombatMounted</Name>
+      <CircleTestRadii content="float_array">
+        20.00000000
+        12.00000000
+        28.00000000
+        16.00000000
+        24.00000000
+        8.00000000
+        32.00000000
+        40.00000000
+      </CircleTestRadii>
+      <CircleTestsMoveDistToTestNewPos value="4.00000000"/>
+      <MinTimeSinceAnyCircleJoined value="0.20000000"/>
+      <MinTimeSinceSameCircleJoined value="0.40000000"/>
+      <TransitionReactionTime value="1.00000000"/>
+      <VelStartCircling value="3.00000000"/>
+      <VelStopCircling value="3.50000000"/>
+      <MaxTimeWaitingForCircleMs value="3000"/>
+    </Item>
+    <Item type="CTaskDyingDead__Tunables">
+      <Name>CTaskDyingDead</Name>
+      <VehicleForwardInitialScale value="3.00000000"/>
+      <VehicleForwardScale value="0.20000000"/>
+      <TimeToApplyPushFromVehicleForce value="0.35000000"/>
+      <ForceToApply value="25.00000000"/>
+      <MinFallingSpeedForAnimatedDyingFall value="6.50000000"/>
+      <SphereTestRadiusForDeadWaterSettle value="0.40000000"/>
+      <RagdollAbortPoseDistanceThreshold value="0.10000000"/>
+      <RagdollAbortPoseMaxVelocity value="0.40000000"/>
+      <TimeToThrowWeaponMS value="500"/>
+      <TimeToThrowWeaponPlayerMS value="200"/>
+    </Item>
+    <Item type="CTaskDamageElectric__Tunables">
+      <Name>CTaskDamageElectric</Name>
+      <FallsOutofVehicleVelocity value="10.00000000"/>
+    </Item>
+    <Item type="CTaskInvestigate__Tunables">
+      <Name>CTaskInvestigate</Name>
+      <iTimeToStandAtSearchPoint value="4000"/>
+      <fMinDistanceToUseVehicle value="30.00000000"/>
+      <fMinDistanceSavingToUseVehicle value="0.50000000"/>
+      <fTimeToStandAtPerimeter value="10.00000000"/>
+      <fNewPositionThreshold value="5.00000000"/>
+    </Item>
+    <Item type="CTaskCombat__Tunables">
+      <Name>CTaskCombat</Name>
+      <BuddyShot>
+        <Enabled value="true"/>
+        <MinTimeBeforeReact value="0.20000000"/>
+        <MaxTimeBeforeReact value="0.50000000"/>
+        <MaxTimeSinceShot value="1.00000000"/>
+        <MaxDistance value="10.00000000"/>
+      </BuddyShot>
+      <LackOfHostility>
+        <WantedLevel1>
+          <Enabled value="true"/>
+          <MinTimeSinceLastHostileAction value="5.00000000"/>
+        </WantedLevel1>
+        <WantedLevel2>
+          <Enabled value="false"/>
+          <MinTimeSinceLastHostileAction value="0.00000000"/>
+        </WantedLevel2>
+        <WantedLevel3>
+          <Enabled value="false"/>
+          <MinTimeSinceLastHostileAction value="0.00000000"/>
+        </WantedLevel3>
+        <WantedLevel4>
+          <Enabled value="false"/>
+          <MinTimeSinceLastHostileAction value="0.00000000"/>
+        </WantedLevel4>
+        <WantedLevel5>
+          <Enabled value="false"/>
+          <MinTimeSinceLastHostileAction value="0.00000000"/>
+        </WantedLevel5>
+        <MaxSpeedForVehicle value="3.00000000"/>
+      </LackOfHostility>
+      <EnemyAccuracyScaling>
+        <iMinNumEnemiesForScaling value="3"/>
+        <fAccuracyReductionPerEnemy value="0.02500000"/>
+        <fAccuracyReductionFloor value="0.05000000"/>
+      </EnemyAccuracyScaling>
+      <ChargeTuning>
+        <bChargeTargetEnabled value="true"/>
+        <uMaxNumActiveChargers value="1"/>
+        <uConsiderRecentChargeAsActiveTimeoutMS value="30000"/>
+        <uMinTimeBetweenChargesAtSameTargetMS value="4000"/>
+        <uMinTimeForSamePedToChargeAgainMS value="30000"/>
+        <uCheckForChargeTargetPeriodMS value="250"/>
+        <fMinTimeInCombatSeconds value="5.00000000"/>
+        <fMinDistanceToTarget value="2.00000000"/>
+        <fMaxDistanceToTarget value="30.00000000"/>
+        <fMinDistToNonTargetEnemy value="4.00000000"/>
+        <fMinDistBetweenTargetAndOtherEnemies value="4.00000000"/>
+        <fDistToHidingTarget_Outer value="18.00000000"/>
+        <fDistToHidingTarget_Inner value="6.00000000"/>
+        <fChargeGoalCompletionRadius value="1.50000000"/>
+        <fCancelTargetOutOfCoverMovedDist value="2.00000000"/>
+        <fCancelTargetInCoverMovedDist value="3.00000000"/>
+      </ChargeTuning>
+      <ThrowSmokeGrenadeTuning>
+        <bThrowSmokeGrenadeEnabled value="true"/>
+        <uMaxNumActiveThrowers value="1"/>
+        <uConsiderRecentThrowAsActiveTimeoutMS value="30000"/>
+        <uMinTimeBetweenThrowsAtSameTargetMS value="2000"/>
+        <uMinTimeForSamePedToThrowAgainMS value="5000"/>
+        <uCheckForSmokeThrowPeriodMS value="275"/>
+        <fMinDistanceToTarget value="8.00000000"/>
+        <fMaxDistanceToTarget value="40.00000000"/>
+        <fDotMinThrowerToTarget value="0.60000000"/>
+        <fMinLoiteringTimeSeconds value="10.00000000"/>
+      </ThrowSmokeGrenadeTuning>
+      <MaxDistToCoverZ value="1.50000000"/>
+      <MaxDistToCoverXY value="0.50000000"/>
+      <fAmbientAnimsMinDistToTargetSq value="81.00000000"/>
+      <fAmbientAnimsMaxDistToTargetSq value="2500.00000000"/>
+      <fGoToDefAreaTimeOut value="10.00000000"/>
+      <fFireContinuouslyDistMin value="6.00000000"/>
+      <fFireContinuouslyDistMax value="12.00000000"/>
+      <fLostTargetTime value="30.00000000"/>
+      <fMinTimeAfterAimPoseForStateChange value="1.00000000"/>
+      <fMaxAttemptMoveToCoverDelay value="18.50000000"/>
+      <fMinAttemptMoveToCoverDelay value="16.50000000"/>
+      <fMaxAttemptMoveToCoverDelayGlobal value="15.00000000"/>
+      <fMinAttemptMoveToCoverDelayGlobal value="13.00000000"/>
+      <fMinDistanceForAltCover value="3.00000000"/>
+      <fMinTimeStandingAtCover value="8.00000000"/>
+      <fMinTimeBetweenFrustratedPeds value="15.00000000"/>
+      <fMaxTimeBetweenFrustratedPeds value="18.50000000"/>
+      <fRetreatTime value="5.00000000"/>
+      <fTargetTooCloseDistance value="10.00000000"/>
+      <fTimeBetweenJackingAttempts value="1.00000000"/>
+      <fTimeBetweenCoverSearchesMin value="1.35000000"/>
+      <fTimeBetweenCoverSearchesMax value="1.75000000"/>
+      <fTimeBetweenAltCoverSearches value="4.25000000"/>
+      <fShoutTargetPositionInterval value="3.00000000"/>
+      <fShoutBlockingLosInterval value="3.00000000"/>
+      <fTimeBetweenDragsMin value="20.00000000"/>
+      <fTimeBetweenSecondaryTargetUsesMin value="5.50000000"/>
+      <fTimeBetweenSecondaryTargetUsesMax value="7.00000000"/>
+      <fTimeToUseSecondaryTargetMin value="2.50000000"/>
+      <fTimeToUseSecondaryTargetMax value="3.50000000"/>
+      <fTimeBetweenCombatDirectorUpdates value="2.00000000"/>
+      <fTimeBetweenPassiveAnimsMin value="1.00000000"/>
+      <fTimeBetweenPassiveAnimsMax value="1.50000000"/>
+      <fTimeBetweenQuickGlancesMin value="1.75000000"/>
+      <fTimeBetweenQuickGlancesMax value="2.50000000"/>
+      <fTimeBetweenGestureAnimsMin value="10.00000000"/>
+      <fTimeBetweenGestureAnimsMax value="12.00000000"/>
+      <fTimeBetweenFailedGestureMin value="0.35000000"/>
+      <fTimeBetweenFailedGestureMax value="0.75000000"/>
+      <fTimeBetweenGesturesMinGlobal value="5.00000000"/>
+      <fTimeBetweenGesturesMaxGlobal value="6.00000000"/>
+      <fTimeSinceLastAimedAtForGesture value="1.25000000"/>
+      <fMinTimeBeforeReactToExplosion value="0.05000000"/>
+      <fMaxTimeBeforeReactToExplosion value="0.25000000"/>
+      <TargetInfluenceSphereRadius value="7.00000000"/>
+      <TargetMinDistanceToRoute value="5.50000000"/>
+      <TargetMinDistanceToAwayFacingNavLink value="25.00000000"/>
+      <fMaxWaitForCoverExitTime value="3.50000000"/>
+      <fMaxDstanceToMoveAwayFromAlly value="4.00000000"/>
+      <fTimeBetweenAllyProximityChecks value="2.50000000"/>
+      <fMinDistanceFromPrimaryTarget value="15.00000000"/>
+      <fMaxAngleBetweenTargets value="0.78539800"/>
+      <MaxDistanceFromPedToHelpPed value="15.00000000"/>
+      <MaxDotToTargetToHelpPed value="0.70700000"/>
+      <MaxHeadingDifferenceForQuickGlanceInSameDirection value="0.77999990"/>
+      <MinTimeBetweenQuickGlancesInSameDirection value="8.00000000"/>
+      <MaxSpeedToStartJackingVehicle value="1.25000000"/>
+      <MaxSpeedToContinueJackingVehicle value="2.25000000"/>
+      <TargetJackRadius value="1.00000000"/>
+      <SafetyProportionInDefensiveAreaMin value="0.65000000"/>
+      <SafetyProportionInDefensiveAreaMax value="0.80000000"/>
+      <MaxMoveToDefensiveAreaAngleVariation value="0.39270000"/>
+      <MinDistanceToEnterVehicleIfTargetEntersVehicle value="12.50000000"/>
+      <MaxDistanceToMyVehicleToChase value="35.00000000"/>
+      <MaxDistanceToVehicleForCommandeer value="20.00000000"/>
+      <NumEarlyVehicleEntryDriversAllowed value="3"/>
+      <SafeTimeBeforeLeavingCover value="2000"/>
+      <WaitTimeForJackingSlowedVehicle value="4000"/>
+      <MaxInjuredTargetTimerVariation value="1.50000000"/>
+      <MaxNumPedsChasingOnFoot value="3"/>
+      <FireTimeAfterStaticMovementAbort value="7.50000000"/>
+      <MinMovingToCoverTimeToStop value="4.75000000"/>
+      <MinDistanceToCoverToStop value="9.00000000"/>
+      <FireTimeAfterStoppingMoveToCover value="5.00000000"/>
+      <ApproachingTargetVehicleHoldFireDistance value="3.50000000"/>
+      <MinDefensiveAreaRadiusForWillAdvance value="10.00000000"/>
+      <MaxDistanceToHoldFireForArrest value="7.50000000"/>
+      <TimeToDelayChaseOnFoot value="0.75000000"/>
+      <FireTimeAfterChaseOnFoot value="2.50000000"/>
+      <MinTimeToChangeChaseOnFootSpeed value="2500"/>
+      <EnableForcedFireForTargetProximity value="false"/>
+      <MinForceFiringStateTime value="2.00000000"/>
+      <MaxForceFiringStateTime value="2.50000000"/>
+      <TimeBeforeInitialForcedFire value="3.00000000"/>
+      <TimeBetweenForcedFireStates value="4.00000000"/>
+      <MinTimeInStateForForcedFire value="2.00000000"/>
+      <MinForceFiringDistance value="1.50000000"/>
+      <MaxForceFiringDistance value="5.00000000"/>
+      <MinDistanceForAimIntro value="0.75000000"/>
+      <MinDistanceToBlockAimIntro value="0.00000000"/>
+      <MinBlockedLOSTimeToBlockAimIntro value="0.00000000"/>
+      <AmbientAnimLengthBuffer value="0.25000000"/>
+      <TimeBetweenPlayerArrestAttempts value="3719"/>
+      <TimeBetweenArmedMeleeAttemptsInMs value="2000"/>
+      <AllowMovingArmedMeleeAttack value="false"/>
+      <TimeToHoldFireAfterJack value="1.50000000"/>
+      <MinTimeBetweenMeleeJackAttempts value="2000"/>
+      <MinTimeBetweenMeleeJackAttemptsOnNetworkClone value="3500"/>
+      <MaxTimeToHoldFireAtTaskInitialization value="2.00000000"/>
+      <MaxTimeToRejectRespawnedTarget value="1000"/>
+      <MinDistanceForLawToFleeFromCombat value="80.00000000"/>
+      <MaxDistanceForLawToReturnToCombatFromFlee value="35.00000000"/>
+      <fTimeLosBlockedForReturnToInitialPosition value="5.00000000"/>
+    </Item>
+    <Item type="CTaskReactAimWeapon__Tunables">
+      <Name>CTaskReactAimWeapon</Name>
+      <Professional>
+        <Flinch>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_CLEAN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTIONS_RIFLE_CLEAN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_CLEAN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </Flinch>
+        <Surprised>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTION_AIM_PISTOL</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="true"/>
+            <HasCreateWeaponTag value="true"/>
+            <HasInterruptTag value="true"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTION_AIM_RIFLE</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="true"/>
+            <HasCreateWeaponTag value="true"/>
+            <HasInterruptTag value="true"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTION_AIM_PISTOL</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="true"/>
+            <HasCreateWeaponTag value="true"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </Surprised>
+        <Sniper>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_SNIPER</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTIONS_RIFLE_SNIPER</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_SNIPER</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </Sniper>
+        <None>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_TURN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTIONS_RIFLE_TURN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_TURN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </None>
+      </Professional>
+      <NotProfessional>
+        <Flinch>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_MESSY</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTIONS_RIFLE_MESSY</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_MESSY</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </Flinch>
+        <Surprised>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTION_AIM_PISTOL</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="true"/>
+            <HasCreateWeaponTag value="true"/>
+            <HasInterruptTag value="true"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTION_AIM_RIFLE</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="true"/>
+            <HasCreateWeaponTag value="true"/>
+            <HasInterruptTag value="true"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTION_AIM_PISTOL</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="true"/>
+            <HasCreateWeaponTag value="true"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </Surprised>
+        <Sniper>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_SNIPER</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTIONS_RIFLE_SNIPER</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_SNIPER</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </Sniper>
+        <None>
+          <Pistol>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_TURN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Pistol>
+          <Rifle>
+            <ClipSetId>COMBAT_REACTIONS_RIFLE_TURN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="false"/>
+          </Rifle>
+          <MicroSMG>
+            <ClipSetId>COMBAT_REACTIONS_PISTOL_TURN</ClipSetId>
+            <Rate value="1.00000000"/>
+            <HasSixDirections value="false"/>
+            <HasCreateWeaponTag value="false"/>
+            <HasInterruptTag value="true"/>
+          </MicroSMG>
+        </None>
+      </NotProfessional>
+      <Rate value="1.30000000"/>
+      <MaxRateVariance value="0.15000000"/>
+    </Item>
+    <Item type="CTaskSearch__Tunables">
+      <Name>CTaskSearch</Name>
+      <TimeToStare value="5.00000000"/>
+      <MoveBlendRatio value="2.00000000"/>
+      <TargetReached value="10.00000000"/>
+      <CruiseSpeed value="40.00000000"/>
+    </Item>
+    <Item type="CTaskSearchForUnknownThreat__Tunables">
+      <Name>CTaskSearchForUnknownThreat</Name>
+      <iMinTimeBeforeSearchingForNewHidingPlace value="10000"/>
+      <iMaxTimeBeforeSearchingForNewHidingPlace value="20000"/>
+    </Item>
+    <Item type="CTaskSharkCircle__Tunables">
+      <Name>CTaskSharkCircle</Name>
+      <AdvanceDistanceSquared value="25.00000000"/>
+      <MoveRateOverride value="0.70000000"/>
+    </Item>
+    <Item type="CTaskSharkAttack__Tunables">
+      <Name>CTaskSharkAttack</Name>
+      <SurfaceProjectionDistance value="7.00000000"/>
+      <SurfaceZOffset value="0.25000000"/>
+      <MinDepthBelowSurface value="1.70000000"/>
+      <CirclingAngularSpeed value="100.00000000"/>
+      <TimeToCircle value="8.00000000"/>
+      <MinCircleRadius value="10.00000000"/>
+      <MaxCircleRadius value="14.00000000"/>
+      <CirclingMBR value="3.00000000"/>
+      <DiveProjectionDistance value="10.00000000"/>
+      <DiveDepth value="5.00000000"/>
+      <DiveMBR value="3.00000000"/>
+      <MinNumberFakeApproaches value="2"/>
+      <MaxNumberFakeApproaches value="4"/>
+      <FakeLungeOffset value="9.00000000"/>
+      <LungeForwardOffset value="5.00000000"/>
+      <LungeZOffset value="0.50000000"/>
+      <LungeChangeDistance value="0.10000000"/>
+      <LungeTargetRadius value="1.00000000"/>
+      <FollowTimeout value="30.00000000"/>
+      <FollowYOffset value="12.00000000"/>
+      <FollowZOffset value="1.00000000"/>
+      <LandProbeLength value="12.00000000"/>
+      <MovingVehicleVelocityThreshold value="10.00000000"/>
+      <SharkFleeDist value="35.00000000"/>
+    </Item>
+    <Item type="CTaskCover__Tunables">
+      <Name>CTaskCover</Name>
+      <FPSBlindFireOutroBlendOutPelvisOffsetTime value="0.10000000"/>
+      <FPSAimOutroBlendOutPelvisOffsetTime value="0.00000000"/>
+      <FPSPeekToAimBlendDurationHigh value="0.00000000"/>
+      <FPSPeekToAimBlendDurationLow value="0.15000000"/>
+      <FPSPeekToBlindFireBlendDurationHigh value="0.10000000"/>
+      <FPSPeekToBlindFireBlendDurationLow value="0.10000000"/>
+      <FPSDefaultBlendDurationHigh value="0.20000000"/>
+      <FPSDefaultBlendDurationLow value="0.20000000"/>
+      <PriorityCoverWeighting value="1.00000000"/>
+      <AngleToCameraWeighting value="4.00000000"/>
+      <AngleToDynamicCoverWeighting value="2.00000000"/>
+      <DistanceWeighting value="2.00000000"/>
+      <AngleToCoverWeighting value="3.00000000"/>
+      <AngleOfCoverWeighting value="0.00000000"/>
+      <EdgeWeighting value="2.00000000"/>
+      <NetworkBlendOutDurationRun value="0.75000000"/>
+      <NetworkBlendOutDurationRunStart value="0.50000000"/>
+      <NetworkBlendOutDuration value="0.45000000"/>
+      <MaxPlayerToCoverDist value="6.50000000"/>
+      <MaxPlayerToCoverDistFPS value="4.00000000"/>
+      <MaxAngularDiffBetweenDynamicAndStaticCover value="0.25000000"/>
+      <RangeToUseDynamicCoverPointMin value="4.00000000"/>
+      <RangeToUseDynamicCoverPointMax value="7.00000000"/>
+      <MinDistToCoverAnyDir value="1.00000000"/>
+      <MinDistToPriorityCoverToForce value="2.50000000"/>
+      <MinDistToCoverSpecificDir value="2.00000000"/>
+      <BehindPedToCoverCosTolerance value="0.00000000"/>
+      <SearchToCoverCosTolerance value="0.00000000"/>
+      <CapsuleZOffset value="0.25000000"/>
+      <TimeBetweenTestSpheresIntersectingRoute value="0.25000000"/>
+      <MaxDistToCoverWhenPlayerIsClose value="1.00000000"/>
+      <MinCoverToPlayerCoverDist value="1.00000000"/>
+      <MinMoveToCoverDistForCoverMeAudio value="6.00000000"/>
+      <MaxSecondsAsTopLevelTask value="2.00000000"/>
+      <ForceStreamingFailure value="false"/>
+      <StreamedUnarmedCoverMovementClipSetId>COVER@MOVE@EXTRA@CORE</StreamedUnarmedCoverMovementClipSetId>
+      <StreamedUnarmedCoverMovementFPSClipSetId>COVER@FIRST_PERSON@MOVE@EXTRA@CORE</StreamedUnarmedCoverMovementFPSClipSetId>
+      <StreamedOneHandedCoverMovementClipSetId>COVER@MOVE@EXTRA@1H</StreamedOneHandedCoverMovementClipSetId>
+      <AIOneHandedAimingClipSetId>COVER@WEAPON@AI@1H</AIOneHandedAimingClipSetId>
+      <AITwoHandedAimingClipSetId>COVER@WEAPON@AI@2H</AITwoHandedAimingClipSetId>
+      <CoreWeaponClipSetId>COVER@WEAPON@CORE</CoreWeaponClipSetId>
+      <CoreWeaponAimingClipSetId>COVER@WEAPON@1H</CoreWeaponAimingClipSetId>
+      <CoreWeaponAimingFPSClipSetId>COVER@FIRST_PERSON@WEAPON@1H</CoreWeaponAimingFPSClipSetId>
+    </Item>
+    <Item type="CTaskEnterCover__Tunables">
+      <Name>CTaskEnterCover</Name>
+      <CoverEntryRatePlayer value="1.00000000"/>
+      <CoverEntryRateAI value="0.60000000"/>
+      <CoverEntryShortDistanceAI value="2.50000000"/>
+      <CoverEntryShortDistancePlayer value="2.50000000"/>
+      <CoverEntryStandDistance value="1.00000000"/>
+      <CoverEntryStandStrafeDistance value="0.75000000"/>
+      <CoverEntryMinDistance value="0.75000000"/>
+      <CoverEntryMaxDistance value="7.00000000"/>
+      <CoverEntryMinDistanceAI value="2.50000000"/>
+      <CoverEntryMaxDistanceAI value="5.50000000"/>
+      <CoverEntryMaxDirectDistance value="2.00000000"/>
+      <CoverEntryMinTimeNavigatingAI value="1000"/>
+      <CoverEntryMinAngleToScale value="0.01000000"/>
+      <CoverEntryHeadingReachedTol value="0.00500000"/>
+      <CoverEntryPositionReachedTol value="0.01000000"/>
+      <FromCoverExitDistance value="0.50000000"/>
+      <NetworkBlendInDuration value="0.25000000"/>
+      <DistFromCoverToAllowReloadCache value="7.50000000"/>
+      <WaitForFootPlant value="false"/>
+      <EnableFootTagSyncing value="false"/>
+      <ForceToTarget value="true"/>
+      <EnableInitialHeadingBlend value="true"/>
+      <EnableTranslationScaling value="true"/>
+      <EnableRotationScaling value="true"/>
+      <PreventTranslationOvershoot value="true"/>
+      <PreventRotationOvershoot value="true"/>
+      <DoInitialHeadingBlend value="true"/>
+      <DoFinalHeadingFixUp value="true"/>
+      <MinDistToPlayEntryAnim value="2.00000000"/>
+      <MinDistToScale value="0.01000000"/>
+      <MaxSpeed value="5.25000000"/>
+      <MaxRotSpeed value="10.00000000"/>
+      <MinTransScale value="0.50000000"/>
+      <MaxTransScale value="1.50000000"/>
+      <MinRotScale value="0.50000000"/>
+      <MaxRotScale value="1.50000000"/>
+      <DeltaTolerance value="0.00100000"/>
+      <MinRotDelta value="0.20000000"/>
+      <MaxAngleToSetDirectly value="0.05000000"/>
+      <AiEntryHalfAngleTolerance value="0.30000000"/>
+      <EnableNewAICoverEntry value="true"/>
+      <EnableUseSwatClipSet value="true"/>
+      <UseShortDistAngleRotation value="true"/>
+      <DisableAiCoverEntryStreamCheck value="false"/>
+      <DistToUseShortestRotation value="2.00000000"/>
+      <InCoverTolerance value="0.05000000"/>
+      <DotThresholdForCenterEnter value="0.80000000"/>
+      <AiEntryMinRate value="0.90000000"/>
+      <AiEntryMaxRate value="1.10000000"/>
+      <PlayerSprintEntryRate value="1.10000000"/>
+      <DefaultPlayerStandEntryStartMovementPhase value="0.22500000"/>
+      <DefaultPlayerStandEntryEndMovementPhase value="0.45000000"/>
+      <MaxAngleToBeginRotationScale value="0.10000000"/>
+      <MaxDefaultAngularVelocity value="3.00000000"/>
+      <EnterCoverInterruptMinTime value="0.25000000"/>
+      <EnterCoverInterruptDistanceTolerance value="0.10000000"/>
+      <EnterCoverInterruptHeadingTolerance value="0.10000000"/>
+      <EnterCoverAimInterruptDistanceTolerance value="0.25000000"/>
+      <EnterCoverAimInterruptHeadingTolerance value="0.50000000"/>
+      <ThirdPersonAnimStateInfos>
+        <SlidingEnterCoverAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>enter_low_l_faceright</Item>
+            </Clips>
+            <Flags>AF_Low AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_low_r_faceleft</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_l_faceright</Item>
+            </Clips>
+            <Flags>AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_r_faceleft</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_low_l_faceleft</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_low_r_faceright</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_l_faceleft</Item>
+            </Clips>
+            <Flags>AF_FaceLeft AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_r_faceright</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </SlidingEnterCoverAnimStateInfos>
+        <PlayerStandEnterCoverAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>Enter_High_L_0-5m_-180</Item>
+              <Item>Enter_High_L_0-5m_00</Item>
+              <Item>Enter_High_L_0-5m_180</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Enter_High_R_0-5m_-180</Item>
+              <Item>Enter_High_R_0-5m_00</Item>
+              <Item>Enter_High_R_0-5m_180</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Enter_Low_L_0-5m_-180</Item>
+              <Item>Enter_Low_L_0-5m_00</Item>
+              <Item>Enter_Low_L_0-5m_180</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Enter_Low_R_0-5m_-180</Item>
+              <Item>Enter_Low_R_0-5m_00</Item>
+              <Item>Enter_Low_R_0-5m_180</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </PlayerStandEnterCoverAnimStateInfos>
+      </ThirdPersonAnimStateInfos>
+      <FirstPersonAnimStateInfos>
+        <SlidingEnterCoverAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>enter_low_l_faceright</Item>
+              <Item>enter_low_l_faceright_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_low_r_faceleft</Item>
+              <Item>enter_low_r_faceleft_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_l_faceright</Item>
+              <Item>enter_high_l_faceright_facecover</Item>
+            </Clips>
+            <Flags>AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_r_faceleft</Item>
+              <Item>enter_high_r_faceleft_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_low_l_faceleft</Item>
+              <Item>enter_low_l_faceleft_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_low_r_faceright</Item>
+              <Item>enter_low_r_faceright_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_l_faceleft</Item>
+              <Item>enter_high_l_faceleft_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft AF_EnterLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>enter_high_r_faceright</Item>
+              <Item>enter_high_r_faceright_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </SlidingEnterCoverAnimStateInfos>
+        <PlayerStandEnterCoverAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>Enter_High_L_0-5m_-180</Item>
+              <Item>Enter_High_L_0-5m_00</Item>
+              <Item>Enter_High_L_0-5m_180</Item>
+              <Item>Enter_High_L_0-5m_-180_FaceCover</Item>
+              <Item>Enter_High_L_0-5m_00_FaceCover</Item>
+              <Item>Enter_High_L_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Enter_High_R_0-5m_-180</Item>
+              <Item>Enter_High_R_0-5m_00</Item>
+              <Item>Enter_High_R_0-5m_180</Item>
+              <Item>Enter_High_R_0-5m_-180_FaceCover</Item>
+              <Item>Enter_High_R_0-5m_00_FaceCover</Item>
+              <Item>Enter_High_R_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Enter_Low_L_0-5m_-180</Item>
+              <Item>Enter_Low_L_0-5m_00</Item>
+              <Item>Enter_Low_L_0-5m_180</Item>
+              <Item>Enter_Low_L_0-5m_-180_FaceCover</Item>
+              <Item>Enter_Low_L_0-5m_00_FaceCover</Item>
+              <Item>Enter_Low_L_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Enter_Low_R_0-5m_-180</Item>
+              <Item>Enter_Low_R_0-5m_00</Item>
+              <Item>Enter_Low_R_0-5m_180</Item>
+              <Item>Enter_Low_R_0-5m_-180_FaceCover</Item>
+              <Item>Enter_Low_R_0-5m_00_FaceCover</Item>
+              <Item>Enter_Low_R_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </PlayerStandEnterCoverAnimStateInfos>
+      </FirstPersonAnimStateInfos>
+      <AIEnterCoverClips>
+        <Item>
+          <EnterClipId>high_left</EnterClipId>
+          <Flags>AF_EnterLeft</Flags>
+        </Item>
+        <Item>
+          <EnterClipId>high_center</EnterClipId>
+          <Flags>AF_Center</Flags>
+        </Item>
+        <Item>
+          <EnterClipId>high_right</EnterClipId>
+          <Flags/>
+        </Item>
+        <Item>
+          <EnterClipId>low_left</EnterClipId>
+          <Flags>AF_Low AF_EnterLeft</Flags>
+        </Item>
+        <Item>
+          <EnterClipId>low_center</EnterClipId>
+          <Flags>AF_Low AF_Center</Flags>
+        </Item>
+        <Item>
+          <EnterClipId>low_right</EnterClipId>
+          <Flags>AF_Low</Flags>
+        </Item>
+      </AIEnterCoverClips>
+      <AIStandEnterCoverClips>
+        <Item>
+          <StandClip0Id>stand_high_0_l</StandClip0Id>
+          <StandClip1Id>stand_high_90_l</StandClip1Id>
+          <StandClip2Id>stand_high_180_l</StandClip2Id>
+          <Flags>AF_EnterLeft</Flags>
+        </Item>
+        <Item>
+          <StandClip0Id>stand_high_0_r</StandClip0Id>
+          <StandClip1Id>stand_high_90_r</StandClip1Id>
+          <StandClip2Id>stand_high_180_r</StandClip2Id>
+          <Flags/>
+        </Item>
+        <Item>
+          <StandClip0Id>stand_low_0_l</StandClip0Id>
+          <StandClip1Id>stand_low_90_l</StandClip1Id>
+          <StandClip2Id>stand_low_180_l</StandClip2Id>
+          <Flags>AF_Low AF_EnterLeft</Flags>
+        </Item>
+        <Item>
+          <StandClip0Id>stand_low_0_r</StandClip0Id>
+          <StandClip1Id>stand_low_90_r</StandClip1Id>
+          <StandClip2Id>stand_low_180_r</StandClip2Id>
+          <Flags>AF_Low</Flags>
+        </Item>
+      </AIStandEnterCoverClips>
+      <AIEnterTransitionClips>
+        <Item>
+          <EnterClipId>high_left</EnterClipId>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <EnterClipId>high_right</EnterClipId>
+          <Flags/>
+        </Item>
+        <Item>
+          <EnterClipId>low_left</EnterClipId>
+          <Flags>AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <EnterClipId>low_right</EnterClipId>
+          <Flags>AF_Low</Flags>
+        </Item>
+      </AIEnterTransitionClips>
+      <EnterCoverAIAimingBase1H>COVER@MOVE@AI@BASE@1H@AIM</EnterCoverAIAimingBase1H>
+      <EnterCoverAIAimingBase2H>COVER@MOVE@AI@BASE@2H@AIM</EnterCoverAIAimingBase2H>
+      <EnterCoverAIAimingSwat1H>COVER@MOVE@AI@SWAT@1H@AIM</EnterCoverAIAimingSwat1H>
+      <EnterCoverAIAimingSwat2H>COVER@MOVE@AI@SWAT@2H@AIM</EnterCoverAIAimingSwat2H>
+      <EnterCoverAITransition1H>COVER@TRANSITIONS@1H</EnterCoverAITransition1H>
+      <EnterCoverAITransition2H>COVER@TRANSITIONS@2H</EnterCoverAITransition2H>
+    </Item>
+    <Item type="CTaskExitCover__Tunables">
+      <Name>CTaskExitCover</Name>
+      <CornerExitClips>
+        <Item>
+          <ExitClipId>break_high_l</ExitClipId>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <ExitClipId>break_high_r</ExitClipId>
+          <Flags/>
+        </Item>
+        <Item>
+          <ExitClipId>break_low_l</ExitClipId>
+          <Flags>AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <ExitClipId>break_low_r</ExitClipId>
+          <Flags>AF_Low</Flags>
+        </Item>
+      </CornerExitClips>
+      <ExitCoverBaseClipSetId>COVER@MOVE@BASE@CORE</ExitCoverBaseClipSetId>
+      <ExitCoverBaseFPSClipSetId>COVER@FIRST_PERSON@MOVE@BASE@CORE</ExitCoverBaseFPSClipSetId>
+      <ExitCoverExtraClipSetId>COVER@MOVE@EXTRA@CORE</ExitCoverExtraClipSetId>
+      <ExitCoverExtraFPSClipSetId>COVER@FIRST_PERSON@MOVE@EXTRA@CORE</ExitCoverExtraFPSClipSetId>
+      <MinInputToInterruptIdle value="0.20000000"/>
+      <CornerExitHeadingModifier value="3.50000000"/>
+      <ExitCornerZOffset value="0.25000000"/>
+      <ExitCornerYOffset value="1.00000000"/>
+      <ExitCornerDirOffset value="1.00000000"/>
+      <ThirdPersonAnimStateInfos>
+        <StandExitAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>Exit_High_L_0-5m_-180</Item>
+              <Item>Exit_High_L_0-5m_00</Item>
+              <Item>Exit_High_L_0-5m_180</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Exit_High_R_0-5m_-180</Item>
+              <Item>Exit_High_R_0-5m_00</Item>
+              <Item>Exit_High_R_0-5m_180</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Exit_Low_L_0-5m_-180</Item>
+              <Item>Exit_Low_L_0-5m_00</Item>
+              <Item>Exit_Low_L_0-5m_180</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Exit_Low_R_0-5m_-180</Item>
+              <Item>Exit_Low_R_0-5m_00</Item>
+              <Item>Exit_Low_R_0-5m_180</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </StandExitAnimStateInfos>
+      </ThirdPersonAnimStateInfos>
+      <FirstPersonAnimStateInfos>
+        <StandExitAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>Exit_High_L_0-5m_-180</Item>
+              <Item>Exit_High_L_0-5m_00</Item>
+              <Item>Exit_High_L_0-5m_180</Item>
+              <Item>Exit_High_L_0-5m_-180_FaceCover</Item>
+              <Item>Exit_High_L_0-5m_00_FaceCover</Item>
+              <Item>Exit_High_L_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Exit_High_R_0-5m_-180</Item>
+              <Item>Exit_High_R_0-5m_00</Item>
+              <Item>Exit_High_R_0-5m_180</Item>
+              <Item>Exit_High_R_0-5m_-180_FaceCover</Item>
+              <Item>Exit_High_R_0-5m_00_FaceCover</Item>
+              <Item>Exit_High_R_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Exit_Low_L_0-5m_-180</Item>
+              <Item>Exit_Low_L_0-5m_00</Item>
+              <Item>Exit_Low_L_0-5m_180</Item>
+              <Item>Exit_Low_L_0-5m_-180_FaceCover</Item>
+              <Item>Exit_Low_L_0-5m_00_FaceCover</Item>
+              <Item>Exit_Low_L_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>Exit_Low_R_0-5m_-180</Item>
+              <Item>Exit_Low_R_0-5m_00</Item>
+              <Item>Exit_Low_R_0-5m_180</Item>
+              <Item>Exit_Low_R_0-5m_-180_FaceCover</Item>
+              <Item>Exit_Low_R_0-5m_00_FaceCover</Item>
+              <Item>Exit_Low_R_0-5m_180_FaceCover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </StandExitAnimStateInfos>
+      </FirstPersonAnimStateInfos>
+    </Item>
+    <Item type="CTaskInCover__Tunables">
+      <Name>CTaskInCover</Name>
+      <MovementClipRate value="1.00000000"/>
+      <TurnClipRate value="1.00000000"/>
+      <MaxInputForIdleExit value="20.00000000"/>
+      <InputYAxisCornerExitValue value="80.00000000"/>
+      <ControlDebugXPos value="0.85000000"/>
+      <ControlDebugYPos value="0.15000000"/>
+      <ControlDebugRadius value="0.07500000"/>
+      <ControlDebugBeginAngle value="0.00000000"/>
+      <ControlDebugEndAngle value="1.57000000"/>
+      <MinStickInputToMoveInCover value="25.00000000"/>
+      <MinStickInputXAxisToTurnInCover value="65.00000000"/>
+      <InputYAxisQuitValueAimDirect value="-10.00000000"/>
+      <InputYAxisQuitValue value="-80.00000000"/>
+      <StartExtendedProbeTime value="0.10000000"/>
+      <MinTimeToSpendInTask value="0.00000000"/>
+      <DesiredDistanceToCover value="0.02500000"/>
+      <DesiredDistanceToCoverToRequestStep value="0.04000000"/>
+      <OptimumDistToRightCoverEdgeCrouched value="0.35000000"/>
+      <OptimumDistToLeftCoverEdgeCrouched value="0.35000000"/>
+      <OptimumDistToRightCoverEdge value="0.35000000"/>
+      <OptimumDistToLeftCoverEdge value="0.35000000"/>
+      <MinMovingProbeOffset value="0.00000000"/>
+      <MaxMovingProbeOffset value="0.65000000"/>
+      <MinTurnProbeOffset value="0.00000000"/>
+      <MaxTurnProbeOffset value="0.65000000"/>
+      <DefaultProbeOffset value="0.25000000"/>
+      <MinStoppingEdgeCheckProbeOffset value="0.40000000"/>
+      <MaxStoppingEdgeCheckProbeOffset value="1.00000000"/>
+      <MinStoppingProbeOffset value="0.30000000"/>
+      <MaxStoppingProbeOffset value="0.85000000"/>
+      <HeadingChangeRate value="8.00000000"/>
+      <MinTimeBeforeAllowingCornerMove value="0.10000000"/>
+      <CrouchedLeftFireOffset value="-0.22000000"/>
+      <CrouchedRightFireOffset value="0.32500000"/>
+      <CoverLeftFireModifier value="0.80000000"/>
+      <CoverRightFireModifier value="0.80000000"/>
+      <CoverLeftFireModifierLow value="0.30000000"/>
+      <CoverRightFireModifierLow value="0.30000000"/>
+      <CoverLeftFireModifierCloseToEdge value="1.10000000"/>
+      <CoverRightFireModifierCloseToEdge value="1.10000000"/>
+      <CoverLeftIncreaseModifier value="2.00000000"/>
+      <CoverRightIncreaseModifier value="2.00000000"/>
+      <AimTurnCosAngleTolerance value="0.25000000"/>
+      <InCoverMovementSpeedEnterCover value="10.00000000"/>
+      <InCoverMovementSpeed value="2.00000000"/>
+      <SteppingMovementSpeed value="1.00000000"/>
+      <UseAutoPeekAimFromCoverControls value="true"/>
+      <ComeBackInWhenAimDirectChangeInHighCover value="false"/>
+      <AlternateControlStickInputThreshold value="0.80000000"/>
+      <EdgeCapsuleRadius value="0.20000000"/>
+      <EdgeStartXOffset value="0.45000000"/>
+      <EdgeEndXOffset value="0.45000000"/>
+      <EdgeStartYOffset value="0.60000000"/>
+      <EdgeEndYOffset value="-0.20000000"/>
+      <InsideEdgeStartYOffset value="0.00000000"/>
+      <InsideEdgeEndYOffset value="0.70000000"/>
+      <InsideEdgeStartXOffset value="0.00000000"/>
+      <InsideEdgeEndXOffset value="0.00000000"/>
+      <WallTestYOffset value="0.70000000"/>
+      <InitialLowEdgeWallTestYOffset value="1.00000000"/>
+      <HighCloseEdgeWallTestYOffset value="0.90000000"/>
+      <WallTestStartXOffset value="0.00000000"/>
+      <WallTestEndXOffset value="0.50000000"/>
+      <WallHighTestZOffset value="0.15000000"/>
+      <MovingEdgeTestStartYOffset value="0.80000000"/>
+      <MovingEdgeTestEndYOffset value="-0.20000000"/>
+      <CoverToCoverEdgeTestStartYOffset value="0.40000000"/>
+      <CoverToCoverEdgeTestEndYOffset value="-0.20000000"/>
+      <SteppingEdgeTestStartYOffset value="0.60000000"/>
+      <SteppingEdgeTestEndYOffset value="-0.20000000"/>
+      <InitialLowEdgeTestStartYOffset value="1.00000000"/>
+      <InitialLowEdgeTestEndYOffset value="-0.20000000"/>
+      <EdgeHighZOffset value="0.25000000"/>
+      <EdgeLowZOffset value="-0.25000000"/>
+      <EdgeMinimumOffsetDiff value="0.05000000"/>
+      <EdgeMaximumOffsetDiff value="1.00000000"/>
+      <PinnedDownPeekChance value="0.25000000"/>
+      <PinnedDownBlindFireChance value="0.40000000"/>
+      <MinTimeBeforeAllowingAutoPeek value="0.00000000"/>
+      <EnableAimDirectlyIntros value="true"/>
+      <PedDirToPedCoverCosAngleTol value="0.95000000"/>
+      <CamToPedDirCosAngleTol value="-0.25000000"/>
+      <CamToCoverDirCosAngleTol value="0.25000000"/>
+      <MinDistanceToTargetForPeek value="8.00000000"/>
+      <TimeBetweenPeeksWithoutLOS value="3.50000000"/>
+      <ThrowProjectileClips>
+        <Item>
+          <IntroClipId>hi_l_intro</IntroClipId>
+          <PullPinClipId>hi_l_pinpull</PullPinClipId>
+          <BaseClipId>hi_l_cook</BaseClipId>
+          <ThrowLongClipId>hi_l_throw_long</ThrowLongClipId>
+          <ThrowShortClipId>hi_l_throw_short</ThrowShortClipId>
+          <ThrowLongFaceCoverClipId/>
+          <ThrowShortFaceCoverClipId/>
+          <Flags>AF_AtEdge AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <IntroClipId>hi_r_intro</IntroClipId>
+          <PullPinClipId>hi_r_pinpull</PullPinClipId>
+          <BaseClipId>hi_r_cook</BaseClipId>
+          <ThrowLongClipId>hi_r_throw_long</ThrowLongClipId>
+          <ThrowShortClipId>hi_r_throw_short</ThrowShortClipId>
+          <ThrowLongFaceCoverClipId/>
+          <ThrowShortFaceCoverClipId/>
+          <Flags>AF_AtEdge</Flags>
+        </Item>
+        <Item>
+          <IntroClipId>low_l_intro</IntroClipId>
+          <PullPinClipId>low_l_pinpull</PullPinClipId>
+          <BaseClipId>low_l_cook</BaseClipId>
+          <ThrowLongClipId>low_l_throw_long</ThrowLongClipId>
+          <ThrowShortClipId>low_l_throw_short</ThrowShortClipId>
+          <ThrowLongFaceCoverClipId/>
+          <ThrowShortFaceCoverClipId/>
+          <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <IntroClipId>low_r_intro</IntroClipId>
+          <PullPinClipId>low_r_pinpull</PullPinClipId>
+          <BaseClipId>low_r_cook</BaseClipId>
+          <ThrowLongClipId>low_r_throw_long</ThrowLongClipId>
+          <ThrowShortClipId>low_r_throw_short</ThrowShortClipId>
+          <ThrowLongFaceCoverClipId/>
+          <ThrowShortFaceCoverClipId/>
+          <Flags>AF_AtEdge AF_Low</Flags>
+        </Item>
+        <Item>
+          <IntroClipId>low_l_intro</IntroClipId>
+          <PullPinClipId>low_l_pinpull</PullPinClipId>
+          <BaseClipId>low_l_cook</BaseClipId>
+          <ThrowLongClipId>low_l_throw_long</ThrowLongClipId>
+          <ThrowShortClipId>low_l_throw_short</ThrowShortClipId>
+          <ThrowLongFaceCoverClipId/>
+          <ThrowShortFaceCoverClipId/>
+          <Flags>AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <IntroClipId>low_r_intro</IntroClipId>
+          <PullPinClipId>low_r_pinpull</PullPinClipId>
+          <BaseClipId>low_r_cook</BaseClipId>
+          <ThrowLongClipId>low_r_throw_long</ThrowLongClipId>
+          <ThrowShortClipId>low_r_throw_short</ThrowShortClipId>
+          <ThrowLongFaceCoverClipId/>
+          <ThrowShortFaceCoverClipId/>
+          <Flags>AF_Low</Flags>
+        </Item>
+      </ThrowProjectileClips>
+      <RecreateWeaponTime value="750"/>
+      <BlindFireHighCoverMinPitchLimit value="-0.40000000"/>
+      <BlindFireHighCoverMaxPitchLimit value="0.25000000"/>
+      <EnableLeftHandIkInCover value="true"/>
+      <EnableReloadingWhilstMovingInCover value="true"/>
+      <AimIntroRateForAi value="1.00000000"/>
+      <AimOutroRateForAi value="1.00000000"/>
+      <MinReactToFireRate value="0.70000000"/>
+      <MaxReactToFireRate value="1.30000000"/>
+      <MaxReactToFireDelay value="0.35000000"/>
+      <MinTimeUntilReturnToIdleFromAimAfterAimedAt value="0.35000000"/>
+      <MaxTimeUntilReturnToIdleFromAimAfterAimedAt value="0.40000000"/>
+      <MinTimeUntilReturnToIdleFromAimDefault value="1.00000000"/>
+      <MaxTimeUntilReturnToIdleFromAimDefault value="3.00000000"/>
+      <GlobalLateralTorsoOffsetInLeftCover value="5.00000000"/>
+      <WeaponLongBlockingOffsetInHighLeftCover value="-0.20000000"/>
+      <WeaponLongBlockingOffsetInLeftCover value="-0.27500000"/>
+      <WeaponLongBlockingOffsetInLeftCoverFPS value="-0.13500000"/>
+      <WeaponBlockingOffsetInLeftCover value="-0.19000000"/>
+      <WeaponBlockingOffsetInLeftCoverFPS value="-0.12000000"/>
+      <WeaponBlockingOffsetInRightCover value="0.00000000"/>
+      <WeaponBlockingOffsetInRightCoverFPS value="0.00000000"/>
+      <WeaponBlockingLengthLongWeaponOffset value="-0.20000000"/>
+      <WeaponBlockingLengthLongWeaponOffsetFPS value="-0.20000000"/>
+      <WeaponBlockingLengthOffset value="-0.08500000"/>
+      <WeaponBlockingLengthOffsetFPS value="-0.18800000"/>
+      <CoverStepClipSetId>COVER@WEAPON@1H</CoverStepClipSetId>
+      <PinnedDownTakeCoverAmount value="40.00000000"/>
+      <AmountPinnedDownByDamage value="100.00000000"/>
+      <AmountPinnedDownByBullet value="25.00000000"/>
+      <AmountPinnedDownByWitnessKill value="50.00000000"/>
+      <PinnedDownByBulletRange value="3.00000000"/>
+      <PinnedDownDecreaseAmountPerSecond value="18.00000000"/>
+      <AimIntroTaskBlendOutDuration value="0.50000000"/>
+      <MinTimeToBePinnedDown value="2000"/>
+      <TimeBetweenBurstsMaxRandomPercent value="0.12500000"/>
+      <AimOutroDelayTime value="0"/>
+      <AimOutroDelayTimeFPS value="0"/>
+      <AimOutroDelayTimeFPSScope value="80"/>
+      <AimOutroDelayWhenPeekingOnly value="true"/>
+      <EnableAimOutroDelay value="false"/>
+      <ThrowProjectileClipSetId>COVER_WPN_THROWN_GRENADE</ThrowProjectileClipSetId>
+      <ThrowProjectileFPSClipSetId>COVER_FIRSTPERSON_WPN_THROWN_GRENADE</ThrowProjectileFPSClipSetId>
+    </Item>
+    <Item type="CTaskMotionInCover__Tunables">
+      <Name>CTaskMotionInCover</Name>
+      <CoverToCoverClipRate value="1.00000000"/>
+      <DisableCoverToCoverTranslationScaling value="false"/>
+      <DisableCoverToCoverRotationScaling value="false"/>
+      <UseButtonToMoveAroundCorner value="true"/>
+      <EnableCoverToCover value="true"/>
+      <EnableWalkStops value="true"/>
+      <EnableCoverPeekingVariations value="true"/>
+      <EnableCoverPinnedVariations value="true"/>
+      <EnableCoverIdleVariations value="true"/>
+      <UseSprintButtonForCoverToCover value="false"/>
+      <VerifyCoverInterval value="45"/>
+      <MinTimeForCornerMove value="500"/>
+      <DefaultSettleBlendDuration value="0.25000000"/>
+      <HeightChangeSettleBlendDuration value="0.35000000"/>
+      <MinTimeStayPinned value="1.25000000"/>
+      <MaxTimeStayPinned value="1.30000000"/>
+      <PinnedDownThreshold value="40"/>
+      <ForcePinnedDown value="false"/>
+      <MinDistanceToTargetForIdleVariations value="5.00000000"/>
+      <MinTimeBetweenIdleVariations value="0.50000000"/>
+      <MaxTimeBetweenIdleVariations value="4.00000000"/>
+      <MinWaitTimeToPlayPlayerIdleVariations value="3.50000000"/>
+      <MinTimeBetweenPlayerIdleVariations value="0.50000000"/>
+      <MaxTimeBetweenPlayerIdleVariations value="4.00000000"/>
+      <CoverToCoverDuration value="1.00000000"/>
+      <CoverToCoverMinScalePhase value="0.30000000"/>
+      <CoverToCoverMaxScalePhase value="1.00000000"/>
+      <CoverToCoverMinRotScalePhase value="0.80000000"/>
+      <CoverToCoverMaxRotScalePhase value="1.00000000"/>
+      <MaxRotationalSpeedScale value="3.00000000"/>
+      <MaxRotationalSpeed value="2.00000000"/>
+      <MinStickInputToEnableMoveAroundCorner value="50.00000000"/>
+      <MinStickInputToEnableCoverToCover value="90.00000000"/>
+      <MinStickInputToMoveAroundCorner value="0.90000000"/>
+      <MaxStoppingDuration value="1.00000000"/>
+      <MinStoppingDist value="0.02500000"/>
+      <MinTimeToScale value="0.02500000"/>
+      <CTCDepthDistanceCompletionOffset value="1.25000000"/>
+      <EdgeLowCoverMoveTime value="0.75000000"/>
+      <MinTimeToStandUp value="1.00000000"/>
+      <CoverToCoverMinDistToScale value="0.05000000"/>
+      <CoverToCoverMinAngToScale value="0.05000000"/>
+      <CoverToCoverMinAng value="0.01000000"/>
+      <CoverToCoverDistTol value="0.01000000"/>
+      <CoverToCoverMaxDistToStep value="0.10000000"/>
+      <CoverToCoverAngTol value="0.01000000"/>
+      <CoverToCoverMaxAngToStep value="0.10000000"/>
+      <CoverToCoverMaxAccel value="10.00000000"/>
+      <ForwardDistToStartSideScale value="0.50000000"/>
+      <CoverToCoverMinDepthToScale value="0.05000000"/>
+      <CoverToCoverSmallAnimDist value="0.05000000"/>
+      <HeadingReachedTolerance value="0.05000000"/>
+      <BlendToIdleTime value="0.10000000"/>
+      <InsideCornerStopDistance value="1.00000000"/>
+      <CoverHeadingCloseEnough value="0.01000000"/>
+      <CoverHeadingCloseEnoughTurn value="0.50000000"/>
+      <CoverPositionCloseEnough value="0.05000000"/>
+      <DefaultStillToTurnBlendDuration value="0.07000000"/>
+      <DefaultEdgeTurnBlendDuration value="0.25000000"/>
+      <PeekToEdgeTurnBlendDuration value="0.25000000"/>
+      <MaxMoveSpeedInCover value="4.00000000"/>
+      <MinEdgeDistanceForStoppingAnim value="1.00000000"/>
+      <UseNewStepAndWalkStarts value="true"/>
+      <UseNewTurns value="true"/>
+      <UseNewTurnWalkStarts value="true"/>
+      <CoreMotionClipSetId>COVER@MOVE@BASE@CORE</CoreMotionClipSetId>
+      <CoreMotionFPSClipSetId>COVER@FIRST_PERSON@MOVE@BASE@CORE</CoreMotionFPSClipSetId>
+      <CoreAIMotionClipSetId>COVER@MOVE@AI@BASE@1H</CoreAIMotionClipSetId>
+      <PeekingVariationAnimStateInfos>
+        <Item>
+          <Clips>
+            <Item>peek_l_corner</Item>
+          </Clips>
+          <Flags>AF_AtEdge AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>peek_r_corner</Item>
+          </Clips>
+          <Flags>AF_AtEdge</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>peek_l_center</Item>
+          </Clips>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>peek_r_center</Item>
+          </Clips>
+          <Flags/>
+        </Item>
+      </PeekingVariationAnimStateInfos>
+      <PeekingLow1HVariationClipsets>
+        <Item>COVER@PEEK@AI@1H@LOW@_A</Item>
+        <Item>COVER@PEEK@AI@1H@LOW@_B</Item>
+        <Item>COVER@PEEK@AI@1H@LOW@_C</Item>
+      </PeekingLow1HVariationClipsets>
+      <PeekingLow2HVariationClipsets>
+        <Item>COVER@PEEK@AI@2H@LOW@_A</Item>
+        <Item>COVER@PEEK@AI@2H@LOW@_B</Item>
+        <Item>COVER@PEEK@AI@2H@LOW@_C</Item>
+      </PeekingLow2HVariationClipsets>
+      <PeekingHigh1HVariationClipsets>
+        <Item>COVER@PEEK@AI@1H@HIGH@_A</Item>
+        <Item>COVER@PEEK@AI@1H@HIGH@_B</Item>
+        <Item>COVER@PEEK@AI@1H@HIGH@_C</Item>
+      </PeekingHigh1HVariationClipsets>
+      <PeekingHigh2HVariationClipsets>
+        <Item>COVER@PEEK@AI@2H@HIGH@_A</Item>
+        <Item>COVER@PEEK@AI@2H@HIGH@_B</Item>
+        <Item>COVER@PEEK@AI@2H@HIGH@_C</Item>
+      </PeekingHigh2HVariationClipsets>
+      <PinnedLow1HVariationClipsets>
+        <Item>COVER@PINNED@AI@1H@LOW@_A</Item>
+      </PinnedLow1HVariationClipsets>
+      <PinnedLow2HVariationClipsets>
+        <Item>COVER@PINNED@AI@2H@LOW@_A</Item>
+      </PinnedLow2HVariationClipsets>
+      <PinnedHigh1HVariationClipsets>
+        <Item>COVER@PINNED@AI@1H@HIGH@_A</Item>
+      </PinnedHigh1HVariationClipsets>
+      <PinnedHigh2HVariationClipsets>
+        <Item>COVER@PINNED@AI@2H@HIGH@_A</Item>
+      </PinnedHigh2HVariationClipsets>
+      <OutroReact1HVariationClipsets>
+        <Item>COVER@WEAPON@AI@REACT_OUTRO@1H_A</Item>
+      </OutroReact1HVariationClipsets>
+      <OutroReact2HVariationClipsets>
+        <Item>COVER@WEAPON@AI@REACT_OUTRO@2H_A</Item>
+      </OutroReact2HVariationClipsets>
+      <IdleLow1HVariationClipsets>
+        <Item>COVER@IDLES@AI@1H@LOW@_A</Item>
+        <Item>COVER@IDLES@AI@1H@LOW@_B</Item>
+        <Item>COVER@IDLES@AI@1H@LOW@_C</Item>
+      </IdleLow1HVariationClipsets>
+      <IdleLow2HVariationClipsets>
+        <Item>COVER@IDLES@AI@2H@LOW@_A</Item>
+        <Item>COVER@IDLES@AI@2H@LOW@_B</Item>
+        <Item>COVER@IDLES@AI@2H@LOW@_C</Item>
+      </IdleLow2HVariationClipsets>
+      <IdleHigh1HVariationClipsets>
+        <Item>COVER@IDLES@AI@1H@HIGH@_A</Item>
+        <Item>COVER@IDLES@AI@1H@HIGH@_B</Item>
+        <Item>COVER@IDLES@AI@1H@HIGH@_C</Item>
+      </IdleHigh1HVariationClipsets>
+      <IdleHigh2HVariationClipsets>
+        <Item>COVER@IDLES@AI@2H@HIGH@_A</Item>
+        <Item>COVER@IDLES@AI@2H@HIGH@_B</Item>
+        <Item>COVER@IDLES@AI@2H@HIGH@_C</Item>
+      </IdleHigh2HVariationClipsets>
+      <PlayerIdleLow0HVariationClipsets>
+        <Item>COVER@IDLES@UNARMED@LOW@_A</Item>
+        <Item>COVER@IDLES@UNARMED@LOW@_B</Item>
+        <Item>COVER@IDLES@UNARMED@LOW@_C</Item>
+      </PlayerIdleLow0HVariationClipsets>
+      <PlayerIdleLow1HVariationClipsets>
+        <Item>COVER@IDLES@1H@LOW@_A</Item>
+        <Item>COVER@IDLES@1H@LOW@_B</Item>
+        <Item>COVER@IDLES@1H@LOW@_C</Item>
+      </PlayerIdleLow1HVariationClipsets>
+      <PlayerIdleLow2HVariationClipsets>
+        <Item>COVER@IDLES@2H@LOW@_A</Item>
+        <Item>COVER@IDLES@2H@LOW@_B</Item>
+        <Item>COVER@IDLES@2H@LOW@_C</Item>
+      </PlayerIdleLow2HVariationClipsets>
+      <PlayerIdleHigh0HVariationClipsets>
+        <Item>COVER@IDLES@UNARMED@HIGH@_A</Item>
+        <Item>COVER@IDLES@UNARMED@HIGH@_B</Item>
+        <Item>COVER@IDLES@UNARMED@HIGH@_C</Item>
+      </PlayerIdleHigh0HVariationClipsets>
+      <PlayerIdleHigh1HVariationClipsets>
+        <Item>COVER@IDLES@1H@HIGH@_A</Item>
+        <Item>COVER@IDLES@1H@HIGH@_B</Item>
+        <Item>COVER@IDLES@1H@HIGH@_C</Item>
+      </PlayerIdleHigh1HVariationClipsets>
+      <PlayerIdleHigh2HVariationClipsets>
+        <Item>COVER@IDLES@2H@HIGH@_A</Item>
+        <Item>COVER@IDLES@2H@HIGH@_B</Item>
+        <Item>COVER@IDLES@2H@HIGH@_C</Item>
+      </PlayerIdleHigh2HVariationClipsets>
+      <PinnedIntroAnimStateInfos>
+        <Item>
+          <Clips>
+            <Item>pinned_l_corner_intro</Item>
+          </Clips>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>pinned_r_corner_intro</Item>
+          </Clips>
+          <Flags/>
+        </Item>
+      </PinnedIntroAnimStateInfos>
+      <PinnedIdleAnimStateInfos>
+        <Item>
+          <Clips>
+            <Item>pinned_l_corner_idle</Item>
+          </Clips>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>pinned_r_corner_idle</Item>
+          </Clips>
+          <Flags/>
+        </Item>
+      </PinnedIdleAnimStateInfos>
+      <PinnedOutroAnimStateInfos>
+        <Item>
+          <Clips>
+            <Item>pinned_l_corner_outro</Item>
+          </Clips>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>pinned_r_corner_outro</Item>
+          </Clips>
+          <Flags/>
+        </Item>
+      </PinnedOutroAnimStateInfos>
+      <IdleVariationAnimStateInfos>
+        <Item>
+          <Clips>
+            <Item>idle_l_corner</Item>
+          </Clips>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>idle_r_corner</Item>
+          </Clips>
+          <Flags/>
+        </Item>
+      </IdleVariationAnimStateInfos>
+      <ThirdPersonAnimStateInfos>
+        <IdleAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_idle_l</Item>
+              <Item>high_idle_l</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r</Item>
+              <Item>high_idle_r</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </IdleAnimStateInfos>
+        <AtEdgeAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_idle_l</Item>
+              <Item>high_idle_l</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r</Item>
+              <Item>high_idle_r</Item>
+            </Clips>
+            <Flags>AF_AtEdge</Flags>
+          </Item>
+        </AtEdgeAnimStateInfos>
+        <PeekingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_idle_l_peek</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r_peek</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_l_peek_corner</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r_peek_corner</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_idle_l_peek</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_idle_r_peek</Item>
+            </Clips>
+            <Flags>AF_AtEdge</Flags>
+          </Item>
+        </PeekingAnimStateInfos>
+        <StoppingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_wstop_l_lfp</Item>
+              <Item>low_wstop_l_rfp</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_wstop_r_lfp</Item>
+              <Item>low_wstop_r_rfp</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_wstop_l_lfp</Item>
+              <Item>high_wstop_l_rfp</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_wstop_r_lfp</Item>
+              <Item>high_wstop_r_rfp</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </StoppingAnimStateInfos>
+        <MovingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_walk_l</Item>
+              <Item>high_walk_l</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_walk_r</Item>
+              <Item>high_walk_r</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </MovingAnimStateInfos>
+        <EdgeTurnAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_cturn_l_90</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_cturn_r_90</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_cturn_l_90</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_cturn_r_90</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </EdgeTurnAnimStateInfos>
+        <CoverToCoverAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_l_to_low_r</Item>
+            </Clips>
+            <Flags>AF_ToLow AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_to_low_l</Item>
+            </Clips>
+            <Flags>AF_ToLow AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_l_to_high_r</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_to_high_l</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_l_to_high_r</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_to_high_l</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_l_to_low_r</Item>
+            </Clips>
+            <Flags>AF_ToLow AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_to_low_l</Item>
+            </Clips>
+            <Flags>AF_ToLow</Flags>
+          </Item>
+        </CoverToCoverAnimStateInfos>
+        <SteppingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_idle_l</Item>
+              <Item>high_l_step</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_idle_r</Item>
+              <Item>high_r_step</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_l</Item>
+              <Item>low_l_step</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r</Item>
+              <Item>low_r_step</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </SteppingAnimStateInfos>
+        <WalkStartAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_l_walkstart</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_walkstart</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_l_walkstart</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_walkstart</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </WalkStartAnimStateInfos>
+        <SettleAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_l_settle</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_settle</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_l_settle</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_settle</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </SettleAnimStateInfos>
+        <TurnEnterAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_enter</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_enter</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_enter</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_enter</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+        </TurnEnterAnimStateInfos>
+        <TurnEndAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_end</Item>
+              <Item>high_turn_l_step</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_end</Item>
+              <Item>high_turn_r_step</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_end</Item>
+              <Item>low_turn_l_step</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_end</Item>
+              <Item>low_turn_r_step</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+        </TurnEndAnimStateInfos>
+        <TurnWalkStartAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_walkstart</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_walkstart</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_walkstart</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_walkstart</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </TurnWalkStartAnimStateInfos>
+        <WeaponHoldingFilterId>upperbody_filter</WeaponHoldingFilterId>
+      </ThirdPersonAnimStateInfos>
+      <FirstPersonAnimStateInfos>
+        <IdleAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_idle_l</Item>
+              <Item>low_idle_l_facecover</Item>
+              <Item>high_idle_l</Item>
+              <Item>high_idle_l_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r</Item>
+              <Item>low_idle_r_facecover</Item>
+              <Item>high_idle_r</Item>
+              <Item>high_idle_r_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </IdleAnimStateInfos>
+        <AtEdgeAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_idle_l</Item>
+              <Item>low_idle_l_facecover</Item>
+              <Item>high_idle_l</Item>
+              <Item>high_idle_l_facecover</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r</Item>
+              <Item>low_idle_r_facecover</Item>
+              <Item>high_idle_r</Item>
+              <Item>high_idle_r_facecover</Item>
+            </Clips>
+            <Flags>AF_AtEdge</Flags>
+          </Item>
+        </AtEdgeAnimStateInfos>
+        <PeekingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_idle_l_peek</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r_peek</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_l_peek_corner</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r_peek_corner</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_idle_l_peek</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_idle_r_peek</Item>
+            </Clips>
+            <Flags>AF_AtEdge</Flags>
+          </Item>
+        </PeekingAnimStateInfos>
+        <StoppingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_wstop_l_lfp</Item>
+              <Item>low_wstop_l_lfp_facecover</Item>
+              <Item>low_wstop_l_rfp</Item>
+              <Item>low_wstop_l_rfp_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_wstop_r_lfp</Item>
+              <Item>low_wstop_r_lfp_facecover</Item>
+              <Item>low_wstop_r_rfp</Item>
+              <Item>low_wstop_r_rfp_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_wstop_l_lfp</Item>
+              <Item>high_wstop_l_lfp_facecover</Item>
+              <Item>high_wstop_l_rfp</Item>
+              <Item>high_wstop_l_rfp_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_wstop_r_lfp</Item>
+              <Item>high_wstop_r_lfp_facecover</Item>
+              <Item>high_wstop_r_rfp</Item>
+              <Item>high_wstop_r_rfp_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </StoppingAnimStateInfos>
+        <MovingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_walk_l</Item>
+              <Item>low_walk_l_facecover</Item>
+              <Item>high_walk_l</Item>
+              <Item>high_walk_l_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_walk_r</Item>
+              <Item>low_walk_r_facecover</Item>
+              <Item>high_walk_r</Item>
+              <Item>high_walk_r_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </MovingAnimStateInfos>
+        <EdgeTurnAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_cturn_l_90</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_cturn_r_90</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_cturn_l_90</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_cturn_r_90</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+        </EdgeTurnAnimStateInfos>
+        <CoverToCoverAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>low_l_to_low_r_facecover</Item>
+              <Item>low_l_to_low_r_facecover</Item>
+            </Clips>
+            <Flags>AF_ToLow AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_to_low_l_facecover</Item>
+              <Item>low_r_to_low_l_facecover</Item>
+            </Clips>
+            <Flags>AF_ToLow AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_l_to_high_r_facecover</Item>
+              <Item>low_l_to_high_r_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_to_high_l_facecover</Item>
+              <Item>low_r_to_high_l_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_l_to_high_r_facecover</Item>
+              <Item>high_l_to_high_r_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_to_high_l_facecover</Item>
+              <Item>high_r_to_high_l_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_l_to_low_r_facecover</Item>
+              <Item>high_l_to_low_r_facecover</Item>
+            </Clips>
+            <Flags>AF_ToLow AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_to_low_l_facecover</Item>
+              <Item>high_r_to_low_l_facecover</Item>
+            </Clips>
+            <Flags>AF_ToLow</Flags>
+          </Item>
+        </CoverToCoverAnimStateInfos>
+        <SteppingAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_idle_l</Item>
+              <Item>high_idle_l_facecover</Item>
+              <Item>high_l_step</Item>
+              <Item>high_l_step_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_idle_r</Item>
+              <Item>high_idle_r_facecover</Item>
+              <Item>high_r_step</Item>
+              <Item>high_r_step_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_l</Item>
+              <Item>low_idle_l_facecover</Item>
+              <Item>low_l_step</Item>
+              <Item>low_l_step_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_idle_r</Item>
+              <Item>low_idle_r_facecover</Item>
+              <Item>low_r_step</Item>
+              <Item>low_r_step_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </SteppingAnimStateInfos>
+        <WalkStartAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_l_walkstart</Item>
+              <Item>high_l_walkstart_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_walkstart</Item>
+              <Item>high_r_walkstart_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_l_walkstart</Item>
+              <Item>low_l_walkstart_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_walkstart</Item>
+              <Item>low_r_walkstart_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </WalkStartAnimStateInfos>
+        <SettleAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_l_settle</Item>
+              <Item>high_l_settle_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_r_settle</Item>
+              <Item>high_r_settle_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_l_settle</Item>
+              <Item>low_l_settle_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_r_settle</Item>
+              <Item>low_r_settle_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </SettleAnimStateInfos>
+        <TurnEnterAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_enterfwd_facecover</Item>
+              <Item>high_turn_l_enter_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_enterfwd_facecover</Item>
+              <Item>high_turn_r_enter_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_enter</Item>
+              <Item>high_turn_l_enter</Item>
+            </Clips>
+            <Flags>AF_AimDirect</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_enter</Item>
+              <Item>high_turn_r_enter</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_enterfwd_facecover</Item>
+              <Item>low_turn_l_enter_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_enterfwd_facecover</Item>
+              <Item>low_turn_r_enter_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_enter</Item>
+              <Item>low_turn_l_enter</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_enter</Item>
+              <Item>low_turn_r_enter</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_enterfwd_facecover</Item>
+              <Item>low_turn_r_enter_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+        </TurnEnterAnimStateInfos>
+        <TurnEndAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_endfwd_facecover</Item>
+              <Item>high_turn_l_end_facecover</Item>
+              <Item>high_turn_l_stepfwd_facecover</Item>
+              <Item>high_turn_l_step_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_endfwd_facecover</Item>
+              <Item>high_turn_r_end_facecover</Item>
+              <Item>high_turn_r_stepfwd_facecover</Item>
+              <Item>high_turn_r_step_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_end</Item>
+              <Item>high_turn_l_end</Item>
+              <Item>high_turn_l_step</Item>
+              <Item>high_turn_l_step_facecover</Item>
+            </Clips>
+            <Flags>AF_AimDirect</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_end</Item>
+              <Item>high_turn_r_end</Item>
+              <Item>high_turn_r_step</Item>
+              <Item>high_turn_r_step_facecover</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_endfwd_facecover</Item>
+              <Item>low_turn_l_end_facecover</Item>
+              <Item>low_turn_l_step</Item>
+              <Item>low_turn_l_step_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_endfwd_facecover</Item>
+              <Item>low_turn_r_end_facecover</Item>
+              <Item>low_turn_r_step</Item>
+              <Item>low_turn_r_step_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_end</Item>
+              <Item>low_turn_l_end</Item>
+              <Item>low_turn_l_step</Item>
+              <Item>low_turn_l_step_facecover</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_end</Item>
+              <Item>low_turn_r_end</Item>
+              <Item>low_turn_r_step</Item>
+              <Item>low_turn_r_step_facecover</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low AF_FaceLeft</Flags>
+          </Item>
+        </TurnEndAnimStateInfos>
+        <TurnWalkStartAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>high_turn_l_walkstart</Item>
+              <Item>high_turn_l_walkstart_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>high_turn_r_walkstart</Item>
+              <Item>high_turn_r_walkstart_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_l_walkstart</Item>
+              <Item>low_turn_l_walkstart_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>low_turn_r_walkstart</Item>
+              <Item>low_turn_r_walkstart_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+        </TurnWalkStartAnimStateInfos>
+        <WeaponHoldingFilterId>botharms_filter</WeaponHoldingFilterId>
+      </FirstPersonAnimStateInfos>
+      <EnableFirstPersonLocoAnimations value="true"/>
+      <EnableFirstPersonAimingAnimations value="true"/>
+      <EnableAimOutroToPeekAnims value="true"/>
+      <EnableBlindFireToPeek value="true"/>
+    </Item>
+    <Item type="CTaskAimGunFromCoverIntro__Tunables">
+      <Name>CTaskAimGunFromCoverIntro</Name>
+      <UpperBodyAimBlendInDuration value="0.20000000"/>
+      <IntroMovementDuration value="0.35000000"/>
+      <DisableIntroScaling value="false"/>
+      <DisableRotationScaling value="false"/>
+      <DisableIntroOverShootCheck value="false"/>
+      <UseConstantIntroScaling value="false"/>
+      <RenderArcsAtCoverPosition value="true"/>
+      <RenderAimArcDebug value="false"/>
+      <UseMoverPositionWhilePeeking value="true"/>
+      <DisableWeaponBlocking value="false"/>
+      <DisableTranslationScaling value="true"/>
+      <ArcRadius value="1.00000000"/>
+      <IntroScalingDefaultStartPhase value="0.60000000"/>
+      <IntroScalingDefaultEndPhase value="0.80000000"/>
+      <IntroRotScalingDefaultStartPhase value="0.40000000"/>
+      <IntroRotScalingDefaultEndPhase value="0.50000000"/>
+      <AiAimIntroCloseEnoughTolerance value="0.02000000"/>
+      <MaxStepBackDist value="1.00000000"/>
+      <MinStepOutDist value="0.50000000"/>
+      <MaxStepOutDist value="1.50000000"/>
+      <IntroMaxScale value="5.00000000"/>
+      <IntroRate value="1.00000000"/>
+      <IntroRateToPeekFPS value="1.50000000"/>
+      <OutroRate value="1.00000000"/>
+      <OutroRateFromPeekFPS value="1.50000000"/>
+      <SteppingApproachRateSlow value="0.95000000"/>
+      <SteppingApproachRate value="0.95000000"/>
+      <SteppingApproachRateFast value="1.75000000"/>
+      <SteppingHeadingApproachRate value="4.00000000"/>
+      <MinRotationalSpeedScale value="0.50000000"/>
+      <MaxRotationalSpeedScale value="5.00000000"/>
+      <HeadingReachedTolerance value="0.05000000"/>
+      <StepOutCapsuleRadiusScale value="0.70000000"/>
+      <AimDirectlyMaxAngle value="1.74000000"/>
+      <StepOutLeftX value="-0.85000000"/>
+      <StepOutRightX value="0.80000000"/>
+      <StepOutY value="-0.85000000"/>
+      <LowXClearOffsetCapsuleTest value="0.70000000"/>
+      <LowXOffsetCapsuleTest value="0.00000000"/>
+      <LowYOffsetCapsuleTest value="0.00000000"/>
+      <LowZOffsetCapsuleTest value="1.50000000"/>
+      <LowOffsetCapsuleLength value="0.35000000"/>
+      <LowOffsetCapsuleRadius value="0.25000000"/>
+      <LowLeftStep x="-0.10000000" y="0.50000000"/>
+      <LowRightStep x="0.10000000" y="0.50000000"/>
+      <LowBlockedBlend value="0.50000000"/>
+      <LowStepOutLeftXBlocked value="0.50000000"/>
+      <LowStepOutLeftYBlocked value="0.50000000"/>
+      <LowStepBackLeftXBlocked value="0.00000000"/>
+      <LowStepBackLeftYBlocked value="1.00000000"/>
+      <LowStepOutRightXBlocked value="0.50000000"/>
+      <LowStepOutRightYBlocked value="0.50000000"/>
+      <LowStepBackRightXBlocked value="0.00000000"/>
+      <LowStepBackRightYBlocked value="1.00000000"/>
+      <LowSideZOffset value="1.00000000"/>
+      <DistConsideredAtAimPosition value="0.02500000"/>
+      <MinPhaseToApplyExtraHeadingAi value="0.10000000"/>
+      <MinPhaseToApplyExtraHeadingPlayer value="0.00000000"/>
+      <MaxAngularHeadingVelocityAi value="4.00000000"/>
+      <MaxAngularHeadingVelocityPlayer value="7.50000000"/>
+      <MaxAngularHeadingVelocityPlayerForcedStandAim value="10.00000000"/>
+      <HighLeftAimStepInfoSet>
+        <StepInfos>
+          <Item>
+            <StepOutX value="0.00000000"/>
+            <StepOutY value="0.00000000"/>
+            <StepTransitionMinAngle value="-0.02500000"/>
+            <StepTransitionMaxAngle value="3.14000000"/>
+            <PreviousTransitionExtraScalar value="0.00000000"/>
+            <NextTransitionExtraScalar value="0.00000000"/>
+            <PreviousTransitionClipId>hi_l_corner_covertolong</PreviousTransitionClipId>
+            <NextTransitionClipId>hi_l_corner_covertoshort</NextTransitionClipId>
+          </Item>
+          <Item>
+            <StepOutX value="0.49500000"/>
+            <StepOutY value="0.50000000"/>
+            <StepTransitionMinAngle value="-1.72500000"/>
+            <StepTransitionMaxAngle value="0.02500000"/>
+            <PreviousTransitionExtraScalar value="0.00000000"/>
+            <NextTransitionExtraScalar value="0.00000000"/>
+            <PreviousTransitionClipId>hi_l_corner_shorttocover</PreviousTransitionClipId>
+            <NextTransitionClipId>hi_l_corner_shorttolong</NextTransitionClipId>
+          </Item>
+          <Item>
+            <StepOutX value="1.00000000"/>
+            <StepOutY value="0.35000000"/>
+            <StepTransitionMinAngle value="2.94532000"/>
+            <StepTransitionMaxAngle value="-1.14924000"/>
+            <PreviousTransitionExtraScalar value="0.00000000"/>
+            <NextTransitionExtraScalar value="0.00000000"/>
+            <PreviousTransitionClipId>hi_l_corner_longtoshort</PreviousTransitionClipId>
+            <NextTransitionClipId>hi_l_corner_longtocover</NextTransitionClipId>
+          </Item>
+        </StepInfos>
+      </HighLeftAimStepInfoSet>
+      <HighRightAimStepInfoSet>
+        <StepInfos>
+          <Item>
+            <StepOutX value="0.00000000"/>
+            <StepOutY value="0.00000000"/>
+            <StepTransitionMinAngle value="-3.14000000"/>
+            <StepTransitionMaxAngle value="0.08792000"/>
+            <PreviousTransitionExtraScalar value="0.00000000"/>
+            <NextTransitionExtraScalar value="0.00000000"/>
+            <PreviousTransitionClipId>hi_r_corner_covertolong</PreviousTransitionClipId>
+            <NextTransitionClipId>hi_r_corner_covertoshort</NextTransitionClipId>
+          </Item>
+          <Item>
+            <StepOutX value="0.56500000"/>
+            <StepOutY value="0.25000000"/>
+            <StepTransitionMinAngle value="-0.04396000"/>
+            <StepTransitionMaxAngle value="1.86516000"/>
+            <PreviousTransitionExtraScalar value="0.00000000"/>
+            <NextTransitionExtraScalar value="0.00000000"/>
+            <PreviousTransitionClipId>hi_r_corner_shorttocover</PreviousTransitionClipId>
+            <NextTransitionClipId>hi_r_corner_shorttolong</NextTransitionClipId>
+          </Item>
+          <Item>
+            <StepOutX value="1.00000000"/>
+            <StepOutY value="0.45000000"/>
+            <StepTransitionMinAngle value="1.50092000"/>
+            <StepTransitionMaxAngle value="-2.90764000"/>
+            <PreviousTransitionExtraScalar value="0.00000000"/>
+            <NextTransitionExtraScalar value="0.00000000"/>
+            <PreviousTransitionClipId>hi_r_corner_longtoshort</PreviousTransitionClipId>
+            <NextTransitionClipId>hi_r_corner_longtocover</NextTransitionClipId>
+          </Item>
+        </StepInfos>
+      </HighRightAimStepInfoSet>
+      <AimIntroClips>
+        <Item>
+          <Clips>
+            <Item>intro_hi_l_corner_short</Item>
+            <Item>intro_hi_l_corner_long</Item>
+          </Clips>
+          <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_low_l_centre_short</Item>
+            <Item>intro_low_l_centre_long</Item>
+          </Clips>
+          <Flags>AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_hi_r_corner_short</Item>
+            <Item>intro_hi_r_corner_long</Item>
+          </Clips>
+          <Flags>AF_AtEdge AF_Low</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_low_r_centre_short</Item>
+            <Item>intro_low_r_centre_long</Item>
+          </Clips>
+          <Flags>AF_Low</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_low_l_direct_0</Item>
+            <Item>intro_low_l_direct_100</Item>
+          </Clips>
+          <Flags>AF_AimDirect AF_Low AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_low_r_direct_0</Item>
+            <Item>intro_low_r_direct_100</Item>
+          </Clips>
+          <Flags>AF_AimDirect AF_Low</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_hi_l_corner_short</Item>
+            <Item>intro_hi_l_corner_long</Item>
+          </Clips>
+          <Flags>AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_hi_r_corner_short</Item>
+            <Item>intro_hi_r_corner_long</Item>
+          </Clips>
+          <Flags/>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_hi_l_direct_0</Item>
+            <Item>intro_hi_l_direct_100</Item>
+          </Clips>
+          <Flags>AF_AimDirect AF_FaceLeft</Flags>
+        </Item>
+        <Item>
+          <Clips>
+            <Item>intro_hi_r_direct_0</Item>
+            <Item>intro_hi_r_direct_100</Item>
+          </Clips>
+          <Flags>AF_AimDirect</Flags>
+        </Item>
+      </AimIntroClips>
+    </Item>
+    <Item type="CTaskAimGunFromCoverOutro__Tunables">
+      <Name>CTaskAimGunFromCoverOutro</Name>
+      <DisableOutroScaling value="false"/>
+      <DisableRotationScaling value="true"/>
+      <DisableOutroOverShootCheck value="false"/>
+      <UseConstantOutroScaling value="false"/>
+      <OutroRotationScalingDefaultStartPhase value="0.50000000"/>
+      <OutroRotationScalingDefaultEndPhase value="0.60000000"/>
+      <OutroScalingDefaultStartPhase value="0.50000000"/>
+      <OutroScalingDefaultEndPhase value="0.60000000"/>
+      <OutroMaxScale value="5.00000000"/>
+      <AdditionalModifier value="1.00000000"/>
+      <EndHeadingTolerance value="1.00000000"/>
+      <DesiredDistanceToCover value="0.22500000"/>
+      <InCoverMovementSpeed value="0.75000000"/>
+      <OutroMovementDuration value="0.40000000"/>
+      <UpperBodyAimBlendOutDuration value="0.10000000"/>
+      <MaxAngularHeadingVelocityAi value="3.00000000"/>
+      <MaxAngularHeadingVelocityPlayer value="3.00000000"/>
+      <MaxAngularHeadingVelocityPlayerFPS value="7.50000000"/>
+      <MaxAngularHeadingVelocityPlayerForcedStandAim value="6.00000000"/>
+      <ThirdPersonAnimStateInfos>
+        <AimOutroAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_centre_short</Item>
+              <Item>outro_low_l_centre_long</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_centre_short</Item>
+              <Item>outro_low_l_centre_long</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_centre_short</Item>
+              <Item>outro_low_r_centre_long</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_centre_short</Item>
+              <Item>outro_low_r_centre_long</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_direct_0</Item>
+              <Item>outro_low_l_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_direct_0</Item>
+              <Item>outro_low_r_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_l_corner_short</Item>
+              <Item>outro_hi_l_corner_long</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_r_corner_short</Item>
+              <Item>outro_hi_r_corner_long</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_l_direct_0</Item>
+              <Item>outro_hi_l_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_r_direct_0</Item>
+              <Item>outro_hi_r_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect</Flags>
+          </Item>
+        </AimOutroAnimStateInfos>
+      </ThirdPersonAnimStateInfos>
+      <FirstPersonAnimStateInfos>
+        <AimOutroAnimStateInfos>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_centre_short</Item>
+              <Item>outro_low_l_centre_short_facecover</Item>
+              <Item>outro_low_l_centre_long</Item>
+              <Item>outro_low_l_centre_long_facecover</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_centre_short</Item>
+              <Item>outro_low_l_centre_short_facecover</Item>
+              <Item>outro_low_l_centre_long</Item>
+              <Item>outro_low_l_centre_long_facecover</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_centre_short_topeek</Item>
+              <Item>outro_low_l_centre_short_topeek</Item>
+              <Item>outro_low_l_centre_long_topeek</Item>
+              <Item>outro_low_l_centre_long_topeek</Item>
+            </Clips>
+            <Flags>AF_Low AF_FaceLeft AF_ToPeek</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_centre_short</Item>
+              <Item>outro_low_r_centre_short_facecover</Item>
+              <Item>outro_low_r_centre_long</Item>
+              <Item>outro_low_r_centre_long_facecover</Item>
+            </Clips>
+            <Flags>AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_centre_short</Item>
+              <Item>outro_low_r_centre_short_facecover</Item>
+              <Item>outro_low_r_centre_long</Item>
+              <Item>outro_low_r_centre_long_facecover</Item>
+            </Clips>
+            <Flags>AF_AtEdge AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_centre_short_topeek</Item>
+              <Item>outro_low_r_centre_short_topeek</Item>
+              <Item>outro_low_r_centre_long_topeek</Item>
+              <Item>outro_low_r_centre_long_topeek</Item>
+            </Clips>
+            <Flags>AF_Low AF_ToPeek</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_l_direct_0</Item>
+              <Item>outro_low_l_direct_0</Item>
+              <Item>outro_low_l_direct_100</Item>
+              <Item>outro_low_l_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_low_r_direct_0</Item>
+              <Item>outro_low_r_direct_0</Item>
+              <Item>outro_low_r_direct_100</Item>
+              <Item>outro_low_r_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_Low</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_l_corner_short</Item>
+              <Item>outro_hi_l_corner_short_facecover</Item>
+              <Item>outro_hi_l_corner_long</Item>
+              <Item>outro_hi_l_corner_long_facecover</Item>
+            </Clips>
+            <Flags>AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_l_corner_short_topeek</Item>
+              <Item>outro_hi_l_corner_short_topeek</Item>
+              <Item>outro_hi_l_corner_long_topeek</Item>
+              <Item>outro_hi_l_corner_long_topeek</Item>
+            </Clips>
+            <Flags>AF_FaceLeft AF_ToPeek</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_r_corner_short</Item>
+              <Item>outro_hi_r_corner_short_facecover</Item>
+              <Item>outro_hi_r_corner_long</Item>
+              <Item>outro_hi_r_corner_long_facecover</Item>
+            </Clips>
+            <Flags/>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_r_corner_short_topeek</Item>
+              <Item>outro_hi_r_corner_short_topeek</Item>
+              <Item>outro_hi_r_corner_long_topeek</Item>
+              <Item>outro_hi_r_corner_long_topeek</Item>
+            </Clips>
+            <Flags>AF_ToPeek</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_l_direct_0</Item>
+              <Item>outro_hi_l_direct_0</Item>
+              <Item>outro_hi_l_direct_100</Item>
+              <Item>outro_hi_l_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect AF_FaceLeft</Flags>
+          </Item>
+          <Item>
+            <Clips>
+              <Item>outro_hi_r_direct_0</Item>
+              <Item>outro_hi_r_direct_0</Item>
+              <Item>outro_hi_r_direct_100</Item>
+              <Item>outro_hi_r_direct_100</Item>
+            </Clips>
+            <Flags>AF_AimDirect</Flags>
+          </Item>
+        </AimOutroAnimStateInfos>
+      </FirstPersonAnimStateInfos>
+    </Item>
+    <Item type="CTaskAimGunBlindFire__Tunables">
+      <Name>CTaskAimGunBlindFire</Name>
+      <RemoveReticuleDuringBlindFire value="true"/>
+      <DontRemoveReticuleDuringBlindFireNew value="false"/>
+      <LowBlindFireAimingDirectlyLimitAngle value="1.57000000"/>
+      <HighBlindFireAimingDirectlyLimitAngle value="1.57000000"/>
+      <BlindFireAnimStateNewInfos>
+        <Item>
+          <IntroClip0Id>blindfire_low_l_enter_-45</IntroClip0Id>
+          <IntroClip1Id>blindfire_low_l_enter_45</IntroClip1Id>
+          <SweepClip0Id>blindfire_low_l_aim_low</SweepClip0Id>
+          <SweepClip1Id>blindfire_low_l_aim_med</SweepClip1Id>
+          <SweepClip2Id>blindfire_low_l_aim_hi</SweepClip2Id>
+          <OutroClip0Id>blindfire_low_l_exit</OutroClip0Id>
+          <OutroClip1Id>blindfire_low_l_exit_facecover</OutroClip1Id>
+          <CockGunClip0Id>blindfire_low_l_shotg_reload</CockGunClip0Id>
+          <CockGunClip1Id>blindfire_low_l_shotg_reload_facecover</CockGunClip1Id>
+          <CockGunWeaponClipId>w_blindfire_low_l_shotg_reload</CockGunWeaponClipId>
+          <Flags>AF_Low AF_FaceLeft</Flags>
+          <MinHeadingAngle value="-1.57000000"/>
+          <MaxHeadingAngle value="1.57000000"/>
+          <ThirdPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.75000000"/>
+            <MaxPitchAngle value="0.73476000"/>
+            <MinPitchAngle2H value="-0.75000000"/>
+            <MaxPitchAngle2H value="0.73476000"/>
+          </ThirdPersonBlindFirePitchAngles>
+          <FirstPersonPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.99500000"/>
+            <MaxPitchAngle value="1.01100000"/>
+            <MinPitchAngle2H value="-0.99500000"/>
+            <MaxPitchAngle2H value="1.01100000"/>
+          </FirstPersonPersonBlindFirePitchAngles>
+        </Item>
+        <Item>
+          <IntroClip0Id>blindfire_low_r_enter_-45</IntroClip0Id>
+          <IntroClip1Id>blindfire_low_r_enter_45</IntroClip1Id>
+          <SweepClip0Id>blindfire_low_r_aim_low</SweepClip0Id>
+          <SweepClip1Id>blindfire_low_r_aim_med</SweepClip1Id>
+          <SweepClip2Id>blindfire_low_r_aim_hi</SweepClip2Id>
+          <OutroClip0Id>blindfire_low_r_exit</OutroClip0Id>
+          <OutroClip1Id>blindfire_low_r_exit_facecover</OutroClip1Id>
+          <CockGunClip0Id>blindfire_low_r_shotg_reload</CockGunClip0Id>
+          <CockGunClip1Id>blindfire_low_r_shotg_reload_facecover</CockGunClip1Id>
+          <CockGunWeaponClipId>w_blindfire_low_r_shotg_reload</CockGunWeaponClipId>
+          <Flags>AF_Low</Flags>
+          <MinHeadingAngle value="-1.57000000"/>
+          <MaxHeadingAngle value="1.57000000"/>
+          <ThirdPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.75000000"/>
+            <MaxPitchAngle value="0.73500000"/>
+            <MinPitchAngle2H value="-0.75000000"/>
+            <MaxPitchAngle2H value="0.73500000"/>
+          </ThirdPersonBlindFirePitchAngles>
+          <FirstPersonPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.99500000"/>
+            <MaxPitchAngle value="1.01100000"/>
+            <MinPitchAngle2H value="-0.99500000"/>
+            <MaxPitchAngle2H value="1.01100000"/>
+          </FirstPersonPersonBlindFirePitchAngles>
+        </Item>
+        <Item>
+          <IntroClip0Id>blindfire_low_l_enter_low_edge</IntroClip0Id>
+          <IntroClip1Id>blindfire_low_l_enter_hi_edge</IntroClip1Id>
+          <SweepClip0Id>blindfire_low_l_aim_low_edge</SweepClip0Id>
+          <SweepClip1Id>blindfire_low_l_aim_med_edge</SweepClip1Id>
+          <SweepClip2Id>blindfire_low_l_aim_hi_edge</SweepClip2Id>
+          <OutroClip0Id>blindfire_low_l_exit_edge</OutroClip0Id>
+          <OutroClip1Id>blindfire_low_l_exit_edge_facecover</OutroClip1Id>
+          <CockGunClip0Id>blindfire_low_l_shotg_reload</CockGunClip0Id>
+          <CockGunClip1Id>blindfire_low_l_shotg_reload_facecover</CockGunClip1Id>
+          <CockGunWeaponClipId>w_blindfire_low_l_shotg_reload</CockGunWeaponClipId>
+          <Flags>AF_AtEdge AF_Low AF_FaceLeft</Flags>
+          <MinHeadingAngle value="-1.57000000"/>
+          <MaxHeadingAngle value="0.72220000"/>
+          <ThirdPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-1.06760000"/>
+            <MaxPitchAngle value="0.52400000"/>
+            <MinPitchAngle2H value="-1.06760000"/>
+            <MaxPitchAngle2H value="0.98282000"/>
+          </ThirdPersonBlindFirePitchAngles>
+          <FirstPersonPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.99500000"/>
+            <MaxPitchAngle value="1.01100000"/>
+            <MinPitchAngle2H value="-0.99500000"/>
+            <MaxPitchAngle2H value="1.01100000"/>
+          </FirstPersonPersonBlindFirePitchAngles>
+        </Item>
+        <Item>
+          <IntroClip0Id>blindfire_low_r_enter_low_edge</IntroClip0Id>
+          <IntroClip1Id>blindfire_low_r_enter_hi_edge</IntroClip1Id>
+          <SweepClip0Id>blindfire_low_r_aim_low_edge</SweepClip0Id>
+          <SweepClip1Id>blindfire_low_r_aim_med_edge</SweepClip1Id>
+          <SweepClip2Id>blindfire_low_r_aim_hi_edge</SweepClip2Id>
+          <OutroClip0Id>blindfire_low_r_exit_edge</OutroClip0Id>
+          <OutroClip1Id>blindfire_low_r_exit_edge_facecover</OutroClip1Id>
+          <CockGunClip0Id>blindfire_low_r_shotg_reload</CockGunClip0Id>
+          <CockGunClip1Id>blindfire_low_r_shotg_reload_facecover</CockGunClip1Id>
+          <CockGunWeaponClipId>w_blindfire_low_r_shotg_reload</CockGunWeaponClipId>
+          <Flags>AF_AtEdge AF_Low</Flags>
+          <MinHeadingAngle value="-1.02992000"/>
+          <MaxHeadingAngle value="1.57000000"/>
+          <ThirdPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-1.06760000"/>
+            <MaxPitchAngle value="0.98282000"/>
+            <MinPitchAngle2H value="-1.06760000"/>
+            <MaxPitchAngle2H value="0.52400000"/>
+          </ThirdPersonBlindFirePitchAngles>
+          <FirstPersonPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.99500000"/>
+            <MaxPitchAngle value="1.01100000"/>
+            <MinPitchAngle2H value="-0.99500000"/>
+            <MaxPitchAngle2H value="1.01100000"/>
+          </FirstPersonPersonBlindFirePitchAngles>
+        </Item>
+        <Item>
+          <IntroClip0Id>blindfire_hi_l_enter_low</IntroClip0Id>
+          <IntroClip1Id>blindfire_hi_l_enter_hi</IntroClip1Id>
+          <SweepClip0Id>blindfire_hi_l_aim_low</SweepClip0Id>
+          <SweepClip1Id>blindfire_hi_l_aim_med</SweepClip1Id>
+          <SweepClip2Id>blindfire_hi_l_aim_hi</SweepClip2Id>
+          <OutroClip0Id>blindfire_hi_l_exit</OutroClip0Id>
+          <OutroClip1Id>blindfire_hi_l_exit_facecover</OutroClip1Id>
+          <CockGunClip0Id>blindfire_hi_l_shotg_reload</CockGunClip0Id>
+          <CockGunClip1Id>blindfire_hi_l_shotg_reload_facecover</CockGunClip1Id>
+          <CockGunWeaponClipId>w_blindfire_hi_l_shotg_reload</CockGunWeaponClipId>
+          <Flags>AF_AtEdge AF_FaceLeft</Flags>
+          <MinHeadingAngle value="-1.57000000"/>
+          <MaxHeadingAngle value="0.72220000"/>
+          <ThirdPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-1.06760000"/>
+            <MaxPitchAngle value="0.78500000"/>
+            <MinPitchAngle2H value="-1.06760000"/>
+            <MaxPitchAngle2H value="0.98282000"/>
+          </ThirdPersonBlindFirePitchAngles>
+          <FirstPersonPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.99500000"/>
+            <MaxPitchAngle value="1.01100000"/>
+            <MinPitchAngle2H value="-0.99500000"/>
+            <MaxPitchAngle2H value="1.01100000"/>
+          </FirstPersonPersonBlindFirePitchAngles>
+        </Item>
+        <Item>
+          <IntroClip0Id>blindfire_hi_r_enter_low</IntroClip0Id>
+          <IntroClip1Id>blindfire_hi_r_enter_hi</IntroClip1Id>
+          <SweepClip0Id>blindfire_hi_r_aim_low</SweepClip0Id>
+          <SweepClip1Id>blindfire_hi_r_aim_med</SweepClip1Id>
+          <SweepClip2Id>blindfire_hi_r_aim_hi</SweepClip2Id>
+          <OutroClip0Id>blindfire_hi_r_exit</OutroClip0Id>
+          <OutroClip1Id>blindfire_hi_r_exit_facecover</OutroClip1Id>
+          <CockGunClip0Id>blindfire_hi_r_shotg_reload</CockGunClip0Id>
+          <CockGunClip1Id>blindfire_hi_r_shotg_reload_facecover</CockGunClip1Id>
+          <CockGunWeaponClipId>w_blindfire_hi_r_shotg_reload</CockGunWeaponClipId>
+          <Flags>AF_AtEdge</Flags>
+          <MinHeadingAngle value="-1.02992000"/>
+          <MaxHeadingAngle value="1.57000000"/>
+          <ThirdPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-1.06760000"/>
+            <MaxPitchAngle value="0.98282000"/>
+            <MinPitchAngle2H value="-1.06760000"/>
+            <MaxPitchAngle2H value="0.98282000"/>
+          </ThirdPersonBlindFirePitchAngles>
+          <FirstPersonPersonBlindFirePitchAngles>
+            <MinPitchAngle value="-0.99500000"/>
+            <MaxPitchAngle value="1.01100000"/>
+            <MinPitchAngle2H value="-0.99500000"/>
+            <MaxPitchAngle2H value="1.01100000"/>
+          </FirstPersonPersonBlindFirePitchAngles>
+        </Item>
+      </BlindFireAnimStateNewInfos>
+    </Item>
+    <Item type="CAiCoverClipVariationHelper__Tunables">
+      <Name>CAiCoverClipVariationHelper</Name>
+      <MinUsesForPeekingVariationChange value="4"/>
+      <MaxUsesForPeekingVariationChange value="12"/>
+      <MinUsesForPinnedVariationChange value="4"/>
+      <MaxUsesForPinnedVariationChange value="12"/>
+      <MinUsesForOutroReactVariationChange value="4"/>
+      <MaxUsesForOutroReactVariationChange value="12"/>
+      <MinUsesForIdleVariationChange value="4"/>
+      <MaxUsesForIdleVariationChange value="12"/>
+    </Item>
+    <Item type="CPlayerCoverClipVariationHelper__Tunables">
+      <Name>CPlayerCoverClipVariationHelper</Name>
+      <MinUsesForIdleVariationChange value="4"/>
+      <MaxUsesForIdleVariationChange value="12"/>
+    </Item>
+    <Item type="CDynamicCoverHelper__Tunables">
+      <Name>CDynamicCoverHelper</Name>
+      <EnableConflictingNormalCollisionRemoval value="true"/>
+      <UseStickHistoryForCoverSearch value="true"/>
+      <StickDownDuration value="200"/>
+      <StickDownMinRange value="0.20000000"/>
+      <UseCameraOrientationWeighting value="true"/>
+      <UseCameraOrientationWhenStill value="true"/>
+      <UseCameraOrientationForBackwardsDirection value="true"/>
+      <BehindThreshold value="-0.90000000"/>
+      <DistanceToWallStanding value="0.05000000"/>
+      <DistanceToWallCrouching value="0.10000000"/>
+      <DistanceToWallCoverToCover value="0.20000000"/>
+      <OCMCrouchedForwardClearanceOffset value="0.60000000"/>
+      <OCMStandingForwardClearanceOffset value="0.70000000"/>
+      <OCMSideClearanceDepth value="1.00000000"/>
+      <OCMClearanceCapsuleRadius value="0.20000000"/>
+      <OCMSideTestDepth value="0.80000000"/>
+      <OCMCrouchedHeightOffset value="-0.30000000"/>
+      <OCMStandingHeightOffset value="0.30000000"/>
+      <CTCSideOffset value="-0.60000000"/>
+      <CTCProbeDepth value="1.80000000"/>
+      <CTCForwardOffset value="0.80000000"/>
+      <CTCSpacingOffset value="0.50000000"/>
+      <CTCCapsuleRadius value="0.25000000"/>
+      <CTCHeightOffset value="-0.25000000"/>
+      <LowCoverProbeHeight value="-0.20000000"/>
+      <HighCoverProbeHeight value="0.65000000"/>
+      <CTCClearanceCapsuleRadius value="0.25000000"/>
+      <CTCClearanceCapsuleStartForwardOffset value="0.75000000"/>
+      <CTCClearanceCapsuleEndForwardOffset value="-0.25000000"/>
+      <CTCClearanceCapsuleStartZOffset value="-0.25000000"/>
+      <CTCClearanceCapsuleEndZOffset value="0.75000000"/>
+      <CTCMinDistance value="1.50000000"/>
+      <VehicleEdgeProbeXOffset value="0.10000000"/>
+      <VehicleEdgeProbeZOffset value="0.10000000"/>
+      <MaxZDiffBetweenCoverPoints value="0.17500000"/>
+      <MaxZDiffBetweenPedPos value="0.30000000"/>
+      <MaxHeadingDiffBetweenCTCPoints value="0.78500000"/>
+      <PedToCoverCapsuleRadius value="0.20000000"/>
+      <PedToCoverEndPullBackDistance value="0.27500000"/>
+      <PedToCoverEndZOffset value="0.70000000"/>
+      <MaxStickInputAngleInfluence value="0.39000000"/>
+      <IdleYStartOffset value="0.00000000"/>
+    </Item>
+    <Item type="CClipScalingHelper__Tunables">
+      <Name>CClipScalingHelper</Name>
+      <DisableRotationScaling value="false"/>
+      <DisableRotationOvershoot value="false"/>
+      <DisableTranslationScaling value="false"/>
+      <DisableTranslationOvershoot value="false"/>
+      <MinVelocityToScale value="0.05000000"/>
+      <MaxTransVelocity value="8.00000000"/>
+      <MinRemainingAnimDurationToScale value="0.01000000"/>
+      <MinAnimRotationDeltaToScale value="0.05000000"/>
+      <MinAnimTranslationDeltaToScale value="0.01000000"/>
+      <MinCurrentRotationDeltaToScale value="0.05000000"/>
+      <DefaultMinRotationScalingValue value="0.20000000"/>
+      <DefaultMaxRotationScalingValue value="4.00000000"/>
+      <DefaultMinTranslationScalingValue value="0.20000000"/>
+      <DefaultMaxTranslationScalingValue value="4.00000000"/>
+    </Item>
+    <Item type="CTaskAdvance__Tunables">
+      <Name>CTaskAdvance</Name>
+      <TimeToWaitAtPosition value="3.00000000"/>
+      <TimeBetweenPointUpdates value="3.00000000"/>
+      <TimeBetweenSeekChecksAtTacticalPoint value="5.00000000"/>
+    </Item>
+    <Item type="CTaskAimFromGround__Tunables">
+      <Name>CTaskAimFromGround</Name>
+      <MaxAimFromGroundTime value="8.00000000"/>
+    </Item>
+    <Item type="CTaskBoatChase__Tunables">
+      <Name>CTaskBoatChase</Name>
+      <IdealDistanceForPursue value="15.00000000"/>
+    </Item>
+    <Item type="CTaskBoatCombat__Tunables">
+      <Name>CTaskBoatCombat</Name>
+      <Rendering>
+        <Enabled value="false"/>
+        <CollisionProbe value="true"/>
+        <LandProbe value="true"/>
+      </Rendering>
+      <MinSpeedForChase value="3.00000000"/>
+      <TimeToLookAheadForCollision value="4.00000000"/>
+      <DepthForLandProbe value="4.00000000"/>
+      <TimeToWait value="15.00000000"/>
+    </Item>
+    <Item type="CTaskBoatStrafe__Tunables">
+      <Name>CTaskBoatStrafe</Name>
+      <AdditionalDistanceForApproach value="35.00000000"/>
+      <AdditionalDistanceForStrafe value="25.00000000"/>
+      <CruiseSpeedForStrafe value="5.00000000"/>
+      <RotationLookAhead value="2.50000000"/>
+      <MaxAdjustmentLookAhead value="1.00000000"/>
+    </Item>
+    <Item type="CTaskDraggingToSafety__Tunables">
+      <Name>CTaskDraggingToSafety</Name>
+      <ObstructionProbe>
+        <Height value="2.00000000"/>
+        <Radius value="0.75000000"/>
+        <ExtraHeightForGround value="0.50000000"/>
+      </ObstructionProbe>
+      <Rendering>
+        <Enabled value="false"/>
+        <ObstructionProbe value="true"/>
+      </Rendering>
+      <MaxTimeForStream value="3.00000000"/>
+      <CoverMinDistance value="3.00000000"/>
+      <CoverMaxDistance value="20.00000000"/>
+      <LookAtUpdateTime value="2.00000000"/>
+      <LookAtTime value="3000"/>
+      <CoverWeightDistance value="0.25000000"/>
+      <CoverWeightUsage value="0.40000000"/>
+      <CoverWeightValue value="0.35000000"/>
+      <SeparationPickup x="0.13000000" y="-1.06000000" z="0.00000000"/>
+      <SeparationDrag x="0.02170000" y="-0.51310000" z="0.00000000"/>
+      <SeparationPutdown x="0.02170000" y="-0.51310000" z="0.00000000"/>
+      <AbortAimedAtMinDistance value="15.00000000"/>
+      <CoverResponseTimeout value="1.00000000"/>
+      <MinDotForPickupDirection value="0.70700000"/>
+      <MaxDistanceForHolster value="7.50000000"/>
+      <MaxDistanceForPedToBeVeryCloseToCover value="2.00000000"/>
+      <MaxNumPedsAllowedToBeVeryCloseToCover value="1"/>
+      <TimeBetweenCoverPointSearches value="1.00000000"/>
+      <MinDistanceToSetApproachPosition value="0.10000000"/>
+      <MaxDistanceToConsiderTooClose value="10.00000000"/>
+      <MaxDistanceToAlwaysLookAtTarget value="20.00000000"/>
+      <MaxHeightDifferenceToApproachTarget value="1.00000000"/>
+      <MaxXYDistanceToApproachTarget value="1.00000000"/>
+      <MaxTimeToBeObstructed value="1.00000000"/>
+    </Item>
+    <Item type="CTaskHeliChase__Tunables">
+      <Name>CTaskHeliChase</Name>
+      <DriftX>
+        <MinValueForCorrection value="1.50000000"/>
+        <MaxValueForCorrection value="2.00000000"/>
+        <MinRate value="0.50000000"/>
+        <MaxRate value="0.75000000"/>
+      </DriftX>
+      <DriftY>
+        <MinValueForCorrection value="1.50000000"/>
+        <MaxValueForCorrection value="2.00000000"/>
+        <MinRate value="0.50000000"/>
+        <MaxRate value="0.75000000"/>
+      </DriftY>
+      <DriftZ>
+        <MinValueForCorrection value="1.50000000"/>
+        <MaxValueForCorrection value="2.00000000"/>
+        <MinRate value="0.50000000"/>
+        <MaxRate value="0.75000000"/>
+      </DriftZ>
+      <MinHeightAboveTerrain value="20"/>
+      <SlowDownDistanceMin value="15.00000000"/>
+      <SlowDownDistanceMax value="100.00000000"/>
+      <CruiseSpeed value="35.00000000"/>
+      <MaxDistanceForOrientation value="5.00000000"/>
+      <NearDistanceForOrientation value="100.00000000"/>
+    </Item>
+    <Item type="CTaskHeliCombat__Tunables">
+      <Name>CTaskHeliCombat</Name>
+      <Chase>
+        <MinSpeed value="3.00000000"/>
+        <MinTargetOffsetX value="15.00000000"/>
+        <MaxTargetOffsetX value="35.00000000"/>
+        <MinTargetOffsetY value="10.00000000"/>
+        <MaxTargetOffsetY value="20.00000000"/>
+        <MinTargetOffsetZ value="10.00000000"/>
+        <MaxTargetOffsetZ value="20.00000000"/>
+        <MinTargetOffsetZ_TargetInAir value="0.00000000"/>
+        <MaxTargetOffsetZ_TargetInAir value="15.00000000"/>
+      </Chase>
+    </Item>
+    <Item type="CTaskPlaneChase__Tunables">
+      <Name>CTaskPlaneChase</Name>
+    </Item>
+    <Item type="CTaskReactToBuddyShot__Tunables">
+      <Name>CTaskReactToBuddyShot</Name>
+    </Item>
+    <Item type="CTaskVariedAimPose__Tunables">
+      <Name>CTaskVariedAimPose</Name>
+      <MinTimeBeforeCanChooseNewPose value="0.25000000"/>
+      <MinTimeBeforeNewPose value="1.00000000"/>
+      <MaxTimeBeforeNewPose value="4.00000000"/>
+      <DistanceForMinTimeBeforeNewPose value="10.00000000"/>
+      <DistanceForMaxTimeBeforeNewPose value="30.00000000"/>
+      <AvoidNearbyPedHorizontal value="3.00000000"/>
+      <AvoidNearbyPedVertical value="3.00000000"/>
+      <AvoidNearbyPedDotThreshold value="0.80000000"/>
+      <TargetRadius value="5.00000000"/>
+      <MinTimeBetweenReactions value="1.00000000"/>
+      <MinAnimOffsetMagnitude value="0.15000000"/>
+      <Rate value="1.00000000"/>
+      <MaxDistanceToCareAboutBlockingLineOfSight value="15.00000000"/>
+      <MaxDistanceToUseUrgentTransitions value="25.00000000"/>
+      <TimeToUseUrgentTransitionsWhenThreatened value="10.00000000"/>
+      <MinTimeBetweenReactionChecksForGunAimedAt value="1.00000000"/>
+      <ChancesToReactForGunAimedAt value="0.25000000"/>
+      <MaxClipsToCheckPerFrame value="5"/>
+      <DebugDraw value="false"/>
+      <DefaultStandingPose>Standing</DefaultStandingPose>
+      <DefaultCrouchingPose>crouching</DefaultCrouchingPose>
+      <AimPoses>
+        <Item>
+          <Name>Standing</Name>
+          <IsCrouching value="false"/>
+          <IsStationary value="false"/>
+          <LoopClipSetId/>
+          <LoopClipId/>
+          <Transitions>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITION</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_COP_BWD</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_COP_FWD</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_COP_LEFT</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_COP_RIGHT</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_GANG_BWD</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_GANG_FWD</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_GANG_LEFT</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT_REPOSITION_GANG_RIGHT</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>crouching</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>stand_to_crouch</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>StandingFeetApart</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aima_to_aimb</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>StandingFeetApart</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_B@CALM</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>StandingFeetApart</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_B@DODGY</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingPartial</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aima_to_aimc</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingPartial</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_C@CALM</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingPartial</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_C@DODGY</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeOut</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aima_to_aimd</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeOut</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_D@CALM</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeOut</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_D@DODGY</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeDown</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aima_to_aime</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeDown</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_E@CALM</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeDown</ToPose>
+              <ClipSetId>COMBAT@CHG_POSITIONPOSE_E@DODGY</ClipSetId>
+              <ClipId/>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+          </Transitions>
+        </Item>
+        <Item>
+          <Name>crouching</Name>
+          <IsCrouching value="true"/>
+          <IsStationary value="false"/>
+          <LoopClipSetId/>
+          <LoopClipId/>
+          <Transitions>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>crouch_to_stand</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+          </Transitions>
+        </Item>
+        <Item>
+          <Name>StandingFeetApart</Name>
+          <IsCrouching value="false"/>
+          <IsStationary value="true"/>
+          <LoopClipSetId>COMBAT@CHG_STANCE</LoopClipSetId>
+          <LoopClipId>aimb_loop</LoopClipId>
+          <Transitions>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimb_to_aima</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingPartial</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimb_to_aimc</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeOut</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimb_to_aimd</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeDown</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimb_to_aime</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+          </Transitions>
+        </Item>
+        <Item>
+          <Name>CrouchingPartial</Name>
+          <IsCrouching value="true"/>
+          <IsStationary value="true"/>
+          <LoopClipSetId>COMBAT@CHG_STANCE</LoopClipSetId>
+          <LoopClipId>aimc_loop</LoopClipId>
+          <Transitions>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimc_to_aima</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>StandingFeetApart</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimc_to_aimb</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeOut</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimc_to_aimd</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeDown</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimc_to_aime</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+          </Transitions>
+        </Item>
+        <Item>
+          <Name>CrouchingKneeOut</Name>
+          <IsCrouching value="true"/>
+          <IsStationary value="true"/>
+          <LoopClipSetId>COMBAT@CHG_STANCE</LoopClipSetId>
+          <LoopClipId>aimd_loop</LoopClipId>
+          <Transitions>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimd_to_aima</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>StandingFeetApart</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimd_to_aimb</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingPartial</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimd_to_aimc</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeDown</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aimd_to_aime</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+          </Transitions>
+        </Item>
+        <Item>
+          <Name>CrouchingKneeDown</Name>
+          <IsCrouching value="true"/>
+          <IsStationary value="true"/>
+          <LoopClipSetId>COMBAT@CHG_STANCE</LoopClipSetId>
+          <LoopClipId>aime_loop</LoopClipId>
+          <Transitions>
+            <Item>
+              <ToPose>Standing</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aime_to_aima</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>StandingFeetApart</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aime_to_aimb</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingPartial</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aime_to_aimc</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+            <Item>
+              <ToPose>CrouchingKneeOut</ToPose>
+              <ClipSetId>COMBAT@CHG_STANCE</ClipSetId>
+              <ClipId>aime_to_aimd</ClipId>
+              <Rate value="1.00000000"/>
+              <Flags/>
+            </Item>
+          </Transitions>
+        </Item>
+      </AimPoses>
+    </Item>
+    <Item type="CTaskVehicleChase__Tunables">
+      <Name>CTaskVehicleChase</Name>
+      <CloseDistance>
+        <MinDistanceToStart value="200.00000000"/>
+        <MinDistanceToContinue value="190.00000000"/>
+      </CloseDistance>
+      <Block>
+        <MaxDotToStartFromAnalyze value="-0.70700000"/>
+        <MaxDotToContinueFromAnalyze value="0.25000000"/>
+        <MinTargetSpeedToStartFromPursue value="0.50000000"/>
+        <MinTargetSpeedToContinueFromPursue value="0.25000000"/>
+      </Block>
+      <Pursue>
+        <MinDotToStartFromAnalyze value="-0.70700000"/>
+        <MinDotToContinueFromAnalyze value="-0.75000000"/>
+        <IdealDistance value="12.00000000"/>
+      </Pursue>
+      <Ram>
+        <StraightLineDistance value="30.00000000"/>
+        <MinTargetSpeedToStartFromPursue value="0.00000000"/>
+        <MinTargetSpeedToContinueFromPursue value="0.00000000"/>
+      </Ram>
+      <SpinOut>
+        <StraightLineDistance value="30.00000000"/>
+        <MinTargetSpeedToStartFromPursue value="10.00000000"/>
+        <MinTargetSpeedToContinueFromPursue value="8.00000000"/>
+      </SpinOut>
+      <PullAlongside>
+        <StraightLineDistance value="30.00000000"/>
+        <MinTargetSpeedToStartFromPursue value="0.25000000"/>
+        <MinTargetSpeedToContinueFromPursue value="0.05000000"/>
+      </PullAlongside>
+      <AggressiveMove>
+        <MaxDistanceToStartFromPursue value="25.00000000"/>
+        <MinDotToStartFromPursue value="0.70700000"/>
+        <MinSpeedLeewayToStartFromPursue value="5.00000000"/>
+        <MaxTargetSteerAngleToStartFromPursue value="0.10000000"/>
+        <MaxDistanceToContinueFromPursue value="30.00000000"/>
+        <MinDotToContinueFromPursue value="0.00000000"/>
+        <MaxTimeInStateToContinueFromPursue value="10.00000000"/>
+        <MaxTargetSteerAngleToContinueFromPursue value="0.15000000"/>
+        <MinDelay value="2.00000000"/>
+        <MaxDelay value="3.50000000"/>
+        <WeightToRamFromPursue value="2.00000000"/>
+        <WeightToBlockFromPursue value="1.00000000"/>
+        <WeightToSpinOutFromPursue value="1.00000000"/>
+        <WeightToPullAlongsideFromPursue value="1.00000000"/>
+      </AggressiveMove>
+      <Cheat>
+        <MinSpeedDifferenceForPowerAdjustment value="1.00000000"/>
+        <MaxSpeedDifferenceForPowerAdjustment value="50.00000000"/>
+        <PowerForMinAdjustment value="1.00000000"/>
+        <PowerForMaxAdjustment value="20.00000000"/>
+        <PowerForMaxAdjustmentNetwork value="10.00000000"/>
+      </Cheat>
+      <MaxDotForHandBrake value="0.70700000"/>
+      <TimeBetweenCarChaseShockingEvents value="3.00000000"/>
+      <DistanceForCarChaseShockingEvents value="25.00000000"/>
+    </Item>
+    <Item type="CTaskVehiclePersuit__Tunables">
+      <Name>CTaskVehiclePersuit</Name>
+      <ApproachTarget>
+        <TargetArriveDist value="5.00000000"/>
+        <CruiseSpeed value="25.00000000"/>
+        <MaxDistanceToConsiderClose value="60.00000000"/>
+        <CruiseSpeedWhenClose value="15.00000000"/>
+        <CruiseSpeedWhenObstructedByLawEnforcementPed value="3.00000000"/>
+        <CruiseSpeedWhenObstructedByLawEnforcementVehicle value="5.00000000"/>
+        <CruiseSpeedTooManyNearbyEntities value="10.00000000"/>
+        <DistanceToConsiderCloseEntitiesTarget value="25.00000000"/>
+        <DistanceToConsiderEntityBlocking value="10.00000000"/>
+        <MaxNumberVehiclesNearTarget value="10"/>
+        <MaxNumberPedsNearTarget value="5"/>
+      </ApproachTarget>
+      <ObstructionProbeAngleA value="15.00000000"/>
+      <ObstructionProbeAngleB value="25.00000000"/>
+      <ObstructionProbeAngleC value="35.00000000"/>
+      <IdealDistanceOnBikeAndTargetUnarmed value="25.00000000"/>
+      <IdealDistanceOnBikeAndTargetArmed value="25.00000000"/>
+      <IdealDistanceInVehicleAndTargetUnarmed value="15.00000000"/>
+      <IdealDistanceInVehicleAndTargetArmed value="20.00000000"/>
+      <IdealDistanceShotAt value="50.00000000"/>
+      <IdealDistanceCouldLeaveCar value="50.00000000"/>
+      <DistanceToStopMultiplier value="0.50000000"/>
+      <DistanceToStopMassIdeal value="3000.00000000"/>
+      <DistanceToStopMassWeight value="0.25000000"/>
+      <MinDriverTimeToLeaveVehicle value="2.50000000"/>
+      <MaxDriverTimeToLeaveVehicle value="3.25000000"/>
+      <MinPassengerTimeToLeaveVehicle value="0.50000000"/>
+      <MaxPassengerTimeToLeaveVehicle value="0.75000000"/>
+      <MaxSpeedForEarlyCombatExit value="6.00000000"/>
+      <MinSpeedToJumpOutOfVehicle value="10.00000000"/>
+      <MinTimeBoatOutOfWaterForExit value="2.00000000"/>
+      <AvoidanceMarginForOtherLawEnforcementVehicles value="3.00000000"/>
+      <MinTimeToWaitForOtherPedToExit value="7.00000000"/>
+      <MinDelayExitTime value="0.12500000"/>
+      <MaxDelayExitTime value="0.42500000"/>
+      <PreventShufflingExtraRange value="15.00000000"/>
+      <MaxTimeWaitForExitBeforeWarp value="10.00000000"/>
+      <MinTargetStandingOnTrainSpeed value="10.00000000"/>
+      <DistanceToFollowInCar value="10"/>
+    </Item>
+    <Item type="CTaskVehicleCombat__Tunables">
+      <Name>CTaskVehicleCombat</Name>
+      <MinTimeBetweenShootOutTiresGlobal value="120.00000000"/>
+      <MaxTimeBetweenShootOutTiresGlobal value="240.00000000"/>
+      <MinTimeInCombatToShootOutTires value="120.00000000"/>
+      <MaxTimeInCombatToShootOutTires value="240.00000000"/>
+      <ChancesToApplyReactionWhenShootingOutTire value="0.25000000"/>
+      <MinTimeToPrepareWeapon value="0.50000000"/>
+      <MaxTimeToPrepareWeapon value="1.00000000"/>
+      <MaxTimeSinceTargetLastHostileForLawDriveby value="5000"/>
+    </Item>
+    <Item type="CTaskSearchBase__Tunables">
+      <Name>CTaskSearchBase</Name>
+      <TimeToGiveUp value="120.00000000"/>
+      <MaxPositionVariance value="5.00000000"/>
+      <MaxDirectionVariance value="0.75000000"/>
+    </Item>
+    <Item type="CTaskSearchInAutomobile__Tunables">
+      <Name>CTaskSearchInAutomobile</Name>
+      <FleeOffset value="25.00000000"/>
+      <CruiseSpeed value="25.00000000"/>
+    </Item>
+    <Item type="CTaskSearchInBoat__Tunables">
+      <Name>CTaskSearchInBoat</Name>
+    </Item>
+    <Item type="CTaskSearchInHeli__Tunables">
+      <Name>CTaskSearchInHeli</Name>
+      <FleeOffset value="25.00000000"/>
+      <CruiseSpeed value="25.00000000"/>
+      <MinHeightAboveTerrain value="20"/>
+    </Item>
+    <Item type="CTaskSearchOnFoot__Tunables">
+      <Name>CTaskSearchOnFoot</Name>
+      <FleeOffset value="10.00000000"/>
+      <TargetRadius value="1.00000000"/>
+      <CompletionRadius value="1.00000000"/>
+      <SlowDownDistance value="3.00000000"/>
+      <FleeSafeDistance value="150.00000000"/>
+      <MoveBlendRatio value="1.00000000"/>
+    </Item>
+    <Item type="CTaskShootOutTire__Tunables">
+      <Name>CTaskShootOutTire</Name>
+      <MinTimeoutToAcquireLineOfSight value="5.00000000"/>
+      <MaxTimeoutToAcquireLineOfSight value="15.00000000"/>
+      <TimeBetweenLineOfSightChecks value="0.50000000"/>
+      <MinTimeToWaitForShot value="2.00000000"/>
+      <MaxTimeToWaitForShot value="4.00000000"/>
+      <MaxWaitForShotFailures value="3"/>
+      <MinSpeedToApplyReaction value="10.00000000"/>
+    </Item>
+    <Item type="CTaskTargetUnreachable__Tunables">
+      <Name>CTaskTargetUnreachable</Name>
+      <fTimeBetweenRouteSearches value="3.50000000"/>
+    </Item>
+    <Item type="CTaskTargetUnreachableInInterior__Tunables">
+      <Name>CTaskTargetUnreachableInInterior</Name>
+      <fDirectionTestProbeLength value="3.00000000"/>
+    </Item>
+    <Item type="CTaskTargetUnreachableInExterior__Tunables">
+      <Name>CTaskTargetUnreachableInExterior</Name>
+      <RangePercentage value="0.25000000"/>
+      <MaxDistanceFromNavMesh value="40.00000000"/>
+      <TargetRadius value="3.00000000"/>
+      <MoveBlendRatio value="2.00000000"/>
+      <CompletionRadius value="3.00000000"/>
+      <MinTimeToWait value="5.00000000"/>
+      <MaxTimeToWait value="15.00000000"/>
+    </Item>
+    <Item type="CPedTargetting__Tunables">
+      <Name>CPedTargetting</Name>
+      <fExistingTargetScoreWeight value="1.50000000"/>
+      <fTargetingInactiveDisableTime value="4.00000000"/>
+      <fBlockedLosWeighting value="0.20000000"/>
+      <fTimeToIgnoreBlockedLosWeighting value="5.00000000"/>
+      <fPlayerHighThreatWeighting value="10.00000000"/>
+      <fTargetInAircraftWeighting value="0.00000000"/>
+      <iTargetNotSeenIgnoreTimeMs value="5000"/>
+      <fPlayerThreatDistance value="15.00000000"/>
+      <fPlayerDirectThreatDistance value="27.50000000"/>
+      <fPlayerBeingTargetedExtraDistance value="5.00000000"/>
+      <iPlayerDirectThreatTimeMs value="7500"/>
+    </Item>
+  </Tunables>
+</CTuningFile>

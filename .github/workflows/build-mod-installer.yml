@@ -4,7 +4,8 @@ on:
     branches: [master]
     paths:
       - '.github/workflows/build-mod-installer.yml'
-      - 'src/gtxmod-mod-installer/**'
+          - 'src/gtxmod-mod-installer/**'
+          - 'src/gtxmod-safe-oldbase/**'
       - 'tools/create_gp4_from_tree.py'
       - 'tools/fix_gp4_dirs.py'
   workflow_dispatch:
@@ -35,15 +36,15 @@ jobs:
           export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
           export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
           export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
-          cd src/gtxmod-mod-installer
+          cd src/gtxmod-safe-oldbase
           make -j2
           mkdir -p "$GITHUB_WORKSPACE/finish"
-          cp -f IV0000-YAHI00004_00-GTXMODSAFEVID001.pkg \
-            "$GITHUB_WORKSPACE/finish/GTXMOD-Safe-Video-Test.pkg"
+          cp -f IV0000-YAHI00005_00-GTXMODLEGACY0001.pkg \
+            "$GITHUB_WORKSPACE/finish/GTXMOD-Legacy-Boot-Test.pkg"
       - name: Upload PKG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: GTXMOD-Safe-Video-Test-PS4
-          path: finish/GTXMOD-Safe-Video-Test.pkg
+          name: GTXMOD-Legacy-Boot-Test-PS4
+          path: finish/GTXMOD-Legacy-Boot-Test.pkg
           if-no-files-found: error
           retention-days: 30

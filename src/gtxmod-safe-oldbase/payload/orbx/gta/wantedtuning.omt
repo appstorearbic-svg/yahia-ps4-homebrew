@@ -1,0 +1,654 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CTuningFile>
+  <Tunables>
+    <Item type="CWanted__Tunables">
+      <Name>CWanted</Name>
+      <WantedClean>
+        <Difficulty>
+          <Calculation>
+            <FromWantedLevel value="0.00000000"/>
+            <Weights>
+              <WantedLevel value="1.00000000"/>
+              <LastSpottedDistance value="0.00000000"/>
+              <Randomness value="0.00000000"/>
+            </Weights>
+            <Decay>
+              <TimeEvadingForMaxValue value="1.00000000"/>
+              <MaxValue value="1.00000000"/>
+              <DisableWhenOffMission value="false"/>
+            </Decay>
+          </Calculation>
+          <Helis>
+            <Refuel>
+              <Enabled value="true"/>
+              <TimeBefore value="0.00000000"/>
+              <Delay value="0.00000000"/>
+            </Refuel>
+          </Helis>
+        </Difficulty>
+      </WantedClean>
+      <WantedLevel1>
+        <Difficulty>
+          <Calculation>
+            <FromWantedLevel value="0.10000000"/>
+            <Weights>
+              <WantedLevel value="1.00000000"/>
+              <LastSpottedDistance value="0.10000000"/>
+              <Randomness value="0.00000000"/>
+            </Weights>
+            <Decay>
+              <TimeEvadingForMaxValue value="60.00000000"/>
+              <MaxValue value="1.00000000"/>
+              <DisableWhenOffMission value="false"/>
+            </Decay>
+          </Calculation>
+          <Helis>
+            <Refuel>
+              <Enabled value="true"/>
+              <TimeBefore value="0.00000000"/>
+              <Delay value="0.00000000"/>
+            </Refuel>
+          </Helis>
+        </Difficulty>
+      </WantedLevel1>
+      <WantedLevel2>
+        <Difficulty>
+          <Calculation>
+            <FromWantedLevel value="0.20000000"/>
+            <Weights>
+              <WantedLevel value="1.00000000"/>
+              <LastSpottedDistance value="0.10000000"/>
+              <Randomness value="0.00000000"/>
+            </Weights>
+            <Decay>
+              <TimeEvadingForMaxValue value="90.00000000"/>
+              <MaxValue value="1.00000000"/>
+              <DisableWhenOffMission value="false"/>
+            </Decay>
+          </Calculation>
+          <Helis>
+            <Refuel>
+              <Enabled value="true"/>
+              <TimeBefore value="0.00000000"/>
+              <Delay value="0.00000000"/>
+            </Refuel>
+          </Helis>
+        </Difficulty>
+      </WantedLevel2>
+      <WantedLevel3>
+        <Difficulty>
+          <Calculation>
+            <FromWantedLevel value="0.35000000"/>
+            <Weights>
+              <WantedLevel value="1.00000000"/>
+              <LastSpottedDistance value="0.15000000"/>
+              <Randomness value="0.00000000"/>
+            </Weights>
+            <Decay>
+              <TimeEvadingForMaxValue value="120.00000000"/>
+              <MaxValue value="0.75000000"/>
+              <DisableWhenOffMission value="false"/>
+            </Decay>
+          </Calculation>
+          <Helis>
+            <Refuel>
+              <Enabled value="true"/>
+              <TimeBefore value="120.00000000"/>
+              <Delay value="90.00000000"/>
+            </Refuel>
+          </Helis>
+        </Difficulty>
+      </WantedLevel3>
+      <WantedLevel4>
+        <Difficulty>
+          <Calculation>
+            <FromWantedLevel value="0.55000000"/>
+            <Weights>
+              <WantedLevel value="1.00000000"/>
+              <LastSpottedDistance value="0.20000000"/>
+              <Randomness value="0.00000000"/>
+            </Weights>
+            <Decay>
+              <TimeEvadingForMaxValue value="180.00000000"/>
+              <MaxValue value="0.50000000"/>
+              <DisableWhenOffMission value="false"/>
+            </Decay>
+          </Calculation>
+          <Helis>
+            <Refuel>
+              <Enabled value="false"/>
+              <TimeBefore value="0.00000000"/>
+              <Delay value="0.00000000"/>
+            </Refuel>
+          </Helis>
+        </Difficulty>
+      </WantedLevel4>
+      <WantedLevel5>
+        <Difficulty>
+          <Calculation>
+            <FromWantedLevel value="0.75000000"/>
+            <Weights>
+              <WantedLevel value="1.00000000"/>
+              <LastSpottedDistance value="0.25000000"/>
+              <Randomness value="0.00000000"/>
+            </Weights>
+            <Decay>
+              <TimeEvadingForMaxValue value="300.00000000"/>
+              <MaxValue value="0.25000000"/>
+              <DisableWhenOffMission value="true"/>
+            </Decay>
+          </Calculation>
+          <Helis>
+            <Refuel>
+              <Enabled value="false"/>
+              <TimeBefore value="0.00000000"/>
+              <Delay value="0.00000000"/>
+            </Refuel>
+          </Helis>
+        </Difficulty>
+      </WantedLevel5>
+      <Difficulty>
+        <Spawning>
+          <Scoring>
+            <Weights>
+              <Distance>
+                <Min value="0.00000000"/>
+                <Max value="2.50000000"/>
+                <ValueForMin value="0.00000000"/>
+                <ValueForMax value="1.00000000"/>
+              </Distance>
+              <Direction>
+                <Min value="0.00000000"/>
+                <Max value="1.50000000"/>
+                <ValueForMin value="0.00000000"/>
+                <ValueForMax value="1.00000000"/>
+              </Direction>
+              <Randomness>
+                <Min value="2.00000000"/>
+                <Max value="1.00000000"/>
+                <ValueForMin value="0.00000000"/>
+                <ValueForMax value="1.00000000"/>
+              </Randomness>
+            </Weights>
+          </Scoring>
+          <IdealDistance>
+            <Min value="350.00000000"/>
+            <Max value="300.00000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="0.25000000"/>
+          </IdealDistance>
+          <ChancesToForceWaitInFront>
+            <Min value="0.25000000"/>
+            <Max value="0.75000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="0.40000000"/>
+          </ChancesToForceWaitInFront>
+        </Spawning>
+        <Despawning>
+          <MaxFacingThreshold>
+            <Min value="-0.90000000"/>
+            <Max value="-0.50000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="1.00000000"/>
+          </MaxFacingThreshold>
+          <MaxMovingThreshold>
+            <Min value="-0.90000000"/>
+            <Max value="-0.50000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="1.00000000"/>
+          </MaxMovingThreshold>
+          <MinDistanceToBeConsideredLaggingBehind>
+            <Min value="200.00000000"/>
+            <Max value="75.00000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="1.00000000"/>
+          </MinDistanceToBeConsideredLaggingBehind>
+          <MinDistanceToCheckClumped>
+            <Min value="200.00000000"/>
+            <Max value="50.00000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="1.00000000"/>
+          </MinDistanceToCheckClumped>
+          <MaxDistanceToBeConsideredClumped>
+            <Min value="5.00000000"/>
+            <Max value="15.00000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="1.00000000"/>
+          </MaxDistanceToBeConsideredClumped>
+        </Despawning>
+        <Peds>
+          <Cops>
+            <Situations>
+              <Default>
+                <SensesRange>
+                  <Min value="60.00000000"/>
+                  <Max value="60.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="20.00000000"/>
+                  <Max value="20.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="1.00000000"/>
+                  <Max value="3.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.12000000"/>
+                  <Max value="0.24000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="1.00000000"/>
+              </Default>
+              <InVehicle>
+                <SensesRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.25000000"/>
+                  <Max value="0.50000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.06000000"/>
+                  <Max value="0.12000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="1.00000000"/>
+              </InVehicle>
+              <InHeli>
+                <SensesRange>
+                  <Min value="150.00000000"/>
+                  <Max value="150.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="150.00000000"/>
+                  <Max value="150.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.12500000"/>
+                  <Max value="0.25000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.03000000"/>
+                  <Max value="0.06000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="0.02000000"/>
+                <WeaponAccuracyModifierForOffScreen value="0.10000000"/>
+                <WeaponAccuracyModifierForAimedAt value="2.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InHeli>
+              <InBoat>
+                <SensesRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.25000000"/>
+                  <Max value="0.50000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.06000000"/>
+                  <Max value="0.12000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InBoat>
+            </Situations>
+            <AutomobileSpeedModifier>
+              <Min value="0.50000000"/>
+              <Max value="1.00000000"/>
+              <ValueForMin value="0.00000000"/>
+              <ValueForMax value="0.02000000"/>
+            </AutomobileSpeedModifier>
+            <HeliSpeedModifier>
+              <Min value="0.30000000"/>
+              <Max value="0.70000000"/>
+              <ValueForMin value="0.00000000"/>
+              <ValueForMax value="0.30000000"/>
+            </HeliSpeedModifier>
+          </Cops>
+          <Swat>
+            <Situations>
+              <Default>
+                <SensesRange>
+                  <Min value="60.00000000"/>
+                  <Max value="60.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="20.00000000"/>
+                  <Max value="20.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="1.00000000"/>
+                  <Max value="3.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.15000000"/>
+                  <Max value="0.30000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </Default>
+              <InVehicle>
+                <SensesRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.30000000"/>
+                  <Max value="0.50000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.07500000"/>
+                  <Max value="0.15000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InVehicle>
+              <InHeli>
+                <SensesRange>
+                  <Min value="150.00000000"/>
+                  <Max value="150.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="150.00000000"/>
+                  <Max value="150.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.60000000"/>
+                  <Max value="0.80000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.04000000"/>
+                  <Max value="0.08000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="0.02000000"/>
+                <WeaponAccuracyModifierForOffScreen value="0.10000000"/>
+                <WeaponAccuracyModifierForAimedAt value="2.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InHeli>
+              <InBoat>
+                <SensesRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.25000000"/>
+                  <Max value="0.50000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.07500000"/>
+                  <Max value="0.15000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InBoat>
+            </Situations>
+            <AutomobileSpeedModifier>
+              <Min value="1.00000000"/>
+              <Max value="1.00000000"/>
+              <ValueForMin value="0.00000000"/>
+              <ValueForMax value="1.00000000"/>
+            </AutomobileSpeedModifier>
+            <HeliSpeedModifier>
+              <Min value="0.30000000"/>
+              <Max value="0.70000000"/>
+              <ValueForMin value="0.00000000"/>
+              <ValueForMax value="0.30000000"/>
+            </HeliSpeedModifier>
+          </Swat>
+          <Army>
+            <Situations>
+              <Default>
+                <SensesRange>
+                  <Min value="60.00000000"/>
+                  <Max value="60.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="20.00000000"/>
+                  <Max value="20.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="1.00000000"/>
+                  <Max value="3.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.12000000"/>
+                  <Max value="0.24000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="1.00000000"/>
+              </Default>
+              <InVehicle>
+                <SensesRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.25000000"/>
+                  <Max value="0.50000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.06000000"/>
+                  <Max value="0.12000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="1.00000000"/>
+              </InVehicle>
+              <InHeli>
+                <SensesRange>
+                  <Min value="150.00000000"/>
+                  <Max value="150.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="150.00000000"/>
+                  <Max value="150.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.12500000"/>
+                  <Max value="0.25000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.03000000"/>
+                  <Max value="0.06000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="0.02000000"/>
+                <WeaponAccuracyModifierForOffScreen value="0.10000000"/>
+                <WeaponAccuracyModifierForAimedAt value="2.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InHeli>
+              <InBoat>
+                <SensesRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </SensesRange>
+                <IdentificationRange>
+                  <Min value="90.00000000"/>
+                  <Max value="90.00000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </IdentificationRange>
+                <ShootRateModifier>
+                  <Min value="0.25000000"/>
+                  <Max value="0.50000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </ShootRateModifier>
+                <WeaponAccuracy>
+                  <Min value="0.06000000"/>
+                  <Max value="0.12000000"/>
+                  <ValueForMin value="0.00000000"/>
+                  <ValueForMax value="1.00000000"/>
+                </WeaponAccuracy>
+                <WeaponAccuracyModifierForEvasiveMovement value="1.00000000"/>
+                <WeaponAccuracyModifierForOffScreen value="1.00000000"/>
+                <WeaponAccuracyModifierForAimedAt value="1.00000000"/>
+                <MinForDrivebys value="0.00000000"/>
+              </InBoat>
+            </Situations>
+            <AutomobileSpeedModifier>
+              <Min value="0.50000000"/>
+              <Max value="1.00000000"/>
+              <ValueForMin value="0.00000000"/>
+              <ValueForMax value="0.25000000"/>
+            </AutomobileSpeedModifier>
+            <HeliSpeedModifier>
+              <Min value="0.30000000"/>
+              <Max value="0.70000000"/>
+              <ValueForMin value="0.00000000"/>
+              <ValueForMax value="0.30000000"/>
+            </HeliSpeedModifier>
+          </Army>
+        </Peds>
+        <Dispatch>
+          <TimeBetweenSpawnAttemptsModifier>
+            <Min value="3.00000000"/>
+            <Max value="1.00000000"/>
+            <ValueForMin value="0.00000000"/>
+            <ValueForMax value="0.25000000"/>
+          </TimeBetweenSpawnAttemptsModifier>
+        </Dispatch>
+      </Difficulty>
+      <Rendering>
+        <Enabled value="false"/>
+        <Witnesses value="true"/>
+        <Crimes value="true"/>
+      </Rendering>
+      <Timers>
+        <TimeBetweenDifficultyUpdates value="1.00000000"/>
+      </Timers>
+      <MaxTimeTargetVehicleMoving value="10000"/>
+      <DefaultAmnestyTime value="2000"/>
+      <DefaultHiddenEvasionTimeReduction value="3500"/>
+      <InitialAreaTimeoutWhenSeen value="5000"/>
+      <InitialAreaTimeoutWhenCrimeReported value="30000"/>
+      <ExtraStartHiddenEvasionDelay value="30.00000000"/>
+    </Item>
+  </Tunables>
+</CTuningFile>

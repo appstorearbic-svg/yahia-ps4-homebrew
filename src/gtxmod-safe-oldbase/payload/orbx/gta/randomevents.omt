@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CTuningFile>
+  <Tunables>
+    <Item type="CRandomEventManager__Tunables">
+      <Name>CRandomEventManager</Name>
+      <RenderDebug value="false"/>
+      <Enabled value="true"/>
+      <ForceCrime value="false"/>
+      <EventInterval value="5.00000000"/>
+      <EventInitInterval value="40.00000000"/>
+      <RandomEventType>
+        <Item>
+          <RandomEventTypeName>Crime</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="240.00000000"/>
+          <RandomEventTimeIntervalMax value="300.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="50.00000000"/>
+        </Item>
+        <Item>
+          <RandomEventTypeName>JayWalkingLights</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="120.00000000"/>
+          <RandomEventTimeIntervalMax value="150.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="50.00000000"/>
+        </Item>
+        <Item>
+          <RandomEventTypeName>CopPursuit</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="480.00000000"/>
+          <RandomEventTimeIntervalMax value="720.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="0.00000000"/>
+        </Item>
+        <Item>
+          <RandomEventTypeName>SpawnedCopPursuit</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="540.00000000"/>
+          <RandomEventTimeIntervalMax value="840.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="0.00000000"/>
+        </Item>
+        <Item>
+          <RandomEventTypeName>AmbientCop</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="180.00000000"/>
+          <RandomEventTimeIntervalMax value="200.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="50.00000000"/>
+        </Item>
+        <Item>
+          <RandomEventTypeName>InterestingDriver</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="60.00000000"/>
+          <RandomEventTimeIntervalMax value="80.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="50.00000000"/>
+        </Item>
+        <Item>
+          <RandomEventTypeName>AggressiveDriver</RandomEventTypeName>
+          <RandomEventTimeIntervalMin value="60.00000000"/>
+          <RandomEventTimeIntervalMax value="80.00000000"/>
+          <DeltaScaleWhenPlayerStationary value="50.00000000"/>
+        </Item>
+      </RandomEventType>
+      <RandomEventData>
+        <Item>
+          <RandomEventName>StealVehicle</RandomEventName>
+          <RandomEventType>ET_CRIME</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>JayWalkLights</RandomEventName>
+          <RandomEventType>ET_JAYWALKING</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>CopPursue</RandomEventName>
+          <RandomEventType>ET_COP_PURSUIT</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>SpawnedCopPursueVehicleFlee</RandomEventName>
+          <RandomEventType>ET_SPAWNED_COP_PURSUIT</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>CopVehicleDrivingFast</RandomEventName>
+          <RandomEventType>ET_AMBIENT_COP</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>SlowDriver</RandomEventName>
+          <RandomEventType>ET_INTERESTING_DRIVER</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>RecklessDriver</RandomEventName>
+          <RandomEventType>ET_INTERESTING_DRIVER</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>ProDriver</RandomEventName>
+          <RandomEventType>ET_INTERESTING_DRIVER</RandomEventType>
+        </Item>
+        <Item>
+          <RandomEventName>AggressiveDriver</RandomEventName>
+          <RandomEventType>ET_AGGRESSIVE_DRIVER</RandomEventType>
+        </Item>
+      </RandomEventData>
+      <SpawningChasesEnabled value="true"/>
+      <MaxNumberCopVehiclesInChase value="2"/>
+      <ProbSpawnHeli value="30"/>
+      <MaxAmbientVehiclesToSpawnChase value="40"/>
+      <MinPlayerMoveDistanceToSpawnChase value="200"/>
+      <HeliVehicleModelId>polmav</HeliVehicleModelId>
+      <HeliPedModelId>s_m_y_swat_01</HeliPedModelId>
+    </Item>
+  </Tunables>
+</CTuningFile>

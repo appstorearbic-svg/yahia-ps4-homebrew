@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CVehicleModelColorsGen9>
+  <Colors>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 161 Anodized Red</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod001</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 162 Anodized Wine</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod002</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 163 Anodized Purple</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod003</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 164 Anodized Blue</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod004</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 165 Anodized Green</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod005</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 166 Anodized Lime</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod006</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_brown</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="2201497177" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 167 Anodized Copper</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod007</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_brown</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="2201497177" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 168 Anodized Bronze</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod008</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_brown</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="2201497177" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 169 Anodized Champagne</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod009</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_brown</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="2201497177" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 170 Anodized Gold</colorName>
+      <rampTextureName>vehicle_paint_ramp_anod010</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 171 Green Blue Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip001</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 172 Green Red Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip002</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 173 Green Brown Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip003</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 174 Green Turqoise Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip004</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 175 Green Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip005</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 176 Teal Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip006</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 177 Turqoise Red Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip007</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 178 Turqoise Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip008</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 179 Cyan Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip009</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 180 Blue Pink Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip010</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 181 Blue Green Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip011</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 182 Purple Red Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip012</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 183 Purple Green Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip013</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 184 Magenta Green Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip014</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 185 Magenta Yellow Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip015</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 186 Burgundy Green Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip016</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 187 Magenta Cyan Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip017</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 188 Copper Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip018</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_orange</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="2639756769" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 189 Magenta Orange Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip019</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_orange</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="2639756769" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 190 Red Orange Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip020</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_orange</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="2639756769" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 191 Orange Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip021</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_orange</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="2639756769" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 192 Orange Blue Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip022</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_beige</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="1325014621" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 193 White Purple Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip023</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 194 Red Rainbow Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip024</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 195 Blue Rainbow Flip</colorName>
+      <rampTextureName>vehicle_paint_ramp_flip024</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 196 Dark Green Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl001</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 197 Dark Teal Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl002</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 198 Dark Blue Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl003</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 199 Dark Purple Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl004</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 200 Oil Slick Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl005</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 201 Light Green Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl006</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 202 Light Blue Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl007</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_pink</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="2019367074" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 203 Light Purple Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl008</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_pink</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="2019367074" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 204 Light Pink Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl009</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_white</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="4066575219" />
+      <audioPrefixHash value="0" />
+      <colorName> 205 Off White Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_pearl010</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_pink</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="2019367074" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 206 Pink Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism001</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_beige</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="1325014621" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 207 Yellow Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism002</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 208 Green Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism003</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_blue</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="3826758445" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 209 Blue Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism004</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_white</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="4066575219" />
+      <audioPrefixHash value="0" />
+      <colorName> 210 Cream Pearl</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism005</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_white</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="4066575219" />
+      <audioPrefixHash value="0" />
+      <colorName> 211 White Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism006</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_grey</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="807368168" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 212 Graphite Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism007</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_grey</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="807368168" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 213 Dark Blue Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism008</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_grey</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_light</audioPrefix>
+      <audioColorHash value="807368168" />
+      <audioPrefixHash value="3089268592" />
+      <colorName> 214 Dark Purple Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism009</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_pink</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="2019367074" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 215 Hot Pink Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism010</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_red</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_bright</audioPrefix>
+      <audioColorHash value="1585269136" />
+      <audioPrefixHash value="1815504495" />
+      <colorName> 216 Dark Red Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism011</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_green</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="306110198" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 217 Dark GREEEN Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism012</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_grey</audioColor>
+      <audioPrefix>POLICE_SCANNER_PREFIX_dark</audioPrefix>
+      <audioColorHash value="807368168" />
+      <audioPrefixHash value="1169689894" />
+      <colorName> 218 Black Prismatic</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism013</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_black</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="3850041493" />
+      <audioPrefixHash value="0" />
+      <colorName> 219 Black Oil Spill</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism014</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_black</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="3850041493" />
+      <audioPrefixHash value="0" />
+      <colorName> 220 Black Rainbow</colorName>
+      <rampTextureName>vehicle_paint_ramp_prism015</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_black</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="3850041493" />
+      <audioPrefixHash value="0" />
+      <colorName> 221 Black Holographic </colorName>
+      <rampTextureName>vehicle_paint_ramp_rholo001</rampTextureName>
+    </Item>
+    <Item>
+      <color value="0x00000000" />
+      <metallicID>EVehicleModelColorMetallic_normal</metallicID>
+      <audioColor>POLICE_SCANNER_COLOUR_black</audioColor>
+      <audioPrefix>none</audioPrefix>
+      <audioColorHash value="3850041493" />
+      <audioPrefixHash value="0" />
+      <colorName> 222 White Holographic </colorName>
+      <rampTextureName>vehicle_paint_ramp_rholo002</rampTextureName>
+    </Item>
+  </Colors>
+</CVehicleModelColorsGen9>

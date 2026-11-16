@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CTuningFile>
+  <Tunables>
+    <Item type="CTaskCallPolice__Tunables">
+      <Name>CTaskCallPolice</Name>
+      <MinTimeMovingAwayToGiveToWitness value="1.00000000"/>
+      <MinTimeSinceTalkingEndedToMakeCall value="1.00000000"/>
+      <MinTimeSinceTargetTalkingEndedToMakeCall value="1.00000000"/>
+      <MinTimeTargetHasBeenTalkingToMakeCall value="5.00000000"/>
+      <MinTimeSinceTalkingEndedToSayContextForCall value="2.00000000"/>
+      <MinTimeSpentInEarLoopToSayContextForCall value="2.00000000"/>
+      <MinTimeToSpendInEarLoopToPutDownPhone value="4.00000000"/>
+      <MaxTimeToSpendInEarLoopToPutDownPhone value="8.00000000"/>
+    </Item>
+    <Item type="CTaskConversationHelper__Tunables">
+      <Name>CTaskConversationHelper</Name>
+      <fMinSecondsDelayBetweenPhoneLines value="2.00000000"/>
+      <fMaxSecondsDelayBetweenPhoneLines value="4.00000000"/>
+      <fMinSecondsDelayBetweenChatLines value="5.00000000"/>
+      <fMaxSecondsDelayBetweenChatLines value="15.00000000"/>
+      <fMinDistanceSquaredToPlayerForAudio value="400.00000000"/>
+      <fChanceOfConversationRant value="0.20000000"/>
+      <fChanceOfArgumentChallenge value="0.50000000"/>
+      <fChanceOfArgumentChallengeBeingAccepted value="0.50000000"/>
+      <uTimeInMSUntilNewWeirdPedComment value="10000"/>
+      <uMaxTimeInMSToPlayRingTone value="7000"/>
+      <uTimeToWaitAfterNewSayFailureInSeconds value="1"/>
+      <uTicksUntilHangoutConversationCheck value="30"/>
+    </Item>
+  </Tunables>
+</CTuningFile>
