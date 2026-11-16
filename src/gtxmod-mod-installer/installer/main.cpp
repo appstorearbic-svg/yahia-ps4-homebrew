@@ -1,3 +1,6 @@
+#ifndef GRAPHICS_USES_FONT
+#define GRAPHICS_USES_FONT 1
+#endif
 #include <orbis/Pad.h>
 #include <orbis/UserService.h>
 #include <stdint.h>
