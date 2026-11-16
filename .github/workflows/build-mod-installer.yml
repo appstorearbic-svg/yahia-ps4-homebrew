@@ -39,12 +39,12 @@ jobs:
           cd src/gtxmod-safe-oldbase
           make -j2
           mkdir -p "$GITHUB_WORKSPACE/finish"
-          cp -f IV0000-YAHI00005_00-GTXMODLEGACY0001.pkg \
-            "$GITHUB_WORKSPACE/finish/GTXMOD-Legacy-Boot-Test.pkg"
+          cp -f IV0000-YAHI00002_00-INSTALLER0000000.pkg \
+            "$GITHUB_WORKSPACE/finish/GTXMOD-Original-Boot.pkg"
       - name: Upload PKG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: GTXMOD-Legacy-Boot-Test-PS4
-          path: finish/GTXMOD-Legacy-Boot-Test.pkg
+          name: GTXMOD-Original-Boot-PS4
+          path: finish/GTXMOD-Original-Boot.pkg
           if-no-files-found: error
           retention-days: 30

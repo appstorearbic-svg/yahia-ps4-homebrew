@@ -1,7 +1,7 @@
-TITLE       := GTXMOD Legacy Boot Test
+TITLE       := GTXMOD Menu
 VERSION     := 01.00
-TITLE_ID    := YAHI00005
-CONTENT_ID  := IV0000-YAHI00005_00-GTXMODLEGACY0001
+TITLE_ID    := YAHI00002
+CONTENT_ID  := IV0000-YAHI00002_00-INSTALLER0000000
 LIBS        := -lc -lkernel -lc++ -lSceVideoOut -lScePad -lSceUserService -lSceSysmodule -lSceFreeType
 TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
 PROJDIR     := installer
