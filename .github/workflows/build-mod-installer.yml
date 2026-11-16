@@ -38,12 +38,12 @@ jobs:
           cd src/gtxmod-mod-installer
           make -j2
           mkdir -p "$GITHUB_WORKSPACE/finish"
-          cp -f IV0000-YAHI00003_00-GTXMODINSTAL0001.pkg \
-            "$GITHUB_WORKSPACE/finish/GTXMOD-Mod-Installer.pkg"
+          cp -f IV0000-YAHI00004_00-GTXMODSAFEVIDEO01.pkg \
+            "$GITHUB_WORKSPACE/finish/GTXMOD-Safe-Video-Test.pkg"
       - name: Upload PKG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: GTXMOD-Mod-Installer-PS4
-          path: finish/GTXMOD-Mod-Installer.pkg
+          name: GTXMOD-Safe-Video-Test-PS4
+          path: finish/GTXMOD-Safe-Video-Test.pkg
           if-no-files-found: error
           retention-days: 30
