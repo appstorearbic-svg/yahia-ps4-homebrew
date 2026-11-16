@@ -1,6 +1,8 @@
 #include <unistd.h>
+#include <sstream>
 #include "graphics.h"
 
+std::stringstream debugLogStream;
 Scene2D::~Scene2D() {}
 
 int main(){
