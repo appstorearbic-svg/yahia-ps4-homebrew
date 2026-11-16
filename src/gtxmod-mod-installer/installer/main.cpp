@@ -31,14 +31,14 @@ static uint32_t shaped(const std::vector<uint32_t>&v,size_t i){const ArabicForm*
 static void arabic(Scene2D*s,FT_Face face,const std::string&str,int right,int base,Color fg){std::vector<uint32_t>v=utf8(str.c_str());int pen=right;for(size_t i=0;i<v.size();++i){uint32_t cp=shaped(v,i);FT_UInt gi=FT_Get_Char_Index(face,cp);if(FT_Load_Glyph(face,gi,FT_LOAD_DEFAULT)||FT_Render_Glyph(face->glyph,ft_render_mode_normal))continue;FT_GlyphSlot g=face->glyph;pen-=g->advance.x>>6;for(int y=0;y<g->bitmap.rows;++y)for(int x=0;x<g->bitmap.width;++x){int dx=pen+x+g->bitmap_left,dy=base+y-g->bitmap_top;if(dx<0||dy<0||dx>=W||dy>=H)continue;uint8_t a=g->bitmap.buffer[y*g->bitmap.pitch+x];if(a){Color c={(uint8_t)(fg.r*a/255),(uint8_t)(fg.g*a/255),(uint8_t)(fg.b*a/255)};s->DrawPixel(dx,dy,c);}}}}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
 static Scene2D *gScene=nullptr;static FT_Face gEn=nullptr,gAr=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr;static int gFrame=0;
-static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::string appMessage,listError;static int screen=0,category=0,sel=0;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
+static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::string appMessage,listError;static bool catalogLoaded=false;static int screen=0,category=0,sel=0;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
 static void base(const char* subtitle){gScene->FrameBufferFill(BG);gScene->DrawRectangle(0,0,W,5,RED);gScene->DrawRectangle(0,H-7,W,3,{76,18,25});if(gLeft)gLeft->Draw(gScene,24,330);if(gRight)gRight->Draw(gScene,1600,330);gScene->DrawRectangle(95,90,1730,900,PANEL);gScene->DrawRectangle(95,90,1730,5,RED);text(gScene,gEn,"GTXMOD",125,66,RED);text(gScene,gEn,"PS4 MOD INSTALLER",1480,66,WHITE);arabic(gScene,gAr,subtitle,1770,155,WHITE);}
 static void drawList(){base("مثبت مودات GTA V");
     for(size_t i=0;i<gtxcatalog::categoryCount;i++){int x=145+(int)i*210;bool active=(int)i==category;gScene->DrawRectangle(x,188,195,68,active?ACTIVE:ROW);if(active)gScene->DrawRectangle(x,250,195,5,RED);arabic(gScene,gAr,gtxcatalog::categories[i],x+180,233,active?WHITE:MUTED);}
     gScene->DrawRectangle(130,285,665,620,{10,13,19});gScene->DrawRectangle(820,285,970,620,{10,13,19});
     arabic(gScene,gAr,"المودات المتاحة",750,333,BLUE);arabic(gScene,gAr,"تفاصيل المود",1750,333,BLUE);
-    if(shown.empty()){arabic(gScene,gAr,listError.empty()?"لا توجد مودات في هذا التصنيف":crop(listError,55),770,500,listError.empty()?MUTED:BAD);}
+    if(shown.empty()){const char *emptyText=!catalogLoaded?"اضغط مثلث لتحميل المودات من الموقع":(listError.empty()?"لا توجد مودات في هذا التصنيف":nullptr);arabic(gScene,gAr,emptyText?emptyText:crop(listError,55),770,500,!catalogLoaded||listError.empty()?MUTED:BAD);}
     for(size_t i=0;i<shown.size()&&i<8;i++){
         size_t idx=shown[i];int y=355+(int)i*66;bool active=(int)i==sel;gScene->DrawRectangle(155,y-36,610,57,active?ACTIVE:ROW);if(active)gScene->DrawRectangle(155,y-36,6,57,RED);arabic(gScene,gAr,crop(mods[idx].name,36),744,y,active?WHITE:MUTED);
     }
@@ -62,7 +62,7 @@ static void rebuildShown(){shown.clear();for(size_t i=0;i<mods.size();i++)if(cat
 static bool ensureDir(const char*p){if(mkdir(p,0777)==0||errno==EEXIST)return true;return false;}
 static bool progress(uint64_t got,uint64_t total,void*){progNow=got;progTotal=total;present();return true;}
 static void installStatus(const char*message,void*){appMessage=message?message:"";progTitle="تثبيت المود";present();}
-static void refresh(){screen=2;progTitle="الاتصال بموقع GTXMOD";progNow=progTotal=0;appMessage="جاري تحميل قائمة المودات";present();std::string err;if(!gtxcatalog::fetchMods(mods,&err)){listError=err;mods.clear();}else listError.clear();rebuildShown();screen=0;appMessage.clear();}
+static void refresh(){screen=2;progTitle="الاتصال بموقع GTXMOD";progNow=progTotal=0;appMessage="جاري تحميل قائمة المودات";present();std::string err;if(!gtxcatalog::fetchMods(mods,&err)){listError=err;mods.clear();}else listError.clear();catalogLoaded=true;rebuildShown();screen=0;appMessage.clear();}
 static void beginInstall(){
     if(shown.empty()||sel<0||sel>=(int)shown.size()){screen=3;installError="لا يوجد مود محدد";return;}
     const gtxcatalog::Mod &m=mods[shown[sel]];screen=2;progTitle="تنزيل المود";appMessage="الاتصال بموقع GTXMOD";progNow=progTotal=0;present();
@@ -78,8 +78,7 @@ int main(){
     if(!scene.InitFont(&gEn,"/app0/assets/fonts/Gontserrat-Regular.ttf",52))return 2;if(!scene.InitFont(&gAr,"/app0/assets/fonts/NotoSansArabic-Regular.ttf",43))return 3;
     PNG left("/app0/assets/images/GTX-side.png"),right("/app0/assets/images/GTX-side.png");gLeft=&left;gRight=&right;
     if(scePadInit()<0)return 4;OrbisUserServiceInitializeParams up;memset(&up,0,sizeof(up));up.priority=ORBIS_KERNEL_PRIO_FIFO_LOWEST;if(sceUserServiceInitialize(&up)<0)return 5;int uid=-1;if(sceUserServiceGetInitialUser(&uid)<0)return 6;int pad=scePadOpen(uid,ORBIS_PAD_PORT_TYPE_STANDARD,0,0);if(pad<0)return 7;
-    std::string netErr;if(!gtxhttp::initialize(&netErr))listError=netErr;else refresh();
-    uint32_t prev=0;bool run=true;present();while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
+    listError.clear();uint32_t prev=0;bool run=true;present();while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
         if(screen==0){if(pressed&ORBIS_PAD_BUTTON_UP){if(sel>0)--sel;present();}else if(pressed&ORBIS_PAD_BUTTON_DOWN){if(sel+1<(int)shown.size())++sel;present();}else if(pressed&ORBIS_PAD_BUTTON_LEFT){category=(category+(int)gtxcatalog::categoryCount-1)%(int)gtxcatalog::categoryCount;sel=0;rebuildShown();present();}else if(pressed&ORBIS_PAD_BUTTON_RIGHT){category=(category+1)%(int)gtxcatalog::categoryCount;sel=0;rebuildShown();present();}else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){refresh();present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(!shown.empty()){screen=1;appMessage.clear();present();}}else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
         else if(screen==1){if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=0;present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS)beginInstall();}
         else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=0;present();}
