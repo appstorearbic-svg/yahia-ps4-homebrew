@@ -57,32 +57,58 @@ static void box(int x,int y,int w,int h,Color fill,Color edge={0,0,0}){
     gScene->DrawRectangle(x,y,w,h,fill);
     if(edge.r||edge.g||edge.b){gScene->DrawRectangle(x,y,w,3,edge);gScene->DrawRectangle(x,y,3,h,edge);}
 }
+static void frame(int x,int y,int w,int h,Color c){
+    gScene->DrawRectangle(x,y,w,4,c);gScene->DrawRectangle(x,y+h-4,w,4,c);
+    gScene->DrawRectangle(x,y,4,h,c);gScene->DrawRectangle(x+w-4,y,4,h,c);
+}
 static void neon(int x,int y,int w,int h,bool active){
     Color edge=active?RED:Color{25,78,153};
     box(x,y,w,h,active?Color{10,55,125}:Color{7,25,58},edge);
-    if(active){gScene->DrawRectangle(x+7,y+7,w-14,3,{36,173,255});}
+    if(active){frame(x,y,w,h,RED);gScene->DrawRectangle(x+7,y+7,w-14,3,{36,173,255});}
 }
 static void logo(){text(gScene,gEn,"GTXMOD",800,67,WHITE);text(gScene,gEn,"PS4",1035,67,RED);}
 static void header(){gScene->DrawRectangle(0,0,W,94,DEEP);gScene->DrawRectangle(0,91,W,4,RED);logo();}
 static void hero(){int x=36,y=118,w=1820,h=270;box(x,y,w,h,DEEP,{22,104,220});gScene->DrawRectangle(x+8,y+8,w-16,4,RED);box(x+22,y+28,565,214,{13,35,75},{24,101,204});text(gScene,gEn,"GTA V",x+72,y+132,WHITE);text(gScene,gEn,"PLAYSTATION 4 MODS",x+57,y+202,MUTED);smart(gScene,"طوّر تجربتك في",x+w-55,y+92,WHITE);text(gScene,gEn,"GTA V",x+w-382,y+162,RED);smart(gScene,"مودات مختارة لجهاز PS4 المعدّل",x+w-55,y+218,MUTED);}
-static void categories(){int y=410;for(size_t i=0;i<gtxcatalog::categoryCount;i++){int x=36+(int)i*226;bool active=(int)i==category;neon(x,y,210,62,active);smart(gScene,gtxcatalog::categories[i],x+188,y+40,active?WHITE:MUTED);}smart(gScene,focus==0?"التصنيفات":"المنشورات",1850,507,focus==0?RED:WHITE);}
+static void categories(){int y=410;for(size_t i=0;i<gtxcatalog::categoryCount;i++){int x=36+(int)i*226;bool active=(int)i==category&&focus==0;neon(x,y,210,62,active);smart(gScene,gtxcatalog::categories[i],x+188,y+40,active?WHITE:MUTED);}smart(gScene,focus==0?"التصنيفات":"المنشورات",1850,507,focus==0?RED:WHITE);}
 static void drawPreview(const gtxcatalog::Mod&m,int x,int y,int w,int h){box(x,y,w,h,Color{8,30,70},{29,99,208});if(media==0&&gPreview&&gPreview->valid()){gPreview->drawFit(gScene,x+5,y+5,w-10,h-10);}else if(media==1&& !m.video.empty()){text(gScene,gEn,"PLAY",x+w/2-50,y+h/2,RED);smart(gScene,"معاينة الفيديو",x+w-35,y+h/2+70,WHITE);}else{smart(gScene,media==1?"لا يوجد فيديو لهذا المنشور":"لا توجد صورة لهذا المنشور",x+w-25,y+h/2, MUTED);}}
 static void card(const gtxcatalog::Mod&m,int x,int y,int w,int h,bool active){
     box(x,y,w,h,Color{7,25,58},active?RED:Color{28,76,145});
+    if(active)frame(x,y,w,h,RED);
     size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;
     size_t slot=(size_t)((x-36)/610);
     size_t modIndex=(pageStart+slot<shown.size())?shown[pageStart+slot]:(size_t)-1;
     PreviewImage *cached=(modIndex<previewCache.size())?previewCache[modIndex]:nullptr;
     if(cached&&cached->valid()) cached->drawFit(gScene,x+5,y+5,w-10,145);
     else box(x+5,y+5,w-10,145,Color{13,48,97});
-    smart(gScene,m.category,x+w-22,y+184,active?WHITE:BLUE);
-    smart(gScene,crop(m.name,30),x+w-22,y+224,WHITE);
-    smart(gScene,crop(m.description.empty()?"مود GTA V لجهاز PS4":m.description,35),x+w-22,y+260,MUTED);
-    smart(gScene,m.size.empty()?"الحجم غير محدد":m.size,x+w-22,y+292,WHITE);
-    box(x+18,y+h-46,w-36,32,active?ACTIVE:ROW,active?RED:Color{27,76,145});
-    smart(gScene,"اضغط X للتثبيت",x+w-35,y+h-24,WHITE);
+    std::string tag="#"+m.category;
+    smart(gScene,tag,x+w-22,y+194,active?WHITE:BLUE);
+    smart(gScene,crop(m.name,32),x+w-22,y+244,WHITE);
+    box(x+18,y+h-58,w-36,38,active?ACTIVE:ROW,active?RED:Color{27,76,145});
+    smart(gScene,"اضغط X لعرض معلومات",x+w-35,y+h-32,WHITE);
 }
-static void drawList(){gScene->FrameBufferFill(BG);header();hero();categories();smart(gScene,"🔥 أحدث المنشورات",1850,535,WHITE);char countText[48];snprintf(countText,sizeof(countText),"%d مود",(int)shown.size());smart(gScene,countText,1490,535,BLUE);size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;for(size_t i=0;i<3&&pageStart+i<shown.size();++i){const gtxcatalog::Mod&m=mods[shown[pageStart+i]];card(m,36+(int)i*610,565,578,345,(int)(pageStart+i)==sel);}if(shown.empty()){box(36,565,1820,345,DEEP,{28,91,181});smart(gScene,listError.empty()?"ماكو منشورات بهذا التصنيف حالياً":crop(listError,70),1780,735,listError.empty()?MUTED:BAD);smart(gScene,"اضغط مثلث لتحديث المنشورات من الموقع",1780,800,WHITE);}gScene->DrawRectangle(0,H-70,W,4,RED);text(gScene,gEn,"GTXMOD PS4",38,H-25,WHITE);smart(gScene,"L1/R1 التصنيف   ↓ المنشورات   ←/→ اختيار   L2/R2 صورة/فيديو   X تثبيت   O خروج",1850,H-25,WHITE);}
+static void drawList(){gScene->FrameBufferFill(BG);header();hero();categories();smart(gScene,"أحدث المنشورات",1850,535,WHITE);char countText[48];snprintf(countText,sizeof(countText),"%d مود",(int)shown.size());smart(gScene,countText,1490,535,BLUE);size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;for(size_t i=0;i<3&&pageStart+i<shown.size();++i){const gtxcatalog::Mod&m=mods[shown[pageStart+i]];card(m,36+(int)i*610,565,578,345,(int)(pageStart+i)==sel);}if(shown.empty()){box(36,565,1820,345,DEEP,{28,91,181});smart(gScene,listError.empty()?"ماكو منشورات بهذا التصنيف حالياً":crop(listError,70),1780,735,listError.empty()?MUTED:BAD);smart(gScene,"اضغط مثلث لتحديث المنشورات من الموقع",1780,800,WHITE);}gScene->DrawRectangle(0,H-70,W,4,RED);text(gScene,gEn,"GTXMOD PS4",38,H-25,WHITE);smart(gScene,"L1/R1 التصنيف   ↓ المنشورات   ←/→ اختيار   X معلومات   O خروج",1850,H-25,WHITE);}
+static void drawDetails(){
+    gScene->FrameBufferFill(BG);header();
+    if(shown.empty()||sel<0||sel>=(int)shown.size()){smart(gScene,"لا يوجد منشور محدد",1760,300,BAD);smart(gScene,"O رجوع",1760,900,WHITE);return;}
+    const gtxcatalog::Mod&m=mods[shown[(size_t)sel]];
+    box(45,130,1830,805,DEEP,{29,99,208});
+    frame(45,130,1830,805,Color{18,102,230});
+    box(85,205,760,540,Color{8,30,70},{29,99,208});
+    PreviewImage *cached=(shown[(size_t)sel]<previewCache.size())?previewCache[shown[(size_t)sel]]:nullptr;
+    if(cached&&cached->valid())cached->drawFit(gScene,95,215,740,520);
+    else smart(gScene,"لا توجد صورة لهذا المنشور",790,485,MUTED);
+    smart(gScene,"معلومات المنشور",1780,215,RED);
+    smart(gScene,crop(m.name,42),1780,295,WHITE);
+    smart(gScene,"التصنيف",1780,365,BLUE);
+    std::string tag="#"+m.category;smart(gScene,tag,1780,415,WHITE);
+    smart(gScene,"السيرة الذاتية",1780,490,BLUE);
+    std::string description=m.description.empty()?"لا توجد سيرة ذاتية لهذا المنشور":m.description;
+    for(int i=0;i<3&&!description.empty();++i){std::string line=crop(description,42);smart(gScene,line,1780,545+i*48,WHITE);if(line.size()>=description.size())break;description=description.substr(line.size());}
+    smart(gScene,"الحجم",1780,715,BLUE);
+    smart(gScene,m.size.empty()?"غير محدد":m.size,1780,760,WHITE);
+    box(1010,825,780,58,ACTIVE,RED);smart(gScene,"اضغط X للتثبيت",1740,862,WHITE);
+    smart(gScene,"O رجوع",810,900,WHITE);
+}
 static void drawStatus(const std::string &title,const std::string &body,bool showProgress){
     gScene->FrameBufferFill(BG); header();
     box(55,145,1465,720,DEEP,{29,99,208});
@@ -103,7 +129,7 @@ static void drawResult(){
     if(!installError.empty())smart(gScene,crop(installError,75),1750,770,BAD);else smart(gScene,"تم حفظ النسخ الاحتياطية في /data/GTXMOD/backups",1750,770,BLUE);
     smart(gScene,"O رجوع إلى قائمة المودات",1750,900,WHITE);
 }
-static void present(){if(screen==0)drawList();else if(screen==1)drawStatus("تأكيد تثبيت المود","سيتم تنزيل الملف وفحص قواعد JSON قبل نسخ ملفات RPF. لن يتم حذف الملفات الموجودة؛ سيتم نسخها احتياطيًا.",false);else if(screen==2)drawStatus(progTitle.c_str(),"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
+static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2)drawStatus(progTitle.c_str(),"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
 static void rebuildShown(){shown.clear();for(size_t i=0;i<mods.size();i++)if(category==0||mods[i].category==gtxcatalog::categories[category])shown.push_back(i);if(sel>=(int)shown.size())sel=shown.empty()?0:(int)shown.size()-1;}
 static bool ensureDir(const char*p){if(mkdir(p,0777)==0||errno==EEXIST)return true;return false;}
 static bool progress(uint64_t got,uint64_t total,void*){progNow=got;progTotal=total;present();return true;}
