@@ -21,3 +21,11 @@ void PreviewImage::draw(Scene2D *scene, int x, int y, int w, int h) const {
         }
     }
 }
+
+void PreviewImage::drawFit(Scene2D *scene, int x, int y, int w, int h) const {
+    if (!valid() || w <= 0 || h <= 0) return;
+    int dw = w, dh = (width > 0) ? (w * height) / width : h;
+    if (dh > h) { dh = h; dw = (height > 0) ? (h * width) / height : w; }
+    int ox = x + (w - dw) / 2, oy = y + (h - dh) / 2;
+    draw(scene, ox, oy, dw, dh);
+}
