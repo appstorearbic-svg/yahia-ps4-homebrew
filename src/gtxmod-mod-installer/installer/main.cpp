@@ -39,22 +39,54 @@ static FILE *bootLog=nullptr;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
 static void base(const char* subtitle){gScene->FrameBufferFill(BG);gScene->DrawRectangle(0,0,W,5,RED);gScene->DrawRectangle(0,H-7,W,3,{76,18,25});if(gLeft)gLeft->Draw(gScene,24,330);if(gRight)gRight->Draw(gScene,1600,330);gScene->DrawRectangle(95,90,1730,900,PANEL);gScene->DrawRectangle(95,90,1730,5,RED);text(gScene,gEn,"GTXMOD",125,66,RED);text(gScene,gEn,"PS4 MOD INSTALLER",1480,66,WHITE);arabic(gScene,gAr,subtitle,1770,155,WHITE);}
-static void drawList(){base("مثبت مودات GTA V");
-    for(size_t i=0;i<gtxcatalog::categoryCount;i++){int x=145+(int)i*210;bool active=(int)i==category;gScene->DrawRectangle(x,188,195,68,active?ACTIVE:ROW);if(active)gScene->DrawRectangle(x,250,195,5,RED);arabic(gScene,gAr,gtxcatalog::categories[i],x+180,233,active?WHITE:MUTED);}
-    gScene->DrawRectangle(130,285,665,620,{10,13,19});gScene->DrawRectangle(820,285,970,620,{10,13,19});
-    arabic(gScene,gAr,"المودات المتاحة",750,333,BLUE);arabic(gScene,gAr,"تفاصيل المود",1750,333,BLUE);
-    if(shown.empty()){arabic(gScene,gAr,listError.empty()?"لا توجد مودات في هذا التصنيف":crop(listError,55),770,500,listError.empty()?MUTED:BAD);}
-    for(size_t i=0;i<shown.size()&&i<8;i++){
-        size_t idx=shown[i];int y=355+(int)i*66;bool active=(int)i==sel;gScene->DrawRectangle(155,y-36,610,57,active?ACTIVE:ROW);if(active)gScene->DrawRectangle(155,y-36,6,57,RED);arabic(gScene,gAr,crop(mods[idx].name,36),744,y,active?WHITE:MUTED);
+static void drawList(){
+    gScene->FrameBufferFill({5,7,11});
+    gScene->DrawRectangle(0,0,W,88,{13,15,21});gScene->DrawRectangle(0,85,W,4,RED);
+    text(gScene,gEn,"GTXMOD",115,58,RED);text(gScene,gEn,"PS4 MODS",315,58,WHITE);
+    text(gScene,gEn,"gtxmod-ps4.pages.dev",1270,55,MUTED);
+    arabic(gScene,gAr,"موقع مودات GTA V",1780,57,WHITE);
+    for(size_t i=0;i<gtxcatalog::categoryCount;i++){
+        int x=112+(int)i*211;bool active=(int)i==category;
+        gScene->DrawRectangle(x,106,198,58,active?ACTIVE:ROW);
+        if(active)gScene->DrawRectangle(x,160,198,4,RED);
+        arabic(gScene,gAr,gtxcatalog::categories[i],x+184,145,active?WHITE:MUTED);
     }
-    if(!shown.empty()&&sel<(int)shown.size()){
-        const gtxcatalog::Mod&m=mods[shown[sel]];arabic(gScene,gAr,crop(m.name,52),1742,408,WHITE);arabic(gScene,gAr,"التصنيف: "+m.category,1742,468,BLUE);arabic(gScene,gAr,"الحجم: "+(m.size.empty()?"غير محدد":m.size),1742,525,MUTED);
-        arabic(gScene,gAr,crop(m.description.empty()?"مود GTA V لجهاز PS4":m.description,70),1742,598,WHITE);
-        std::string readyReason;bool ready=gtxinstall::orbxReady(&readyReason);arabic(gScene,gAr,ready?"ORBX جاهز للتثبيت":"ORBX غير مكتشف",1742,710,ready?GREEN:BAD);
-        arabic(gScene,gAr,"اضغط X للتفاصيل والتثبيت",1742,795,WHITE);
+    gScene->DrawRectangle(108,184,1704,238,{13,16,24});gScene->DrawRectangle(108,184,7,238,RED);
+    gScene->DrawRectangle(130,204,430,198,{26,10,16});
+    text(gScene,gEn,"PLAYSTATION 4 MODS",157,250,MUTED);
+    text(gScene,gEn,"GTXMOD",157,321,RED);
+    arabic(gScene,gAr,"طوّر تجربتك في",1768,265,WHITE);
+    text(gScene,gEn,"GTA V",1490,325,RED);
+    arabic(gScene,gAr,"مودات مختارة لجهاز PS4 المعدّل",1768,374,MUTED);
+    arabic(gScene,gAr,"أحدث المنشورات",1770,477,WHITE);
+    char countText[48];snprintf(countText,sizeof(countText),"%d MODS",(int)shown.size());
+    text(gScene,gEn,countText,130,468,BLUE);
+    if(shown.empty()){
+        gScene->DrawRectangle(130,505,1660,365,{12,15,22});
+        arabic(gScene,gAr,listError.empty()?"ماكو منشورات بهذا التصنيف حالياً":crop(listError,70),1745,675,listError.empty()?MUTED:BAD);
+        if(listError.empty())arabic(gScene,gAr,"اضغط △ لتحديث المنشورات من الموقع",1745,748,WHITE);
     }
-    if(!listError.empty())arabic(gScene,gAr,crop(listError,70),1770,870,BAD);
-    text(gScene,gEn,"UP/DOWN SELECT   LEFT/RIGHT CATEGORY   X OPEN   TRIANGLE REFRESH   O EXIT",280,970,WHITE);
+    size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;
+    for(size_t card=0;card<3&&pageStart+card<shown.size();++card){
+        const gtxcatalog::Mod&m=mods[shown[pageStart+card]];
+        bool active=(int)(pageStart+card)==sel;int x=130+(int)card*555,y=505,w=525,h=365;
+        gScene->DrawRectangle(x,y,w,h,{13,16,23});
+        gScene->DrawRectangle(x,y,w,5,active?RED:ROW);
+        gScene->DrawRectangle(x+1,y+6,w-2,140,{25,12,18});
+        gScene->DrawRectangle(x+1,y+140,w-2,3,active?RED:Color{75,24,32});
+        text(gScene,gEn,"GTA V",x+24,y+64,RED);text(gScene,gEn,"PS4 MOD",x+24,y+112,WHITE);
+        arabic(gScene,gAr,crop(m.category,18),x+w-22,y+77,BLUE);
+        arabic(gScene,gAr,crop(m.name,34),x+w-24,y+191,active?WHITE:MUTED);
+        arabic(gScene,gAr,crop(m.description.empty()?"مود GTA V لجهاز PS4":m.description,48),x+w-24,y+241,WHITE);
+        arabic(gScene,gAr,"ZIP  •  "+(m.size.empty()?"الحجم غير محدد":m.size),x+w-24,y+284,MUTED);
+        gScene->DrawRectangle(x+18,y+309,w-36,42,active?RED:ROW);
+        arabic(gScene,gAr,"X  تحميل وتثبيت المود",x+w-34,y+338,WHITE);
+    }
+    if(shown.size()>3){
+        char pageText[64];snprintf(pageText,sizeof(pageText),"%d / %d",(int)(pageStart/3)+1,(int)((shown.size()+2)/3));
+        text(gScene,gEn,pageText,1690,903,MUTED);
+    }
+    arabic(gScene,gAr,"↑ ↓ اختيار مود   |   ← → تصنيف   |   X تحميل وتثبيت   |   △ تحديث   |   O خروج",1770,963,WHITE);
 }
 static void drawStatus(const std::string &title,const std::string &body,bool showProgress){base(title.c_str());gScene->DrawRectangle(230,260,1460,590,{11,14,21});arabic(gScene,gAr,body,1610,380,WHITE);
     if(showProgress){gScene->DrawRectangle(340,520,1240,34,ROW);int percent=progTotal?(int)((progNow*100)/progTotal):0;if(percent>100)percent=100;gScene->DrawRectangle(340,520,(1240*percent)/100,34,RED);char pc[16];snprintf(pc,sizeof(pc),"%d%%",percent);text(gScene,gEn,pc,1590,500,WHITE);}
@@ -83,7 +115,7 @@ int main(){
     if(!scene.InitFont(&gEn,"/app0/assets/fonts/Gontserrat-Regular.ttf",52)){trace("English font init failed");return 2;}trace("English font init ok");if(!scene.InitFont(&gAr,"/app0/assets/fonts/NotoSansArabic-Regular.ttf",43)){trace("Arabic font init failed");return 3;}trace("Arabic font init ok");
     PNG left("/app0/assets/images/GTX-side.png"),right("/app0/assets/images/GTX-side.png");gLeft=&left;gRight=&right;
     trace("images loaded");if(scePadInit()<0){trace("scePadInit failed");return 4;}trace("scePadInit ok");OrbisUserServiceInitializeParams up;memset(&up,0,sizeof(up));up.priority=ORBIS_KERNEL_PRIO_FIFO_LOWEST;if(sceUserServiceInitialize(&up)<0){trace("user service init failed");return 5;}int uid=-1;if(sceUserServiceGetInitialUser(&uid)<0){trace("get initial user failed");return 6;}int pad=scePadOpen(uid,ORBIS_PAD_PORT_TYPE_STANDARD,0,0);if(pad<0){trace("scePadOpen failed");return 7;}trace("pad opened");
-    listError="اضغط مثلث لتحميل المودات من الموقع";uint32_t prev=0;bool run=true;present();trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
+    listError="جاري تحميل موقع GTXMOD";uint32_t prev=0;bool run=true;refresh();present();trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
         if(screen==0){if(pressed&ORBIS_PAD_BUTTON_UP){if(sel>0)--sel;present();}else if(pressed&ORBIS_PAD_BUTTON_DOWN){if(sel+1<(int)shown.size())++sel;present();}else if(pressed&ORBIS_PAD_BUTTON_LEFT){category=(category+(int)gtxcatalog::categoryCount-1)%(int)gtxcatalog::categoryCount;sel=0;rebuildShown();present();}else if(pressed&ORBIS_PAD_BUTTON_RIGHT){category=(category+1)%(int)gtxcatalog::categoryCount;sel=0;rebuildShown();present();}else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){refresh();present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(!shown.empty()){screen=1;appMessage.clear();present();}}else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
         else if(screen==1){if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=0;present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS)beginInstall();}
         else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=0;present();}
