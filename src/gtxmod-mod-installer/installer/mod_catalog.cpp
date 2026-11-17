@@ -25,7 +25,7 @@ bool fetchMods(std::vector<Mod> &mods,std::string *error){
         Mod m;
         auto field=[&](const char *k){const gtxjson::Value *x=v.get(k);return x?x->string():std::string();};
         m.id=field("id");m.name=field("name");m.category=field("category");m.description=field("description");
-        m.image=field("image");m.download=field("download");m.size=field("size");
+        m.image=field("image");m.video=field("video");m.download=field("download");m.size=field("size");
         if(m.id.empty()||m.name.empty()||m.download.empty())continue;
         if(m.id.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)continue;
         if(resolveUrl(m.download).empty())continue;
