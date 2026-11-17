@@ -21,9 +21,10 @@
 std::stringstream debugLogStream;
 Scene2D::~Scene2D() {}
 static const int W=1920,H=1080;
-static const Color BG={6,8,13}, PANEL={16,19,27}, ROW={26,30,39};
-static const Color ACTIVE={57,15,22}, RED={232,32,48}, WHITE={241,243,246};
-static const Color MUTED={145,152,164}, GREEN={74,218,140}, BAD={255,89,90}, BLUE={77,164,240};
+static const Color BG={3,10,25}, PANEL={8,22,49}, ROW={12,31,65};
+static const Color ACTIVE={18,102,230}, RED={0,137,255}, WHITE={242,247,255};
+static const Color MUTED={157,181,220}, GREEN={73,226,157}, BAD={255,105,124}, BLUE={36,145,255};
+static const Color DEEP={2,16,42}, NAV={7,27,61}, GLOW={22,85,181}, GOLD={255,198,45};
 struct ArabicForm { uint32_t cp, iso, fin, ini, med; bool joinNext, joinPrev; };
 static const ArabicForm A[] = {
  {0x0621,0xFE80,0,0,0,0,0},{0x0622,0xFE81,0xFE82,0,0,0,1},{0x0623,0xFE83,0xFE84,0,0,0,1},{0x0625,0xFE87,0xFE88,0,0,0,1},{0x0627,0xFE8D,0xFE8E,0,0,0,1},{0x0628,0xFE8F,0xFE90,0xFE91,0xFE92,1,1},{0x0629,0xFE93,0xFE94,0,0,0,1},{0x062A,0xFE95,0xFE96,0xFE97,0xFE98,1,1},{0x062B,0xFE99,0xFE9A,0xFE9B,0xFE9C,1,1},{0x062C,0xFE9D,0xFE9E,0xFE9F,0xFEA0,1,1},{0x062D,0xFEA1,0xFEA2,0xFEA3,0xFEA4,1,1},{0x062E,0xFEA5,0xFEA6,0xFEA7,0xFEA8,1,1},{0x062F,0xFEA9,0xFEAA,0,0,0,1},{0x0630,0xFEAB,0xFEAC,0,0,0,1},{0x0631,0xFEAD,0xFEAE,0,0,0,1},{0x0632,0xFEAF,0xFEB0,0,0,0,1},{0x0633,0xFEB1,0xFEB2,0xFEB3,0xFEB4,1,1},{0x0634,0xFEB5,0xFEB6,0xFEB7,0xFEB8,1,1},{0x0635,0xFEB9,0xFEBA,0xFEBB,0xFEBC,1,1},{0x0636,0xFEBD,0xFEBE,0xFEBF,0xFEC0,1,1},{0x0637,0xFEC1,0xFEC2,0xFEC3,0xFEC4,1,1},{0x0638,0xFEC5,0xFEC6,0xFEC7,0xFEC8,1,1},{0x0639,0xFEC9,0xFECA,0xFECB,0xFECC,1,1},{0x063A,0xFECD,0xFECE,0xFECF,0xFED0,1,1},{0x0641,0xFED1,0xFED2,0xFED3,0xFED4,1,1},{0x0642,0xFED5,0xFED6,0xFED7,0xFED8,1,1},{0x0643,0xFED9,0xFEDA,0xFEDB,0xFEDC,1,1},{0x0644,0xFEDD,0xFEDE,0xFEDF,0xFEE0,1,1},{0x0645,0xFEE1,0xFEE2,0xFEE3,0xFEE4,1,1},{0x0646,0xFEE5,0xFEE6,0xFEE7,0xFEE8,1,1},{0x0647,0xFEE9,0xFEEA,0xFEEB,0xFEEC,1,1},{0x0648,0xFEED,0xFEEE,0,0,0,1},{0x0649,0xFEEF,0xFEF0,0,0,0,1},{0x064A,0xFEF1,0xFEF2,0xFEF3,0xFEF4,1,1}
@@ -38,62 +39,123 @@ static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static
 static FILE *bootLog=nullptr;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
-static void base(const char* subtitle){gScene->FrameBufferFill(BG);gScene->DrawRectangle(0,0,W,5,RED);gScene->DrawRectangle(0,H-7,W,3,{76,18,25});if(gLeft)gLeft->Draw(gScene,24,330);if(gRight)gRight->Draw(gScene,1600,330);gScene->DrawRectangle(95,90,1730,900,PANEL);gScene->DrawRectangle(95,90,1730,5,RED);text(gScene,gEn,"GTXMOD",125,66,RED);text(gScene,gEn,"PS4 MOD INSTALLER",1480,66,WHITE);arabic(gScene,gAr,subtitle,1770,155,WHITE);}
-static void drawList(){
-    gScene->FrameBufferFill({5,7,11});
-    gScene->DrawRectangle(0,0,W,88,{13,15,21});gScene->DrawRectangle(0,85,W,4,RED);
-    text(gScene,gEn,"GTXMOD",115,58,RED);text(gScene,gEn,"PS4 MODS",315,58,WHITE);
-    text(gScene,gEn,"gtxmod-ps4.pages.dev",1270,55,MUTED);
-    arabic(gScene,gAr,"موقع مودات GTA V",1780,57,WHITE);
+static void box(int x,int y,int w,int h,Color fill,Color edge={0,0,0}){
+    gScene->DrawRectangle(x,y,w,h,fill);
+    if(edge.r||edge.g||edge.b){gScene->DrawRectangle(x,y,w,3,edge);gScene->DrawRectangle(x,y,3,h,edge);}
+}
+static void neon(int x,int y,int w,int h,bool active){
+    Color edge=active?RED:Color{25,78,153};
+    box(x,y,w,h,active?Color{10,55,125}:Color{7,25,58},edge);
+    if(active){gScene->DrawRectangle(x+7,y+7,w-14,3,{36,173,255});}
+}
+static void logo(){
+    text(gScene,gEn,"GTX",845,67,WHITE);
+    text(gScene,gEn,"MOD",960,67,RED);
+    text(gScene,gEn,"PS4",1105,67,WHITE);
+    text(gScene,gEn,"PLAYSTATION",1255,67,MUTED);
+}
+static void header(){
+    gScene->DrawRectangle(0,0,W,94,DEEP);
+    gScene->DrawRectangle(0,91,W,4,RED);
+    box(42,20,84,58,NAV,{29,84,160});
+    box(145,20,84,58,NAV,{29,84,160});
+    text(gScene,gEn,"*",72,61,WHITE);
+    text(gScene,gEn,"!",177,61,WHITE);
+    logo();
+    box(1572,15,292,68,NAV,{29,84,160});
+    text(gScene,gEn,"USER",1605,57,WHITE);
+    text(gScene,gEn,"PS4",1780,57,RED);
+}
+static void sidebar(){
+    int x=1570;
+    box(x,112,300,760,DEEP,{28,91,181});
+    const char *items[]={"الرئيسية","الإدارة","الرفع","الإعدادات","حول التطبيق"};
+    int ys[]={175,270,365,505,590};
+    for(int i=0;i<5;i++){
+        bool active=i==0;
+        if(active)box(x+10,ys[i]-43,280,72,ACTIVE,{44,158,255});
+        arabic(gScene,gAr,items[i],x+238,ys[i],active?WHITE:MUTED);
+        text(gScene,gEn,i==0?"HOME":i==1?"SAFE":i==2?"CLOUD":i==3?"SET":"INFO",x+35,ys[i],active?WHITE:MUTED);
+    }
+    gScene->DrawRectangle(x+35,430,230,2,{28,91,181});
+    arabic(gScene,gAr,"GTXMOD PS4",x+235,820,RED);
+}
+static void hero(){
+    int x=36,y=118,w=1500,h=292;
+    box(x,y,w,h,DEEP,{22,104,220});
+    gScene->DrawRectangle(x+8,y+8,w-16,4,RED);
+    // An abstract GTA/GTXMOD hero treatment that remains readable without extra runtime assets.
+    box(x+22,y+28,555,232,{13,35,75},{24,101,204});
+    text(gScene,gEn,"GTA",x+70,y+132,WHITE);
+    text(gScene,gEn,"V",x+262,y+132,RED);
+    text(gScene,gEn,"V",x+320,y+132,RED);
+    text(gScene,gEn,"PLAYSTATION 4 MODS",x+56,y+207,MUTED);
+    arabic(gScene,gAr,"طوّر تجربتك في",x+w-56,y+92,WHITE);
+    text(gScene,gEn,"GTA V",x+w-380,y+165,RED);
+    arabic(gScene,gAr,"مودات مختارة لجهاز PS4 المعدّل",x+w-56,y+222,MUTED);
+    gScene->DrawRectangle(x+620,y+38,5,215,RED);
+    for(int i=0;i<5;i++)gScene->DrawRectangle(x+700+i*125,y+246-i*18,92,3,{15,(uint8_t)(95+i*22),255});
+}
+static void categories(){
+    int y=430;
     for(size_t i=0;i<gtxcatalog::categoryCount;i++){
-        int x=112+(int)i*211;bool active=(int)i==category;
-        gScene->DrawRectangle(x,106,198,58,active?ACTIVE:ROW);
-        if(active)gScene->DrawRectangle(x,160,198,4,RED);
-        arabic(gScene,gAr,gtxcatalog::categories[i],x+184,145,active?WHITE:MUTED);
+        int x=36+(int)i*185; bool active=(int)i==category;
+        neon(x,y,168,66,active);
+        arabic(gScene,gAr,gtxcatalog::categories[i],x+145,y+42,active?WHITE:MUTED);
     }
-    gScene->DrawRectangle(108,184,1704,238,{13,16,24});gScene->DrawRectangle(108,184,7,238,RED);
-    gScene->DrawRectangle(130,204,430,198,{26,10,16});
-    text(gScene,gEn,"PLAYSTATION 4 MODS",157,250,MUTED);
-    text(gScene,gEn,"GTXMOD",157,321,RED);
-    arabic(gScene,gAr,"طوّر تجربتك في",1768,265,WHITE);
-    text(gScene,gEn,"GTA V",1490,325,RED);
-    arabic(gScene,gAr,"مودات مختارة لجهاز PS4 المعدّل",1768,374,MUTED);
-    arabic(gScene,gAr,"أحدث المنشورات",1770,477,WHITE);
+}
+static void card(const gtxcatalog::Mod&m,int x,int y,int w,int h,bool active){
+    box(x,y,w,h,Color{7,25,58},active?RED:Color{28,76,145});
+    gScene->DrawRectangle(x+4,y+4,w-8,112,Color{13,48,97});
+    gScene->DrawRectangle(x+4,y+112,w-8,3,active?RED:Color{20,68,137});
+    arabic(gScene,gAr,crop(m.category,16),x+w-22,y+37,active?WHITE:BLUE);
+    arabic(gScene,gAr,crop(m.name,25),x+w-22,y+158,WHITE);
+    arabic(gScene,gAr,crop(m.description.empty()?"مود GTA V لجهاز PS4":m.description,31),x+w-22,y+198,MUTED);
+    arabic(gScene,gAr,m.size.empty()?"الحجم غير محدد":m.size,x+w-22,y+239,WHITE);
+    box(x+18,y+h-52,w-36,36,active?ACTIVE:ROW,active?RED:Color{27,76,145});
+    arabic(gScene,gAr,"X  تثبيت المود",x+w-35,y+h-27,WHITE);
+}
+static void drawList(){
+    gScene->FrameBufferFill(BG); header(); hero(); categories(); sidebar();
+    arabic(gScene,gAr,"🔥 أحدث المنشورات",1518,533,WHITE);
     char countText[48];snprintf(countText,sizeof(countText),"%d MODS",(int)shown.size());
-    text(gScene,gEn,countText,130,468,BLUE);
-    if(shown.empty()){
-        gScene->DrawRectangle(130,505,1660,365,{12,15,22});
-        arabic(gScene,gAr,listError.empty()?"ماكو منشورات بهذا التصنيف حالياً":crop(listError,70),1745,675,listError.empty()?MUTED:BAD);
-        if(listError.empty())arabic(gScene,gAr,"اضغط △ لتحديث المنشورات من الموقع",1745,748,WHITE);
-    }
+    text(gScene,gEn,countText,45,535,BLUE);
     size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;
-    for(size_t card=0;card<3&&pageStart+card<shown.size();++card){
-        const gtxcatalog::Mod&m=mods[shown[pageStart+card]];
-        bool active=(int)(pageStart+card)==sel;int x=130+(int)card*555,y=505,w=525,h=365;
-        gScene->DrawRectangle(x,y,w,h,{13,16,23});
-        gScene->DrawRectangle(x,y,w,5,active?RED:ROW);
-        gScene->DrawRectangle(x+1,y+6,w-2,140,{25,12,18});
-        gScene->DrawRectangle(x+1,y+140,w-2,3,active?RED:Color{75,24,32});
-        text(gScene,gEn,"GTA V",x+24,y+64,RED);text(gScene,gEn,"PS4 MOD",x+24,y+112,WHITE);
-        arabic(gScene,gAr,crop(m.category,18),x+w-22,y+77,BLUE);
-        arabic(gScene,gAr,crop(m.name,34),x+w-24,y+191,active?WHITE:MUTED);
-        arabic(gScene,gAr,crop(m.description.empty()?"مود GTA V لجهاز PS4":m.description,48),x+w-24,y+241,WHITE);
-        arabic(gScene,gAr,"ZIP  •  "+(m.size.empty()?"الحجم غير محدد":m.size),x+w-24,y+284,MUTED);
-        gScene->DrawRectangle(x+18,y+309,w-36,42,active?RED:ROW);
-        arabic(gScene,gAr,"X  تحميل وتثبيت المود",x+w-34,y+338,WHITE);
+    for(size_t i=0;i<3&&pageStart+i<shown.size();++i){
+        const gtxcatalog::Mod&m=mods[shown[pageStart+i]];
+        card(m,36+(int)i*500,565,468,310,(int)(pageStart+i)==sel);
     }
-    if(shown.size()>3){
-        char pageText[64];snprintf(pageText,sizeof(pageText),"%d / %d",(int)(pageStart/3)+1,(int)((shown.size()+2)/3));
-        text(gScene,gEn,pageText,1690,903,MUTED);
+    if(shown.empty()){
+        box(36,565,1498,310,DEEP,{28,91,181});
+        arabic(gScene,gAr,listError.empty()?"ماكو منشورات بهذا التصنيف حالياً":crop(listError,70),1480,700,listError.empty()?MUTED:BAD);
+        arabic(gScene,gAr,"اضغط △ لتحديث المنشورات من الموقع",1480,765,WHITE);
     }
-    arabic(gScene,gAr,"↑ ↓ اختيار مود   |   ← → تصنيف   |   X تحميل وتثبيت   |   △ تحديث   |   O خروج",1770,963,WHITE);
+    if(shown.size()>3){char pageText[64];snprintf(pageText,sizeof(pageText),"%d / %d",(int)(pageStart/3)+1,(int)((shown.size()+2)/3));text(gScene,gEn,pageText,1450,900,MUTED);}
+    gScene->DrawRectangle(0,H-70,W,4,RED);
+    text(gScene,gEn,"GTXMOD",38,H-25,WHITE);text(gScene,gEn,"PS4",205,H-25,RED);
+    text(gScene,gEn,"Mods for a better gaming experience",715,H-25,MUTED);
+    arabic(gScene,gAr,"↑ ↓ اختيار   |   ← → تصنيف   |   X تثبيت   |   △ تحديث   |   O خروج",1830,H-25,WHITE);
 }
-static void drawStatus(const std::string &title,const std::string &body,bool showProgress){base(title.c_str());gScene->DrawRectangle(230,260,1460,590,{11,14,21});arabic(gScene,gAr,body,1610,380,WHITE);
-    if(showProgress){gScene->DrawRectangle(340,520,1240,34,ROW);int percent=progTotal?(int)((progNow*100)/progTotal):0;if(percent>100)percent=100;gScene->DrawRectangle(340,520,(1240*percent)/100,34,RED);char pc[16];snprintf(pc,sizeof(pc),"%d%%",percent);text(gScene,gEn,pc,1590,500,WHITE);}
-    if(!appMessage.empty())arabic(gScene,gAr,crop(appMessage,72),1610,650,BAD);
-    text(gScene,gEn,"O BACK",1600,965,WHITE);
+static void drawStatus(const std::string &title,const std::string &body,bool showProgress){
+    gScene->FrameBufferFill(BG); header(); sidebar();
+    box(55,145,1465,720,DEEP,{29,99,208});
+    arabic(gScene,gAr,title,1450,235,WHITE);
+    arabic(gScene,gAr,body,1400,370,WHITE);
+    if(showProgress){
+        gScene->DrawRectangle(190,540,1200,34,ROW);int percent=progTotal?(int)((progNow*100)/progTotal):0;if(percent>100)percent=100;
+        gScene->DrawRectangle(190,540,(1200*percent)/100,34,RED);char pc[16];snprintf(pc,sizeof(pc),"%d%%",percent);text(gScene,gEn,pc,1390,520,WHITE);
+    }
+    if(!appMessage.empty())arabic(gScene,gAr,crop(appMessage,72),1400,690,BAD);
+    arabic(gScene,gAr,"O رجوع",1450,900,WHITE);
 }
-static void drawResult(){base(installError.empty()?"نتيجة التثبيت":"تعذر إكمال التثبيت");int y=300;for(const auto&r:installResults){gScene->DrawRectangle(300,y-40,1320,62,ROW);arabic(gScene,gAr,r.text,1565,y,r.ok?GREEN:BAD);y+=78;if(y>760)break;}if(!installError.empty())arabic(gScene,gAr,crop(installError,75),1600,825,BAD);else arabic(gScene,gAr,"تم حفظ النسخ الاحتياطية في /data/GTXMOD/backups",1600,825,BLUE);text(gScene,gEn,"O BACK TO MOD LIST",1450,965,WHITE);}
+static void drawResult(){
+    gScene->FrameBufferFill(BG); header(); sidebar();
+    box(55,145,1465,720,DEEP,{29,99,208});
+    arabic(gScene,gAr,installError.empty()?"اكتمل التثبيت":"تعذر إكمال التثبيت",1450,235,WHITE);
+    int y=330;for(const auto&r:installResults){box(190,y-38,1200,62,ROW,r.ok?GREEN:BAD);arabic(gScene,gAr,r.text,1360,y,r.ok?GREEN:BAD);y+=78;if(y>710)break;}
+    if(!installError.empty())arabic(gScene,gAr,crop(installError,75),1400,770,BAD);else arabic(gScene,gAr,"تم حفظ النسخ الاحتياطية في /data/GTXMOD/backups",1400,770,BLUE);
+    arabic(gScene,gAr,"O رجوع إلى قائمة المودات",1400,900,WHITE);
+}
 static void present(){if(screen==0)drawList();else if(screen==1)drawStatus("تأكيد تثبيت المود","سيتم تنزيل الملف وفحص قواعد JSON قبل نسخ ملفات RPF. لن يتم حذف الملفات الموجودة؛ سيتم نسخها احتياطيًا.",false);else if(screen==2)drawStatus(progTitle.c_str(),"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
 static void rebuildShown(){shown.clear();for(size_t i=0;i<mods.size();i++)if(category==0||mods[i].category==gtxcatalog::categories[category])shown.push_back(i);if(sel>=(int)shown.size())sel=shown.empty()?0:(int)shown.size()-1;}
 static bool ensureDir(const char*p){if(mkdir(p,0777)==0||errno==EEXIST)return true;return false;}
