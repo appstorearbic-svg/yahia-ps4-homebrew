@@ -20,7 +20,7 @@ TOOLS       := $(TOOLCHAIN)/bin/linux
 all: $(CONTENT_ID).pkg
 $(CONTENT_ID).pkg: pkg.gp4
 	$(TOOLS)/PkgTool.Core pkg_build $< .
-pkg.gp4: eboot.bin sce_sys/param.sfo sce_sys/icon0.png $(LIBMODULES) $(ASSETS)
+pkg.gp4: eboot.bin sce_sys/param.sfo sce_sys/icon0.png sce_module/libc.prx sce_module/libSceFios2.prx $(LIBMODULES) $(ASSETS)
 	python3 ../../tools/create_gp4_from_tree.py $@ $(CONTENT_ID)
 	python3 ../../tools/fix_gp4_dirs.py $@
 sce_sys/param.sfo: Makefile
