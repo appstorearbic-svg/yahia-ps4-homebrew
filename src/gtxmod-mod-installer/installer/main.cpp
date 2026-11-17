@@ -23,7 +23,7 @@ std::stringstream debugLogStream;
 Scene2D::~Scene2D() {}
 static const int W=1920,H=1080;
 static const Color BG={3,10,25}, PANEL={8,22,49}, ROW={12,31,65};
-static const Color ACTIVE={18,102,230}, RED={0,137,255}, WHITE={242,247,255};
+static const Color ACTIVE={18,102,230}, RED={255,55,65}, WHITE={242,247,255};
 static const Color MUTED={157,181,220}, GREEN={73,226,157}, BAD={255,105,124}, BLUE={36,145,255};
 static const Color DEEP={2,16,42}, NAV={7,27,61}, GLOW={22,85,181}, GOLD={255,198,45};
 struct ArabicForm { uint32_t cp, iso, fin, ini, med; bool joinNext, joinPrev; };
@@ -35,7 +35,13 @@ static std::vector<uint32_t> utf8(const char*s){std::vector<uint32_t>v;const uns
 static uint32_t shaped(const std::vector<uint32_t>&v,size_t i){const ArabicForm*c=form(v[i]);if(!c)return v[i];const ArabicForm*p=i?form(v[i-1]):0,*n=i+1<v.size()?form(v[i+1]):0;bool jp=p&&p->joinNext&&c->joinPrev,jn=n&&c->joinNext&&n->joinPrev;if(jp&&jn&&c->med)return c->med;if(jp&&c->fin)return c->fin;if(jn&&c->ini)return c->ini;return c->iso;}
 static FT_Face gEn=nullptr,gAr=nullptr;
 static void arabic(Scene2D*s,FT_Face face,const std::string&str,int right,int base,Color fg){
-    std::vector<uint32_t>v=utf8(str.c_str());int pen=right;
+    std::vector<uint32_t>raw=utf8(str.c_str()),v;
+    for(size_t i=0;i<raw.size();){
+        bool latin=(raw[i]<128)&&((raw[i]>='A'&&raw[i]<='Z')||(raw[i]>='a'&&raw[i]<='z')||(raw[i]>='0'&&raw[i]<='9'));
+        if(latin){size_t j=i;while(j<raw.size()&&raw[j]<128&&((raw[j]>='A'&&raw[j]<='Z')||(raw[j]>='a'&&raw[j]<='z')||(raw[j]>='0'&&raw[j]<='9')))++j;for(size_t k=j;k>i;--k)v.push_back(raw[k-1]);i=j;}
+        else{v.push_back(raw[i]);++i;}
+    }
+    int pen=right;
     for(size_t i=0;i<v.size();++i){
         uint32_t original=v[i],cp=shaped(v,i);const ArabicForm*af=form(original);
         FT_Face use=af?face:gEn;FT_UInt gi=FT_Get_Char_Index(use,cp);
