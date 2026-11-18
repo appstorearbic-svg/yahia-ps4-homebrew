@@ -4,7 +4,7 @@
 #include <algorithm>
 
 namespace gtxcatalog {
-    const char *const categories[]={"الكل","أحدث المنشورات","سيارات","طيارات","موطورات","قوارب","شخصيات","مابات","سكربتات"};
+    const char *const categories[]={"الكل","الأحدث","سيارات","طيارات","موطورات","قوارب","شخصيات","مابات","سكربتات"};
 const size_t categoryCount=sizeof(categories)/sizeof(categories[0]);
 static const char *BASE="https://gtxmod-ps4.pages.dev/";
 std::string resolveUrl(const std::string &path){
