@@ -56,7 +56,7 @@ static bool hasArabic(const std::string&s){for(size_t i=0;i<s.size();++i)if((uns
 static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;if(hasArabic(str))arabic(s,gAr,str,right,base,c);else{std::string t=str;s->DrawText((char*)t.c_str(),gEn,right-(int)t.size()*23,base,BG,c);}}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
 static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr;static int gFrame=0;static int media=0,focus=0;static std::string previewPath;
-static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery;static int screen=0,category=0,sel=0,searchCursor=0;static bool searchArabic=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
+static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
 static FILE *bootLog=nullptr;static int gPad=-1;static bool downloadCancelled=false;static int cancelChoice=0;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
@@ -130,7 +130,7 @@ static void drawList(){
     smart(gScene,category==1?"الأحدث":(searchQuery.empty()?"الأحدث":"نتائج البحث"),1850,535,WHITE);
     char countText[48];snprintf(countText,sizeof(countText),"%d مود",(int)shown.size());smart(gScene,countText,1490,535,BLUE);
     size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;
-    for(size_t i=0;i<3&&pageStart+i<shown.size();++i){const gtxcatalog::Mod&m=mods[shown[pageStart+i]];card(m,36+(int)i*610,565,578,345,(int)(pageStart+i)==sel);}
+    for(size_t i=0;i<3&&pageStart+i<shown.size();++i){const gtxcatalog::Mod&m=mods[shown[pageStart+i]];card(m,36+(int)i*610,565,578,345,focus==1&&(int)(pageStart+i)==sel);}
     if(shown.empty()){box(36,565,1820,345,DEEP,{28,91,181});smart(gScene,listError.empty()?"ماكو منشورات بهذا التصنيف حالياً":crop(listError,70),1780,735,listError.empty()?MUTED:BAD);smart(gScene,"اضغط مثلث لتحديث المنشورات من الموقع",1780,800,WHITE);}
     gScene->DrawRectangle(0,H-70,W,4,RED);text(gScene,gEn,"GTXMOD PS4",38,H-25,WHITE);smart(gScene,"L1/R1 التصنيف   ←/→ اختيار   🔍 اضغط مربع للبحث   X معلومات   O خروج",1850,H-25,WHITE);
 }
@@ -264,9 +264,9 @@ int main(){
             else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_L2)){media=0;loadPreview(false);present();}
             else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_R2)){media=1;present();}
             else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){refresh();}
-            else if(pressed&ORBIS_PAD_BUTTON_SQUARE){screen=5;searchCursor=0;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_SQUARE){savedCategory=category;savedSel=sel;savedFocus=focus;savedSearchQuery=searchQuery;searchQuery.clear();searchArabic=true;screen=5;searchCursor=0;present();}
             else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_CROSS)){if(!shown.empty()){screen=1;appMessage.clear();present();}}
-            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;
+            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
         }
         else if(screen==1){if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=0;present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS)beginInstall();}
         else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=0;present();}
@@ -281,7 +281,7 @@ int main(){
             else if(pressed&ORBIS_PAD_BUTTON_L2){searchQuery+=" ";present();}
             else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){if(!searchQuery.empty())searchQuery.erase(searchQuery.size()-1);present();}
             else if(pressed&ORBIS_PAD_BUTTON_SQUARE){sel=0;focus=1;category=0;rebuildShown();preloadVisiblePreviews();screen=0;present();}
-            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){searchQuery.clear();rebuildShown();screen=0;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){category=savedCategory;sel=savedSel;focus=savedFocus;searchQuery=savedSearchQuery;rebuildShown();preloadVisiblePreviews();screen=0;present();}
         }
     }if(screen==0&&hasAnimatedPreview())present();usleep(16000);}
     scePadClose(pad);if(httpReady)gtxhttp::shutdown();trace("normal shutdown");if(bootLog){fclose(bootLog);bootLog=nullptr;}return 0;
