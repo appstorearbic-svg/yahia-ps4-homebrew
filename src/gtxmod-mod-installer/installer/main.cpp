@@ -55,8 +55,8 @@ static void arabic(Scene2D*s,FT_Face face,const std::string&str,int right,int ba
 static bool hasArabic(const std::string&s){for(size_t i=0;i<s.size();++i)if((unsigned char)s[i]>=0xD8&&(unsigned char)s[i]<=0xDF)return true;return false;}
 static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;if(hasArabic(str))arabic(s,gAr,str,right,base,c);else{std::string t=str;s->DrawText((char*)t.c_str(),gEn,right-(int)t.size()*23,base,BG,c);}}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
-static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr;static int gFrame=0;static int media=0,focus=0;static std::string previewPath;
-static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
+static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr,*gDetailsPreview=nullptr;static int gFrame=0;static int media=0,focus=0,detailsImage=0;static std::string previewPath;
+static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
 static FILE *bootLog=nullptr;static int gPad=-1;static bool downloadCancelled=false;static int cancelChoice=0;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
@@ -69,9 +69,9 @@ static void frame(int x,int y,int w,int h,Color c){
     gScene->DrawRectangle(x,y,4,h,c);gScene->DrawRectangle(x+w-4,y,4,h,c);
 }
 static void neon(int x,int y,int w,int h,bool active){
-    Color edge=active?RED:Color{25,78,153};
-    box(x,y,w,h,active?Color{10,55,125}:Color{7,25,58},edge);
-    if(active){frame(x,y,w,h,RED);gScene->DrawRectangle(x+7,y+7,w-14,3,{36,173,255});}
+    Color edge=active?GOLD:Color{25,78,153};
+    box(x,y,w,h,active?Color{46,42,8}:Color{7,25,58},edge);
+    if(active){frame(x,y,w,h,GOLD);gScene->DrawRectangle(x+7,y+7,w-14,3,{255,220,70});}
 }
 static void logo(){text(gScene,gEn,"GTXMOD",800,67,WHITE);text(gScene,gEn,"PS4",1035,67,RED);}
 static void header(){gScene->DrawRectangle(0,0,W,94,DEEP);gScene->DrawRectangle(0,91,W,4,RED);logo();}
@@ -83,7 +83,7 @@ static void hero(){
     text(gScene,gEn,"GTA V",1030,225,RED);
     smart(gScene,"مودات مختارة لجهاز PS4 المعدّل",1360,300,MUTED);
 }
-static void categories(){int y=410;for(size_t i=0;i<gtxcatalog::categoryCount;i++){int x=36+(int)i*203;bool active=(int)i==category&&focus==0;neon(x,y,190,62,active);smart(gScene,gtxcatalog::categories[i],x+170,y+40,active?WHITE:MUTED);}smart(gScene,focus==0?"التصنيفات":"المنشورات",1850,507,focus==0?RED:WHITE);}
+static void categories(){int y=410;for(size_t i=0;i<gtxcatalog::categoryCount;i++){int x=36+(int)i*203;bool active=(int)i==category;neon(x,y,190,62,active);smart(gScene,gtxcatalog::categories[i],x+170,y+40,active?WHITE:MUTED);}smart(gScene,"التصنيفات",1850,507,GOLD);}
 static void drawPreview(const gtxcatalog::Mod&m,int x,int y,int w,int h){box(x,y,w,h,Color{8,30,70},{29,99,208});if(media==0&&gPreview&&gPreview->valid()){gPreview->drawFit(gScene,x+5,y+5,w-10,h-10);}else if(media==1&& !m.video.empty()){text(gScene,gEn,"PLAY",x+w/2-50,y+h/2,RED);smart(gScene,"معاينة الفيديو",x+w-35,y+h/2+70,WHITE);}else{smart(gScene,media==1?"لا يوجد فيديو لهذا المنشور":"لا توجد صورة لهذا المنشور",x+w-25,y+h/2, MUTED);}}
 static void card(const gtxcatalog::Mod&m,int x,int y,int w,int h,bool active){
     box(x,y,w,h,Color{7,25,58},active?RED:Color{28,76,145});
@@ -142,7 +142,7 @@ static void drawDetails(){
     frame(45,130,1830,805,Color{18,102,230});
     box(85,205,760,540,Color{8,30,70},{29,99,208});
     PreviewImage *cached=(shown[(size_t)sel]<previewCache.size())?previewCache[shown[(size_t)sel]]:nullptr;
-    if(cached&&cached->valid())cached->drawFit(gScene,95,215,740,520);
+    if(gDetailsPreview&&gDetailsPreview->valid())gDetailsPreview->drawFit(gScene,95,215,740,520);else if(cached&&cached->valid())cached->drawFit(gScene,95,215,740,520);
     else smart(gScene,"لا توجد صورة لهذا المنشور",790,485,MUTED);
     smart(gScene,"معلومات المنشور",1780,215,RED);
     smart(gScene,crop(m.name,42),1780,295,WHITE);
@@ -153,6 +153,7 @@ static void drawDetails(){
     for(int i=0;i<3&&!description.empty();++i){std::string line=crop(description,42);smart(gScene,line,1780,545+i*48,WHITE);if(line.size()>=description.size())break;description=description.substr(line.size());}
     smart(gScene,"الحجم",1780,715,BLUE);
     smart(gScene,m.size.empty()?"غير محدد":m.size,1780,760,WHITE);
+    if(m.images.size()>1){char pc[48];snprintf(pc,sizeof(pc),"الصورة %d من %d",detailsImage+1,(int)m.images.size());smart(gScene,pc,810,785,GOLD);smart(gScene,"يمين/يسار تغيير الصورة",810,825,MUTED);}
     box(1010,825,780,58,ACTIVE,RED);smart(gScene,"اضغط X للتثبيت",1740,862,WHITE);
     smart(gScene,"O رجوع",810,900,WHITE);
 }
@@ -162,6 +163,27 @@ static void drawOffline(){
     smart(gScene,"يجب عليك الاتصال بالإنترنت",1510,520,RED);
     smart(gScene,"اضغط مثلث لإعادة التحميل",1510,650,GREEN);
     smart(gScene,"O خروج",1510,820,MUTED);
+}
+static std::string installedName(const gtxinstall::InstalledMod&m){for(const auto&x:mods)if(x.id==m.id)return x.name;return m.id;}
+static void drawEntryChoice(){
+    gScene->FrameBufferFill(BG);header();smart(gScene,"اختر العملية",1600,220,WHITE);
+    box(180,360,700,180,installedSel==0?Color{55,42,8}:PANEL,installedSel==0?GOLD:Color{27,76,145});
+    box(1040,360,700,180,installedSel==1?Color{55,42,8}:PANEL,installedSel==1?GOLD:Color{27,76,145});
+    smart(gScene,"حذف المود",760,470,installedSel==0?GOLD:WHITE);smart(gScene,"عرض الموقع",1620,470,installedSel==1?GOLD:WHITE);smart(gScene,"يمين/يسار اختيار   X تأكيد",1600,760,MUTED);
+}
+static void drawInstalledList(){
+    gScene->FrameBufferFill(BG);header();smart(gScene,"المودات المثبتة",1700,210,WHITE);
+    if(installed.empty()){smart(gScene,"لا توجد مودات مثبتة",1700,460,MUTED);smart(gScene,"O رجوع",1700,850,WHITE);return;}
+    for(size_t i=0;i<installed.size()&&i<6;++i){int y=285+(int)i*90;bool a=(int)i==installedSel;box(180,y,1500,64,a?Color{55,42,8}:PANEL,a?GOLD:Color{27,76,145});smart(gScene,installedName(installed[i]),1600,y+42,a?GOLD:WHITE);}
+    smart(gScene,"X عرض المود   O رجوع",1700,870,WHITE);
+}
+static void drawDeleteDetails(){
+    gScene->FrameBufferFill(BG);header();box(180,180,1560,620,DEEP,{29,99,208});smart(gScene,"المود المثبت",1650,270,WHITE);
+    if(installedSel>=0&&installedSel<(int)installed.size()){
+        const auto&m=installed[(size_t)installedSel];smart(gScene,installedName(m),1650,380,GOLD);smart(gScene,"المسارات المسجلة للحذف",1650,470,MUTED);char n[64];snprintf(n,sizeof(n),"%d ملفات",(int)m.paths.size());smart(gScene,n,1650,530,WHITE);
+        box(760,650,800,72,BAD,RED);smart(gScene,"حذف المود من لعبة",1490,698,WHITE);
+    }
+    smart(gScene,"X حذف   O رجوع",1650,850,WHITE);
 }
 static void drawStatus(const std::string &title,const std::string &body,bool showProgress){
     gScene->FrameBufferFill(BG); header();
@@ -201,10 +223,10 @@ static void drawResult(){
     box(55,145,1465,720,DEEP,{29,99,208});
     smart(gScene,installError.empty()?"اكتمل التثبيت":"تعذر إكمال التثبيت",1800,235,WHITE);
     int y=330;for(const auto&r:installResults){box(190,y-38,1200,62,ROW,r.ok?GREEN:BAD);smart(gScene,r.text,1700,y,r.ok?GREEN:BAD);y+=78;if(y>710)break;}
-    if(!installError.empty())smart(gScene,crop(installError,75),1750,770,BAD);else smart(gScene,"تم حفظ النسخ الاحتياطية في /data/GTXMOD/backups",1750,770,BLUE);
+    if(!installError.empty())smart(gScene,crop(installError,75),1750,770,BAD);else smart(gScene,"تم حفظ سجل المود للحذف في /data/GTXMOD/installed.db",1750,770,BLUE);
     smart(gScene,"O رجوع إلى قائمة المودات",1750,900,WHITE);
 }
-static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2)drawStatus(progTitle.c_str(),"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else if(screen==4)drawOffline();else if(screen==5)drawSearch();else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
+static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2)drawStatus(progTitle.c_str(),"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else if(screen==4)drawOffline();else if(screen==5)drawSearch();else if(screen==6)drawEntryChoice();else if(screen==7)drawInstalledList();else if(screen==8)drawDeleteDetails();else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
 static void rebuildShown(){
     shown.clear();
     for(size_t i=0;i<mods.size();++i){
@@ -228,7 +250,16 @@ static bool preparePreview(size_t modIndex,bool allowDownload){
     if(access(path.c_str(),F_OK)!=0){if(!allowDownload)return false;std::string u=gtxcatalog::resolveUrl(m.image),e;if(u.empty()||!gtxhttp::download(u,path,nullptr,nullptr,&e))return false;}
     PreviewImage *loaded=new PreviewImage(path.c_str());if(!loaded->valid()){delete loaded;return false;}previewCache[modIndex]=loaded;return true;
 }
+static bool ensureDir(const char*);
 static void loadPreview(bool allowDownload){gPreview=nullptr;if(shown.empty()||sel<0||sel>=(int)shown.size()||media!=0)return;size_t modIndex=shown[(size_t)sel];if(preparePreview(modIndex,allowDownload))gPreview=previewCache[modIndex];}
+static bool loadDetailsImage(bool allowDownload){
+    gDetailsPreview=nullptr;if(shown.empty()||sel<0||sel>=(int)shown.size())return false;
+    const gtxcatalog::Mod&m=mods[shown[(size_t)sel]];if(m.images.empty())return false;
+    if(detailsImage<0)detailsImage=(int)m.images.size()-1;if(detailsImage>=(int)m.images.size())detailsImage=0;
+    std::string path=std::string("/data/GTXMOD/previews/")+m.id+"_detail_"+std::to_string(detailsImage)+".media";ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/previews");
+    if(access(path.c_str(),F_OK)!=0){if(!allowDownload)return false;std::string u=gtxcatalog::resolveUrl(m.images[(size_t)detailsImage]),e;if(u.empty()||!gtxhttp::download(u,path,nullptr,nullptr,&e))return false;}
+    PreviewImage *p=new PreviewImage(path.c_str());if(!p->valid()){delete p;return false;}gDetailsPreview=p;return true;
+}
 static void preloadVisiblePreviews(){size_t limit=shown.size()<12?shown.size():12;for(size_t i=0;i<limit;++i)preparePreview(shown[i],true);loadPreview(false);}
 static bool hasAnimatedPreview(){size_t limit=shown.size()<12?shown.size():12;for(size_t i=0;i<limit;++i){size_t idx=shown[i];if(idx<previewCache.size()&&previewCache[idx]&&previewCache[idx]->animated())return true;}return false;}
 static void refresh(){
@@ -248,15 +279,32 @@ static void beginInstall(){
     installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());screen=1;appMessage.clear();present();return;}if(!ok){installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
     appMessage="اكتمل التنزيل؛ جاري فحص المود";progTitle="فحص وتثبيت المود";progTotal=progNow=0;present();
     if(!gtxinstall::installZip(zip,m.id.c_str(),installStatus,nullptr,installResults,&err))installError=err;
-    screen=3;appMessage.clear();present();
+    gtxinstall::listInstalled(installed,nullptr);screen=3;appMessage.clear();present();
 }
 int main(){
     setvbuf(stdout,0,_IONBF,0);trace("main entered");Scene2D scene(W,H,4);if(!scene.Init(0xC000000,2)){trace("Scene2D init failed");return 1;}scene.SetActiveFrameBuffer(0);gScene=&scene;trace("Scene2D init ok");
     if(!scene.InitFont(&gEn,"/app0/assets/fonts/Gontserrat-Regular.ttf",52)){trace("English font init failed");return 2;}trace("English font init ok");if(!scene.InitFont(&gAr,"/app0/assets/fonts/NotoSansArabic-Regular.ttf",43)){trace("Arabic font init failed");return 3;}trace("Arabic font init ok");
     PNG left("/app0/assets/images/GTX-side.png"),right("/app0/assets/images/GTX-side.png");gLeft=&left;gRight=&right;
     PNG heroImage("/app0/assets/images/GTXMOD-header.png");gHero=&heroImage;trace("images loaded");if(scePadInit()<0){trace("scePadInit failed");return 4;}trace("scePadInit ok");OrbisUserServiceInitializeParams up;memset(&up,0,sizeof(up));up.priority=ORBIS_KERNEL_PRIO_FIFO_LOWEST;if(sceUserServiceInitialize(&up)<0){trace("user service init failed");return 5;}int uid=-1;if(sceUserServiceGetInitialUser(&uid)<0){trace("get initial user failed");return 6;}int pad=scePadOpen(uid,ORBIS_PAD_PORT_TYPE_STANDARD,0,0);if(pad<0){trace("scePadOpen failed");return 7;}gPad=pad;trace("pad opened");
-    listError="جاري تحميل موقع GTXMOD";uint32_t prev=0;bool run=true;refresh();trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
-        if(screen==0){
+    listError="جاري تحميل موقع GTXMOD";uint32_t prev=0;bool run=true;refresh();if(!offline){gtxinstall::listInstalled(installed,nullptr);screen=6;present();}trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
+        if(screen==6){
+            if(pressed&ORBIS_PAD_BUTTON_LEFT||pressed&ORBIS_PAD_BUTTON_RIGHT){installedSel=1-installedSel;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(installedSel==1){screen=0;present();}else{installedSel=0;screen=7;present();}}
+            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
+        }
+        else if(screen==7){
+            if(pressed&ORBIS_PAD_BUTTON_UP){if(installedSel>0)--installedSel;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_DOWN){if(installedSel+1<(int)installed.size())++installedSel;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(!installed.empty()){screen=8;present();}}
+            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=6;installedSel=0;present();}
+        }
+        else if(screen==8){
+            if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=7;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CROSS&&installedSel>=0&&installedSel<(int)installed.size()){
+                installResults.clear();installError.clear();gtxinstall::removeInstalled(installed[(size_t)installedSel],installResults,&installError);installed.erase(installed.begin()+installedSel);if(installedSel>=(int)installed.size())installedSel=installed.empty()?0:(int)installed.size()-1;screen=7;present();
+            }
+        }
+        else if(screen==0){
             if(pressed&ORBIS_PAD_BUTTON_L1){searchQuery.clear();category=(category+(int)gtxcatalog::categoryCount-1)%(int)gtxcatalog::categoryCount;sel=0;focus=1;media=0;rebuildShown();preloadVisiblePreviews();present();}
             else if(pressed&ORBIS_PAD_BUTTON_R1){searchQuery.clear();category=(category+1)%(int)gtxcatalog::categoryCount;sel=0;focus=1;media=0;rebuildShown();preloadVisiblePreviews();present();}
             else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_LEFT)){if(sel>0)--sel;media=0;loadPreview(false);present();}
@@ -265,10 +313,10 @@ int main(){
             else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_R2)){media=1;present();}
             else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){refresh();}
             else if(pressed&ORBIS_PAD_BUTTON_SQUARE){savedCategory=category;savedSel=sel;savedFocus=focus;savedSearchQuery=searchQuery;searchQuery.clear();searchArabic=true;screen=5;searchCursor=0;present();}
-            else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_CROSS)){if(!shown.empty()){screen=1;appMessage.clear();present();}}
+            else if(focus==1&&(pressed&ORBIS_PAD_BUTTON_CROSS)){if(!shown.empty()){screen=1;detailsImage=0;loadDetailsImage(true);appMessage.clear();present();}}
             else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
         }
-        else if(screen==1){if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=0;present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS)beginInstall();}
+        else if(screen==1){if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=0;gDetailsPreview=nullptr;present();}else if(pressed&ORBIS_PAD_BUTTON_LEFT){detailsImage--;loadDetailsImage(true);present();}else if(pressed&ORBIS_PAD_BUTTON_RIGHT){detailsImage++;loadDetailsImage(true);present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS)beginInstall();}
         else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=0;present();}
         else if(screen==4){if(pressed&ORBIS_PAD_BUTTON_TRIANGLE)refresh();else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
         else if(screen==5){

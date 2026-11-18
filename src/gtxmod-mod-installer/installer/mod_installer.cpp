@@ -114,6 +114,12 @@ static bool atomicWrite(const std::string &path,const std::string &data){
     while(off<data.size()){ssize_t n=write(fd,data.data()+off,data.size()-off);if(n<0&&errno==EINTR)continue;if(n<=0){ok=false;break;}off+=(size_t)n;}
     if(ok&&fsync(fd)<0)ok=false;if(close(fd)<0)ok=false;if(ok&&rename(tmp.c_str(),path.c_str())<0)ok=false;if(!ok)unlink(tmp.c_str());return ok;
 }
+static std::string registryPath(){return std::string(GTX_DATA_ROOT)+"/installed.db";}
+static std::string cleanField(std::string s){for(char &c:s)if(c=='\t'||c=='\r'||c=='\n')c=' ';return s;}
+static bool appendInstalled(const std::string&id,const std::vector<Planned>&planned,const std::vector<std::string>&xmlLines){
+    if(!mkdirs(GTX_DATA_ROOT))return false;FILE*f=fopen(registryPath().c_str(),"ab");if(!f)return false;
+    fprintf(f,"MOD\t%s\n",cleanField(id).c_str());for(const Planned&p:planned)fprintf(f,"PATH\t%s\n",cleanField(p.destination).c_str());for(const std::string&l:xmlLines)fprintf(f,"XML\t%s\n",cleanField(l).c_str());fprintf(f,"END\n");bool ok=fflush(f)==0;fclose(f);return ok;
+}
 bool orbxReady(std::string *reason){
     std::string root=GTX_ORBX_ROOT;std::string gta=root+"/gta";std::string dlc=gta+"/dlclist.xml";std::string rpf=gta+"/rpf";
     if(!dirExists(root.c_str())||!dirExists(gta.c_str())||!dirExists(rpf.c_str())||!fileExists(dlc)){if(reason)*reason="لم يتم العثور على ORBX أو مسارات GTA المطلوبة: /data/orbx/gta";return false;}return true;
@@ -151,20 +157,18 @@ bool installZip(const std::string &zipPath,const std::string &modId,StatusCallba
         xmlNeedsWrite=false;for(const std::string &line:dlcLines)if(!hasXmlLine(oldXml,line))xmlNeedsWrite=true;
         if(xmlNeedsWrite&&oldXml.rfind("</Paths>")==std::string::npos){mz_zip_reader_end(&zip);if(error)*error="لم يتم العثور على وسم </Paths> في dlclist.xml";return false;}
     }
-    std::string backupRoot;
     std::string staging=std::string(GTX_DATA_ROOT)+"/staging/"+((modId.empty()||modId.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_" )!=std::string::npos)?"mod":modId);
-    if(!uniqueBackupDirectory(backupRoot)||!mkdirs(staging)){mz_zip_reader_end(&zip);if(error)*error="تعذر إنشاء مجلد النسخ الاحتياطية أو التجهيز";return false;}
+    if(!mkdirs(staging)){mz_zip_reader_end(&zip);if(error)*error="تعذر إنشاء مجلد التجهيز";return false;}
     for(size_t k=0;k<planned.size();k++){
-        Planned &p=planned[k];p.stage=staging+"/file_"+std::to_string(k)+".part";p.backup=backupRoot+"/file_"+std::to_string(k)+".bak";unlink(p.stage.c_str());
+        Planned &p=planned[k];p.stage=staging+"/file_"+std::to_string(k)+".part";unlink(p.stage.c_str());
         say(status,context,"استخراج الملف المطابق من ZIP");
         if(!mz_zip_reader_extract_to_file(&zip,p.index,p.stage.c_str(),0)){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="فشل استخراج ملف RPF من ZIP";return false;}
-        if(p.existed&&!copyFile(p.destination,p.backup)){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="فشل حفظ نسخة احتياطية من ملف موجود";return false;}
+        if(p.existed){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="الوجهة موجودة مسبقاً؛ تم إيقاف التثبيت لأن النسخ الاحتياطية معطلة";return false;}
     }
     mz_zip_reader_end(&zip);
-    std::string xmlBackup=backupRoot+"/dlclist.xml.bak",xmlStage=xmlPath+".gtxmod.tmp";
+    std::string xmlStage=xmlPath+".gtxmod.tmp";
     std::string newXml=oldXml;
     if(xmlNeedsWrite){
-        if(fileExists(xmlPath)&&!copyFile(xmlPath,xmlBackup)){if(error)*error="فشل النسخ الاحتياطي لـdlclist.xml";return false;}
         const bool crlf=oldXml.find("\r\n")!=std::string::npos;const std::string nl=crlf?"\r\n":"\n";size_t close=oldXml.rfind("</Paths>");
         std::string additions;for(const std::string &line:dlcLines)if(!hasXmlLine(newXml,line)){additions+="\t\t"+line+nl;}
         newXml.insert(close,additions);
@@ -177,13 +181,27 @@ bool installZip(const std::string &zipPath,const std::string &modId,StatusCallba
     }
     if(commitOk&&xmlNeedsWrite&&rename(xmlStage.c_str(),xmlPath.c_str())<0)commitOk=false;
     if(!commitOk){
-        for(size_t i=0;i<committed;i++){Planned &p=planned[i];if(p.existed)copyFile(p.backup,p.destination);else unlink(p.destination.c_str());}
-        if(xmlNeedsWrite)unlink(xmlStage.c_str());if(error)*error="فشل إتمام النقل؛ تمت محاولة استعادة الملفات السابقة من النسخ الاحتياطية";result(results,"نقل ملفات المود",false);return false;
+        for(size_t i=0;i<committed;i++){Planned &p=planned[i];unlink(p.destination.c_str());}
+        if(xmlNeedsWrite)unlink(xmlStage.c_str());if(error)*error="فشل إتمام النقل؛ أزيلت الملفات التي نُقلت في هذه المحاولة";result(results,"نقل ملفات المود",false);return false;
     }
     for(const Planned &p:planned)result(results,p.destination.find("dlc_addon")!=std::string::npos?"نقل dlc.rpf إلى مجلده":"نقل vehicles.rpf إلى gta5",true);
     result(results,"تحديث dlclist.xml",!xmlNeedsWrite||fileExists(xmlPath));
-    if(xmlNeedsWrite)result(results,"إنشاء نسخة احتياطية من dlclist.xml",fileExists(xmlBackup));
-    result(results,"إنشاء نسخ احتياطية للوجهات المستبدلة",true);
+    bool recorded=appendInstalled(modId,planned,dlcLines);result(results,"حفظ سجل المود للمسح لاحقاً",recorded);
+    if(!recorded){if(error)*error="تم التثبيت لكن تعذر حفظ سجل الحذف في /data/GTXMOD/installed.db";return false;}
     result(results,"اكتمل التثبيت",true);return true;
+}
+bool listInstalled(std::vector<InstalledMod>&out,std::string*){
+    out.clear();FILE*f=fopen(registryPath().c_str(),"rb");if(!f)return true;char line[2048];InstalledMod cur;bool open=false;
+    while(fgets(line,sizeof(line),f)){size_t n=strlen(line);while(n&&(line[n-1]=='\n'||line[n-1]=='\r'))line[--n]=0;std::string s(line);if(s.compare(0,4,"MOD\t")==0){if(open)out.push_back(cur);cur=InstalledMod();cur.id=s.substr(4);open=true;}else if(open&&s.compare(0,5,"PATH\t")==0)cur.paths.push_back(s.substr(5));else if(open&&s.compare(0,4,"XML\t")==0)cur.xmlLines.push_back(s.substr(4));else if(open&&s=="END"){out.push_back(cur);cur=InstalledMod();open=false;}}
+    if(open)out.push_back(cur);fclose(f);return true;
+}
+static bool removeXmlLines(const std::string&path,const std::vector<std::string>&lines){
+    std::string raw;if(!readFile(path,raw,16*1024*1024))return false;std::string out;size_t p=0;while(p<=raw.size()){size_t e=raw.find('\n',p);std::string line=raw.substr(p,e==std::string::npos?raw.size()-p:e-p);std::string cmp=line;while(!cmp.empty()&&(cmp.back()=='\r'||cmp.back()==' '||cmp.back()=='\t'))cmp.pop_back();bool drop=false;for(const std::string&l:lines)if(cmp.find(l)!=std::string::npos)drop=true;if(!drop){out+=line;if(e!=std::string::npos)out+='\n';}if(e==std::string::npos)break;p=e+1;}return atomicWrite(path,out);
+}
+bool removeInstalled(const InstalledMod&mod,std::vector<Result>&results,std::string*error){
+    results.clear();bool ok=true;for(const std::string&p:mod.paths){if(p.compare(0,strlen(GTX_ORBX_ROOT),GTX_ORBX_ROOT)!=0){ok=false;result(results,"مسار غير مسموح",false);continue;}if(unlink(p.c_str())==0||errno==ENOENT)result(results,"حذف ملف المود",true);else{ok=false;result(results,"حذف ملف المود",false);}}
+    if(!mod.xmlLines.empty()){std::string xml=std::string(GTX_ORBX_ROOT)+"/gta/dlclist.xml";if(removeXmlLines(xml,mod.xmlLines))result(results,"حذف أسطر DLC",true);else{ok=false;result(results,"حذف أسطر DLC",false);}}
+    if(ok){std::vector<InstalledMod> all;listInstalled(all,nullptr);std::string db;for(const auto&m:all)if(m.id!=mod.id){db+="MOD\t"+cleanField(m.id)+"\n";for(const auto&p:m.paths)db+="PATH\t"+cleanField(p)+"\n";for(const auto&l:m.xmlLines)db+="XML\t"+cleanField(l)+"\n";db+="END\n";}if(!atomicWrite(registryPath(),db))ok=false;}
+    if(!ok&&error)*error="تعذر حذف بعض ملفات المود";return ok;
 }
 }

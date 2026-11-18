@@ -27,6 +27,7 @@ bool fetchMods(std::vector<Mod> &mods,std::string *error){
         auto field=[&](const char *k){const gtxjson::Value *x=v.get(k);return x?x->string():std::string();};
         m.id=field("id");m.name=field("name");m.category=field("category");m.description=field("description");
         m.image=field("image");m.video=field("video");m.download=field("download");m.size=field("size");
+        const gtxjson::Value *imgs=v.get("images");if(!imgs)imgs=v.get("gallery");if(imgs&&imgs->type==gtxjson::Value::Array)for(const gtxjson::Value &iv:imgs->array){std::string u=iv.string();if(!u.empty())m.images.push_back(u);}if(m.images.empty()&&!m.image.empty())m.images.push_back(m.image);if(m.image.empty()&&!m.images.empty())m.image=m.images[0];
         m.sortKey=field("createdAt");if(m.sortKey.empty())m.sortKey=field("publishedAt");if(m.sortKey.empty())m.sortKey=field("date");if(m.sortKey.empty())m.sortKey=field("created_at");
         if(m.id.empty()||m.name.empty()||m.download.empty())continue;
         if(m.id.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)continue;
