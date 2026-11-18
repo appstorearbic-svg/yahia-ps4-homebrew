@@ -9,6 +9,7 @@
 #include <sstream>
 #include <string.h>
 #include <unistd.h>
+#include <dirent.h>
 #include <sys/stat.h>
 #include <algorithm>
 #include <vector>
@@ -237,6 +238,7 @@ static void rebuildShown(){
 }
 
 static bool ensureDir(const char*p){if(mkdir(p,0777)==0||errno==EEXIST)return true;return false;}
+static void cleanupDownloadCache(){DIR*d=opendir("/data/GTXMOD/downloads");if(!d)return;dirent*e;while((e=readdir(d))){if(e->d_name[0]=='.')continue;std::string p=std::string("/data/GTXMOD/downloads/")+e->d_name;unlink(p.c_str());}closedir(d);rmdir("/data/GTXMOD/downloads");}
 static bool progress(uint64_t got,uint64_t total,void*){progNow=got;progTotal=total;present();if(gPad>=0){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(gPad,&d)>=0&&(d.buttons&ORBIS_PAD_BUTTON_CIRCLE)){if(confirmCancel()){downloadCancelled=true;return false;}}}return true;}
 static void installStatus(const char*message,void*){appMessage=message?message:"";progTitle="تثبيت المود";present();}
 static void clearPreviewCache(){for(size_t i=0;i<previewCache.size();++i)delete previewCache[i];previewCache.clear();gPreview=nullptr;}
@@ -273,12 +275,12 @@ static void refresh(){
 }
 static void beginInstall(){
     if(shown.empty()||sel<0||sel>=(int)shown.size()){screen=3;installError="لا يوجد مود محدد";return;}
-    const gtxcatalog::Mod &m=mods[shown[sel]];screen=2;progTitle="تنزيل المود";appMessage="الاتصال بموقع GTXMOD";progNow=progTotal=0;present();
+    const gtxcatalog::Mod &m=mods[shown[sel]];cleanupDownloadCache();screen=2;progTitle="تنزيل المود";appMessage="الاتصال بموقع GTXMOD";progNow=progTotal=0;present();
     downloadCancelled=false;ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/downloads");std::string zip="/data/GTXMOD/downloads/"+m.id+".zip";std::string err;std::string url=gtxcatalog::resolveUrl(m.download);
     bool ok=!url.empty()&&gtxhttp::download(url,zip,progress,nullptr,&err);
-    installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());screen=1;appMessage.clear();present();return;}if(!ok){installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
+    installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");screen=1;appMessage.clear();present();return;}if(!ok){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
     appMessage="اكتمل التنزيل؛ جاري فحص المود";progTitle="فحص وتثبيت المود";progTotal=progNow=0;present();
-    if(!gtxinstall::installZip(zip,m.id.c_str(),installStatus,nullptr,installResults,&err))installError=err;
+    bool installedOk=gtxinstall::installZip(zip,m.id,installStatus,nullptr,installResults,&err);unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");if(!installedOk)installError=err;
     gtxinstall::listInstalled(installed,nullptr);screen=3;appMessage.clear();present();
 }
 int main(){
