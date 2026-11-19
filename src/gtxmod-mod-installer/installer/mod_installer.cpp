@@ -163,7 +163,7 @@ bool installZip(const std::string &zipPath,const std::string &modId,StatusCallba
         Planned &p=planned[k];p.stage=staging+"/file_"+std::to_string(k)+".part";unlink(p.stage.c_str());
         say(status,context,"استخراج الملف المطابق من ZIP");
         if(!mz_zip_reader_extract_to_file(&zip,p.index,p.stage.c_str(),0)){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="فشل استخراج ملف RPF من ZIP";return false;}
-        if(p.existed){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="الوجهة موجودة مسبقاً؛ تم إيقاف التثبيت لأن النسخ الاحتياطية معطلة";return false;}
+        if(p.existed&&p.destination!=std::string(GTX_ORBX_ROOT)+"/gta/rpf/levels/gta5/vehicles.rpf"){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="الوجهة موجودة مسبقاً؛ مود DLC موجود ولم يتم استبداله بدون نسخة احتياطية";return false;}
     }
     mz_zip_reader_end(&zip);
     std::string xmlStage=xmlPath+".gtxmod.tmp";
@@ -199,7 +199,7 @@ bool listInstalled(std::vector<InstalledMod>&out,std::string*){
     if(readFile(xmlPath,xml,16*1024*1024)){
         size_t p=0;while((p=xml.find(prefix,p))!=std::string::npos){size_t a=p+prefix.size(),b=xml.find("/</Item>",a);if(b==std::string::npos)break;std::string parent=xml.substr(a,b-a);if(safeParent(parent)){std::string path=std::string(GTX_ORBX_ROOT)+"/gta/rpf/dlc_addon/"+parent+"/dlc.rpf";bool known=false;for(const auto&m:out)for(const auto&x:m.paths)if(x==path)known=true;if(!known){InstalledMod m;m.id=parent;m.name=parent;m.paths.push_back(path);m.xmlLines.push_back(xml.substr(p,b+8-p));out.push_back(m);}}p=b+8;}
     }
-    return true;
+    std::vector<InstalledMod> newest;std::vector<std::string> seenPaths;for(size_t ri=out.size();ri>0;--ri){const InstalledMod&m=out[ri-1];bool duplicate=false;for(const std::string&p:m.paths)for(const std::string&s:seenPaths)if(p==s)duplicate=true;if(!duplicate){newest.push_back(m);for(const std::string&p:m.paths)seenPaths.push_back(p);}}std::reverse(newest.begin(),newest.end());out.swap(newest);return true;
 }
 static std::string trimXmlLine(std::string s){while(!s.empty()&&(s.back()=='\r'||s.back()==' '||s.back()=='\t'))s.pop_back();size_t p=s.find_first_not_of(" \t");return p==std::string::npos?std::string():s.substr(p);}
 static bool removeXmlLines(const std::string&path,const std::vector<std::string>&lines){
@@ -209,7 +209,7 @@ static bool removeXmlLines(const std::string&path,const std::vector<std::string>
 bool removeInstalled(const InstalledMod&mod,std::vector<Result>&results,std::string*error){
     results.clear();bool ok=true;for(const std::string&p:mod.paths){if(p.compare(0,strlen(GTX_ORBX_ROOT),GTX_ORBX_ROOT)!=0){ok=false;result(results,"مسار غير مسموح",false);continue;}if(unlink(p.c_str())==0||errno==ENOENT){std::string parent=p.substr(0,p.find_last_of('/'));rmdir(parent.c_str());result(results,"حذف ملف المود أو أنه محذوف مسبقاً",true);}else{ok=false;result(results,"حذف ملف المود",false);}}
     if(!mod.xmlLines.empty()){std::string xml=std::string(GTX_ORBX_ROOT)+"/gta/dlclist.xml";if(removeXmlLines(xml,mod.xmlLines))result(results,"حذف أسطر DLC",true);else{ok=false;result(results,"حذف أسطر DLC",false);}}
-    if(ok){std::vector<InstalledMod> all;listInstalled(all,nullptr);std::string db;for(const auto&m:all)if(m.id!=mod.id){db+="MOD\t"+cleanField(m.id)+"\n";for(const auto&p:m.paths)db+="PATH\t"+cleanField(p)+"\n";for(const auto&l:m.xmlLines)db+="XML\t"+cleanField(l)+"\n";db+="END\n";}if(!atomicWrite(registryPath(),db))ok=false;}
+    if(ok){std::vector<InstalledMod> all;listInstalled(all,nullptr);std::string db;for(const auto&m:all){bool samePath=false;for(const auto&p:m.paths)for(const auto&q:mod.paths)if(p==q)samePath=true;if(m.id==mod.id||samePath)continue;db+="MOD\t"+cleanField(m.id)+"\n";for(const auto&p:m.paths)db+="PATH\t"+cleanField(p)+"\n";for(const auto&l:m.xmlLines)db+="XML\t"+cleanField(l)+"\n";db+="END\n";}if(!atomicWrite(registryPath(),db))ok=false;}
     if(!ok&&error)*error="تعذر حذف بعض ملفات المود";return ok;
 }
 }
