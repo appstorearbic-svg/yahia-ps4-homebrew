@@ -57,7 +57,7 @@ static bool hasArabic(const std::string&s){for(size_t i=0;i<s.size();++i)if((uns
 static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;if(hasArabic(str))arabic(s,gAr,str,right,base,c);else{std::string t=str;s->DrawText((char*)t.c_str(),gEn,right-(int)t.size()*23,base,BG,c);}}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
 static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr,*gDetailsPreview=nullptr;static int gFrame=0;static int media=0,focus=0,detailsImage=0;static std::string previewPath;
-static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,codeMode=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
+static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,searchUpper=true,codeMode=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
 static FILE *bootLog=nullptr;static int gPad=-1;static bool downloadCancelled=false;static int cancelChoice=0;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
@@ -113,17 +113,18 @@ static bool fuzzyMatch(const gtxcatalog::Mod&m){
 }
 static const char *AR_KEYS[]={"ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ي"};
 static int searchKeyCount(){return searchArabic?28:36;}
-static std::string searchKey(int i){if(searchArabic)return AR_KEYS[i];const char keys[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";return std::string(1,keys[i]);}
+static std::string searchKey(int i){if(searchArabic)return AR_KEYS[i];const char upper[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";const char lower[]="abcdefghijklmnopqrstuvwxyz0123456789";return std::string(1,(searchUpper?upper:lower)[i]);}
 static void drawSearch(){
     gScene->FrameBufferFill(Color{0,0,0});header();
     box(100,135,1720,790,DEEP,{29,99,208});
     smart(gScene,codeMode?"تحميل مود بالكود":"البحث عن مودات",1640,215,WHITE);
+    if(codeMode)text(gScene,gEn,searchUpper?"ABC":"abc",1740,255,searchUpper?GOLD:GREEN);
     box(180,255,1560,70,Color{4,12,25},RED);
     smart(gScene,searchQuery.empty()?(codeMode?"اكتب الكود الأحمر هنا":"اكتب اسم المود أو كلمة قريبة"):searchQuery,1680,300,searchQuery.empty()?MUTED:WHITE);
     int cols=10;
     for(int i=0;i<searchKeyCount();++i){int x=250+(i%cols)*135,y=390+(i/cols)*85;bool active=i==searchCursor;box(x,y,100,58,active?ACTIVE:ROW,active?RED:Color{27,76,145});smart(gScene,searchKey(i),x+70,y+42,WHITE);if(active)frame(x,y,100,58,RED);}
     if(codeMode&&!appMessage.empty())smart(gScene,appMessage,1660,760,BAD);
-    smart(gScene,codeMode?"X إضافة الحرف   مربع بدء التحميل   مثلث حذف   O رجوع":"X إضافة الحرف   R2 عربي/إنكليزي   مربع بحث   مثلث حذف   O رجوع",1660,840,WHITE);
+    smart(gScene,codeMode?"X إضافة الحرف   R2 كبير/صغير   مربع بدء التحميل   مثلث حذف   O رجوع":"X إضافة الحرف   R2 عربي/إنكليزي   مربع بحث   مثلث حذف   O رجوع",1660,840,WHITE);
 }
 static void drawList(){
     gScene->FrameBufferFill(BG);header();hero();categories();
@@ -311,7 +312,7 @@ int main(){
             else if(pressed&ORBIS_PAD_BUTTON_RIGHT){installedSel=(installedSel+1)%3;present();}
             else if(pressed&ORBIS_PAD_BUTTON_DOWN){installedSel=2;present();}
             else if(pressed&ORBIS_PAD_BUTTON_UP){installedSel=installedSel==2?0:installedSel;present();}
-            else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(installedSel==0){codeMode=true;searchQuery.clear();searchArabic=false;searchCursor=0;appMessage.clear();screen=5;present();}else if(installedSel==1){installedSel=0;screen=7;present();}else{screen=10;present();}}
+            else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(installedSel==0){codeMode=true;searchQuery.clear();searchArabic=false;searchUpper=true;searchCursor=0;appMessage.clear();screen=5;present();}else if(installedSel==1){installedSel=0;screen=7;present();}else{screen=10;present();}}
             else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
         }
         else if(screen==7){
@@ -342,7 +343,7 @@ int main(){
         else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=0;present();}
         else if(screen==4){if(pressed&ORBIS_PAD_BUTTON_TRIANGLE)refresh();else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
         else if(screen==5){
-            if(pressed&ORBIS_PAD_BUTTON_R2&&!codeMode){searchArabic=!searchArabic;searchCursor%=searchKeyCount();present();}
+            if(pressed&ORBIS_PAD_BUTTON_R2){if(codeMode){searchUpper=!searchUpper;}else{searchArabic=!searchArabic;searchUpper=true;}searchCursor%=searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_LEFT){searchCursor=(searchCursor+searchKeyCount()-1)%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_RIGHT){searchCursor=(searchCursor+1)%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor+searchKeyCount()-10)%searchKeyCount();present();}
