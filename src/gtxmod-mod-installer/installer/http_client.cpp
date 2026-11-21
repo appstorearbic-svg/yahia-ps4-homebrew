@@ -20,13 +20,17 @@ static bool trustedUrl(const std::string &url) {
     return url.find("\r") == std::string::npos && url.find("\n") == std::string::npos;
 }
 static std::string mediafireDirectUrl(const std::string &html) {
-    const std::string marker = "id=\"downloadButton\"";
-    size_t id = html.find(marker);
+    size_t id = html.find("downloadButton");
     if (id == std::string::npos) return std::string();
-    size_t href = html.rfind("href=\"", id);
-    if (href == std::string::npos || href + 7 > id) return std::string();
-    size_t begin = href + 6, end = html.find('"', begin);
-    if (end == std::string::npos || end <= begin) return std::string();
+    size_t tagBegin = html.rfind('<', id), tagEnd = html.find('>', id);
+    if (tagBegin == std::string::npos || tagEnd == std::string::npos || tagEnd <= tagBegin) return std::string();
+    size_t href = html.find("href=", tagBegin);
+    if (href == std::string::npos || href >= tagEnd) return std::string();
+    size_t begin = href + 6;
+    while (begin < tagEnd && (html[begin] == ' ' || html[begin] == '\t')) ++begin;
+    if (begin >= tagEnd || (html[begin] != '"' && html[begin] != '\'')) return std::string();
+    char quote = html[begin++]; size_t end = html.find(quote, begin);
+    if (end == std::string::npos || end <= begin || end > tagEnd) return std::string();
     std::string url = html.substr(begin, end - begin);
     for (size_t p = 0; (p = url.find("&amp;", p)) != std::string::npos;) { url.replace(p, 5, "&"); p += 1; }
     if (!mediafireDownload(url)) return std::string();
