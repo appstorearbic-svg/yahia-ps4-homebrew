@@ -13,9 +13,24 @@ namespace gtxhttp {
 static int netPool = -1, sslContext = -1, httpContext = -1;
 static const char *UA = "GTXMOD-Mod-Installer/1.00 (PS4 Homebrew)";
 static bool begins(const std::string &s, const char *p) { return s.compare(0, strlen(p), p) == 0; }
+static bool mediafirePage(const std::string &url) { return begins(url, "https://www.mediafire.com/file/"); }
+static bool mediafireDownload(const std::string &url) { return begins(url, "https://download") && url.find(".mediafire.com/") != std::string::npos; }
 static bool trustedUrl(const std::string &url) {
-    if (!begins(url, "https://gtxmod-ps4.pages.dev/")) return false;
+    if (!begins(url, "https://gtxmod-ps4.pages.dev/") && !mediafirePage(url) && !mediafireDownload(url)) return false;
     return url.find("\r") == std::string::npos && url.find("\n") == std::string::npos;
+}
+static std::string mediafireDirectUrl(const std::string &html) {
+    const std::string marker = "id=\"downloadButton\"";
+    size_t id = html.find(marker);
+    if (id == std::string::npos) return std::string();
+    size_t href = html.rfind("href=\"", id);
+    if (href == std::string::npos || href + 7 > id) return std::string();
+    size_t begin = href + 6, end = html.find('"', begin);
+    if (end == std::string::npos || end <= begin) return std::string();
+    std::string url = html.substr(begin, end - begin);
+    for (size_t p = 0; (p = url.find("&amp;", p)) != std::string::npos;) { url.replace(p, 5, "&"); p += 1; }
+    if (!mediafireDownload(url)) return std::string();
+    return url;
 }
 static bool requestOpen(const std::string &url, int &tpl, int &conn, int &req, std::string *error) {
     tpl = conn = req = -1;
@@ -76,8 +91,15 @@ bool getText(const std::string &url, std::string &body, std::string *error) {
 }
 bool download(const std::string &url, const std::string &destination, ProgressCallback callback, void *context, std::string *error) {
     if (httpContext < 0 && !initialize(error)) return false;
+    std::string target = url;
+    if (mediafirePage(url)) {
+        std::string html;
+        if (!getText(url, html, error)) return false;
+        target = mediafireDirectUrl(html);
+        if (target.empty()) { if (error) *error = "تعذر العثور على زر Download في صفحة MediaFire"; return false; }
+    }
     int tpl,conn,req;
-    if (!requestOpen(url,tpl,conn,req,error)) { requestClose(tpl,conn,req); return false; }
+    if (!requestOpen(target,tpl,conn,req,error)) { requestClose(tpl,conn,req); return false; }
     int lengthType=ORBIS_HTTP_CONTENTLEN_NOT_FOUND; size_t total=0;
     if (sceHttpGetResponseContentLength(req,&lengthType,&total)<0 || lengthType!=ORBIS_HTTP_CONTENTLEN_EXIST) total=0;
     std::string temp=destination+".tmp"; unlink(temp.c_str());
