@@ -23,19 +23,29 @@ bool fetchMods(std::vector<Mod> &mods,std::string *error){
     gtxjson::Value root;std::string parseErr;
     if(!gtxjson::parse(json,root,&parseErr)||root.type!=gtxjson::Value::Array){if(error)*error="تعذر تحليل قائمة المودات من الموقع: "+parseErr;return false;}
     std::vector<Mod> found;
-    for(const gtxjson::Value &v:root.array){
-        if(v.type!=gtxjson::Value::Object)continue;
+    auto addMod=[&](const gtxjson::Value &v){
+        if(v.type!=gtxjson::Value::Object)return;
         Mod m;
         auto field=[&](const char *k){const gtxjson::Value *x=v.get(k);return x?x->string():std::string();};
         m.id=field("id");m.name=field("name");m.category=field("category");m.description=field("description");
         m.image=field("image");m.video=field("video");m.download=field("download");m.size=field("size");
         const gtxjson::Value *imgs=v.get("images");if(!imgs)imgs=v.get("gallery");if(imgs&&imgs->type==gtxjson::Value::Array)for(const gtxjson::Value &iv:imgs->array){std::string u=iv.string();if(!u.empty())m.images.push_back(u);}if(m.images.empty()&&!m.image.empty())m.images.push_back(m.image);if(m.image.empty()&&!m.images.empty())m.image=m.images[0];
         m.sortKey=field("createdAt");if(m.sortKey.empty())m.sortKey=field("publishedAt");if(m.sortKey.empty())m.sortKey=field("date");if(m.sortKey.empty())m.sortKey=field("created_at");
-        if(m.id.empty()||m.name.empty()||m.download.empty())continue;
-        if(m.id.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)continue;
-        if(resolveUrl(m.download).empty())continue;
+        if(m.id.empty()||m.name.empty()||m.download.empty())return;
+        if(m.id.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)return;
+        if(resolveUrl(m.download).empty())return;
         found.push_back(m);
-        if(found.size()>=1000)break;
+    };
+    for(const gtxjson::Value &v:root.array){if(found.size()>=1000)break;addMod(v);}
+    // الموقع يحمّل منشورات المستخدمين من API منفصل بعد mods.json.
+    // يجب دمجها هنا حتى تظهر أكواد codes.community داخل تطبيق PS4 أيضاً.
+    std::string communityJson, communityErr;
+    if(gtxhttp::getText(std::string(BASE)+"api/community",communityJson,&communityErr)){
+        gtxjson::Value communityRoot;std::string communityParseErr;
+        if(gtxjson::parse(communityJson,communityRoot,&communityParseErr)){
+            const gtxjson::Value *community=communityRoot.get("mods");
+            if(community&&community->type==gtxjson::Value::Array)for(const gtxjson::Value &v:community->array){if(found.size()>=1000)break;addMod(v);}
+        }
     }
     std::stable_sort(found.begin(),found.end(),[](const Mod&a,const Mod&b){
         if(a.sortKey.empty()&&b.sortKey.empty())return false;
