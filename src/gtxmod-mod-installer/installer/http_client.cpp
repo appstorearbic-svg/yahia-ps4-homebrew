@@ -20,21 +20,22 @@ static bool trustedUrl(const std::string &url) {
     return url.find("\r") == std::string::npos && url.find("\n") == std::string::npos;
 }
 static std::string mediafireDirectUrl(const std::string &html) {
-    size_t id = html.find("downloadButton");
-    if (id == std::string::npos) return std::string();
-    size_t tagBegin = html.rfind('<', id), tagEnd = html.find('>', id);
-    if (tagBegin == std::string::npos || tagEnd == std::string::npos || tagEnd <= tagBegin) return std::string();
-    size_t href = html.find("href=", tagBegin);
-    if (href == std::string::npos || href >= tagEnd) return std::string();
-    size_t begin = href + 6;
-    while (begin < tagEnd && (html[begin] == ' ' || html[begin] == '\t')) ++begin;
-    if (begin >= tagEnd || (html[begin] != '"' && html[begin] != '\'')) return std::string();
-    char quote = html[begin++]; size_t end = html.find(quote, begin);
-    if (end == std::string::npos || end <= begin || end > tagEnd) return std::string();
-    std::string url = html.substr(begin, end - begin);
-    for (size_t p = 0; (p = url.find("&amp;", p)) != std::string::npos;) { url.replace(p, 5, "&"); p += 1; }
-    if (!mediafireDownload(url)) return std::string();
-    return url;
+    // MediaFire قد يغيّر ترتيب خصائص الزر أو يرسل نسخة mobile؛ لذلك نبحث
+    // عن رابط CDN المباشر نفسه، ولا نعتمد على مكان downloadButton فقط.
+    const char *needles[] = {"https://download", "https:\\/\\/download"};
+    for (size_t n=0;n<sizeof(needles)/sizeof(needles[0]);++n) {
+        size_t p=0;
+        while ((p=html.find(needles[n],p))!=std::string::npos) {
+            size_t begin=p, end=p;
+            while(end<html.size() && html[end]!='"' && html[end]!='\'' && html[end]!='<' && html[end]!=' ' && html[end]!='\t' && html[end]!='\r' && html[end]!='\n')++end;
+            std::string url=html.substr(begin,end-begin);
+            for(size_t q=0;(q=url.find("\\/",q))!=std::string::npos;)url.replace(q,2,"/");
+            for(size_t q=0;(q=url.find("&amp;",q))!=std::string::npos;)url.replace(q,5,"&");
+            if(mediafireDownload(url))return url;
+            p=end;
+        }
+    }
+    return std::string();
 }
 static bool requestOpen(const std::string &url, int &tpl, int &conn, int &req, std::string *error) {
     tpl = conn = req = -1;
@@ -45,6 +46,10 @@ static bool requestOpen(const std::string &url, int &tpl, int &conn, int &req, s
     if (conn < 0) { if (error) *error = "تعذر الاتصال بموقع GTXMOD"; return false; }
     req = sceHttpCreateRequestWithURL(conn, ORBIS_METHOD_GET, url.c_str(), 0);
     if (req < 0) { if (error) *error = "تعذر إنشاء طلب التنزيل"; return false; }
+    // اطلب HTML غير مضغوط؛ بعض نسخ SceHttp لا تفك gzip تلقائياً، فيظهر
+    // للمحلل جسم الصفحة بلا downloadButton.
+    sceHttpAddRequestHeader(req, "Accept-Encoding", "identity", 0);
+    sceHttpAddRequestHeader(req, "Accept", "text/html,application/xhtml+xml,*/*", 0);
     if (sceHttpSendRequest(req, nullptr, 0) < 0) { if (error) *error = "فشل إرسال الطلب"; return false; }
     int status = 0;
     if (sceHttpGetStatusCode(req, &status) < 0 || status < 200 || status >= 300) {

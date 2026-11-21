@@ -43,6 +43,7 @@ https://gtxmod-ps4.pages.dev
 - mod_catalog.cpp: جلب API الأكواد وتحليل static وcommunity وربط الكود بمعرّف المود.
 - main.cpp: إضافة codeMode، شاشة إدخال الكود، مطابقة الكود، خيار اسم الموقع، والخيار الثالث في شاشة البداية.
 - http_client.cpp: دعم روابط صفحات MediaFire من نوع /file/.../file؛ يجلب التطبيق الصفحة، يبحث عن زر downloadButton، يستخرج رابط التنزيل المباشر، ثم يبدأ تنزيل الملف. الروابط المباشرة القديمة ما زالت مدعومة.
+- http_client.cpp: يطلب صفحة MediaFire بترميز غير مضغوط ويفحص روابط CDN المباشرة نفسها، حتى يعمل مع اختلاف نسخة HTML أو نسخة الهاتف التي قد تصل إلى SceHttp على PS4.
 - mod_catalog.cpp: السماح بروابط صفحات MediaFire الآمنة داخل حقل download مع إبقاء بقية النطاقات الخارجية مرفوضة.
 - Makefile وWorkflow لم يحتاجا تغييراً لأن Makefile يجمع كل ملفات installer/*.cpp والـ Workflow يراقب مجلد المصدر ويرفع artifact باسم GTXMOD-Mod-Installer-PS4.
 
