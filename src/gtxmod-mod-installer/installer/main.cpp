@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -57,7 +58,7 @@ static bool hasArabic(const std::string&s){for(size_t i=0;i<s.size();++i)if((uns
 static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;if(hasArabic(str))arabic(s,gAr,str,right,base,c);else{std::string t=str;s->DrawText((char*)t.c_str(),gEn,right-(int)t.size()*23,base,BG,c);}}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
 static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr,*gDetailsPreview=nullptr;static int gFrame=0;static int media=0,focus=0,detailsImage=0;static std::string previewPath;
-static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,searchUpper=true,codeMode=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
+static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,searchUpper=true,codeMode=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0,progStartedMs=0,progSpeedBps=0,progEtaSec=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
 static FILE *bootLog=nullptr;static int gPad=-1;static bool downloadCancelled=false;static int cancelChoice=0;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
 static std::string crop(const std::string&s,size_t max){if(s.size()<=max)return s;size_t n=max;while(n>0&&(((unsigned char)s[n]&0xc0)==0x80))--n;return s.substr(0,n)+"…";}
@@ -209,6 +210,14 @@ static void drawStatus(const std::string &title,const std::string &body,bool sho
     if(showProgress){
         gScene->DrawRectangle(190,540,1200,34,ROW);int percent=progTotal?(int)((progNow*100)/progTotal):0;if(percent>100)percent=100;
         gScene->DrawRectangle(190,540,(1200*percent)/100,34,RED);char pc[16];snprintf(pc,sizeof(pc),"%d%%",percent);text(gScene,gEn,pc,1390,520,WHITE);
+        char rate[64];
+        if(progSpeedBps>=1024ULL*1024ULL)snprintf(rate,sizeof(rate),"%.2f MB/s",(double)progSpeedBps/(1024.0*1024.0));
+        else if(progSpeedBps>=1024ULL)snprintf(rate,sizeof(rate),"%.0f KB/s",(double)progSpeedBps/1024.0);
+        else snprintf(rate,sizeof(rate),"%llu B/s",(unsigned long long)progSpeedBps);
+        uint64_t mm=progEtaSec/60,ss=progEtaSec%60;char eta[32];snprintf(eta,sizeof(eta),"%02llu:%02llu",(unsigned long long)mm,(unsigned long long)ss);
+        text(gScene,gEn,"SPEED",190,635,GREEN);text(gScene,gEn,rate,330,635,WHITE);
+        text(gScene,gEn,"ETA",850,635,GOLD);text(gScene,gEn,eta,950,635,WHITE);
+        smart(gScene,"الوقت والسرعة تقديرية وتتغير حسب قوة الإنترنت",1370,700,MUTED);
     }
     if(!appMessage.empty())smart(gScene,crop(appMessage,72),1750,690,BAD);
     smart(gScene,"O رجوع",1750,900,WHITE);
@@ -254,7 +263,12 @@ static void rebuildShown(){
 
 static bool ensureDir(const char*p){if(mkdir(p,0777)==0||errno==EEXIST)return true;return false;}
 static void cleanupDownloadCache(){DIR*d=opendir("/data/GTXMOD/downloads");if(!d)return;dirent*e;while((e=readdir(d))){if(e->d_name[0]=='.')continue;std::string p=std::string("/data/GTXMOD/downloads/")+e->d_name;unlink(p.c_str());}closedir(d);rmdir("/data/GTXMOD/downloads");}
-static bool progress(uint64_t got,uint64_t total,void*){progNow=got;progTotal=total;present();if(gPad>=0){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(gPad,&d)>=0&&(d.buttons&ORBIS_PAD_BUTTON_CIRCLE)){if(confirmCancel()){downloadCancelled=true;return false;}}}return true;}
+static uint64_t nowMs(){struct timeval tv;gettimeofday(&tv,nullptr);return (uint64_t)tv.tv_sec*1000ULL+(uint64_t)tv.tv_usec/1000ULL;}
+static bool progress(uint64_t got,uint64_t total,void*){
+    progNow=got;progTotal=total;if(!progStartedMs)progStartedMs=nowMs();
+    uint64_t elapsed=nowMs()-progStartedMs;if(elapsed>=250&&got>0){progSpeedBps=(got*1000ULL)/elapsed;if(total>got&&progSpeedBps)progEtaSec=(total-got)/progSpeedBps;else progEtaSec=0;}
+    present();if(gPad>=0){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(gPad,&d)>=0&&(d.buttons&ORBIS_PAD_BUTTON_CIRCLE)){if(confirmCancel()){downloadCancelled=true;return false;}}}return true;
+}
 static void installStatus(const char*message,void*){appMessage=message?message:"";progTitle="تثبيت المود";present();}
 static void clearPreviewCache(){for(size_t i=0;i<previewCache.size();++i)delete previewCache[i];previewCache.clear();gPreview=nullptr;}
 static std::string previewFile(const gtxcatalog::Mod&m){ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/previews");return std::string("/data/GTXMOD/previews/")+m.id+".media";}
@@ -290,7 +304,7 @@ static void refresh(){
 }
 static void beginInstall(){
     if(shown.empty()||sel<0||sel>=(int)shown.size()){screen=3;installError="لا يوجد مود محدد";return;}
-    const gtxcatalog::Mod &m=mods[shown[sel]];cleanupDownloadCache();screen=2;progTitle="تنزيل المود";appMessage="الاتصال بموقع GTXMOD";progNow=progTotal=0;present();
+    const gtxcatalog::Mod &m=mods[shown[sel]];cleanupDownloadCache();screen=2;progTitle="تنزيل المود";appMessage="الاتصال بموقع GTXMOD";progNow=progTotal=progStartedMs=progSpeedBps=progEtaSec=0;present();
     downloadCancelled=false;ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/downloads");std::string zip="/data/GTXMOD/downloads/"+m.id+".zip";std::string err;std::string url=gtxcatalog::resolveUrl(m.download);
     bool ok=!url.empty()&&gtxhttp::download(url,zip,progress,nullptr,&err);
     installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");screen=1;appMessage.clear();present();return;}if(!ok){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
