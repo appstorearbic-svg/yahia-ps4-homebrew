@@ -1,5 +1,4 @@
 #include "mod_installer.hpp"
-#include "json.hpp"
 #include "../third_party/miniz/miniz.h"
 #include <algorithm>
 #include <errno.h>
@@ -18,7 +17,6 @@
 #endif
 
 namespace gtxinstall {
-using gtxjson::Value;
 struct Rule { std::string name, source, destination, mode, xmlLine; };
 struct Planned { mz_uint index; std::string destination, stage, backup; bool existed; };
 static void say(StatusCallback cb, void *ctx, const char *s) { if(cb)cb(s,ctx); }
@@ -59,43 +57,6 @@ static bool safeZipName(const std::string &n){
     size_t pos=0;while(pos<n.size()){size_t slash=n.find('/',pos);std::string part=n.substr(pos,slash==std::string::npos?n.size()-pos:slash-pos);if(part==".."||part==".")return false;if(slash==std::string::npos)break;pos=slash+1;}return true;
 }
 static bool endsWith(const std::string &s,const char *suffix){size_t n=strlen(suffix);return s.size()>=n&&s.compare(s.size()-n,n,suffix)==0;}
-static std::string tokenString(const Value *o,const char *key){const Value *v=o?o->get(key):nullptr;return v?v->string():std::string();}
-static bool readRules(mz_zip_archive *zip,std::vector<Rule> &rules,std::string &xmlFile,std::string &insertBefore,std::string *err){
-    bool found=false;Value chosen;
-    mz_uint count=mz_zip_reader_get_num_files(zip);if(count>20000){if(err)*err="الأرشيف يحتوي عددًا غير مسموح من الملفات";return false;}
-    for(mz_uint i=0;i<count;i++){
-        mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(zip,i,&st))continue;
-        std::string name=st.m_filename;if(st.m_is_directory||!endsWith(name,".json"))continue;
-        if(st.m_uncomp_size>1024*1024){if(err)*err="ملف JSON داخل ZIP أكبر من الحد المسموح";return false;}
-        size_t size=0;void *data=mz_zip_reader_extract_to_heap(zip,i,&size,0);if(!data)continue;
-        std::string raw((const char*)data,size);mz_free(data);Value parsed;std::string parseErr;
-        if(!gtxjson::parse(raw,parsed,&parseErr))continue;
-        const Value *r=parsed.get("rules");if(!r||r->type!=Value::Array)continue;
-        if(found){if(err)*err="يوجد أكثر من JSON صالح يحتوي قواعد؛ لا يمكن اختيار قاعدة بأمان";return false;}
-        found=true;chosen=std::move(parsed);
-    }
-    if(!found){if(err)*err="لم يتم العثور على ملف JSON صالح يحتوي rules داخل ZIP";return false;}
-    const Value *arr=chosen.get("rules");
-    for(const Value &v:arr->array){
-        if(v.type!=Value::Object)continue;
-        Rule r;r.name=tokenString(&v,"file_name");r.source=tokenString(&v,"source_folder");r.destination=tokenString(&v,"destination");r.mode=tokenString(&v,"copy_mode");r.xmlLine=tokenString(&v,"xml_line");
-        if(r.name=="dlc.rpf"||r.name=="vehicles.rpf")rules.push_back(r);
-    }
-    const Value *xml=chosen.get("xml");xmlFile=tokenString(xml,"file");insertBefore=tokenString(xml,"insert_before");
-    if(rules.empty()||xmlFile!="data/orbx/gta/dlclist.xml"||insertBefore!="</Paths>"){if(err)*err="بنية قواعد المثبت لا تطابق المسارات المعتمدة";return false;}
-    bool dlc=false,veh=false;
-    for(const Rule &r:rules){
-        if(r.name=="dlc.rpf"){
-            if(r.source!="parent"||r.mode!="with_parent_folder"||r.destination!="data/orbx/gta/rpf/dlc_addon/{parent}/dlc.rpf"||r.xmlLine!="<Item>/data/orbx/gta/rpf/dlc_addon/{parent}/</Item>"){if(err)*err="قاعدة dlc.rpf غير مطابقة للمسار الآمن المتفق عليه";return false;}dlc=true;
-        } else if(r.name=="vehicles.rpf"){
-            if(r.source!="root"||r.mode!="file_only"||r.destination!="data/orbx/gta/rpf/levels/gta5/vehicles.rpf"){if(err)*err="قاعدة vehicles.rpf غير مطابقة للمسار الآمن المتفق عليه";return false;}veh=true;
-        }
-    }
-    if(!dlc&&!veh){if(err)*err="JSON لا يحتوي قاعدة DLC أو vehicles مدعومة";return false;}
-    const Value *doNot=xml?xml->get("do_not_replace"):nullptr;const Value *skip=xml?xml->get("skip_existing_line"):nullptr;
-    if(!doNot||!doNot->boolean()||!skip||!skip->boolean()){if(err)*err="إعداد XML يجب أن يمنع الاستبدال والتكرار";return false;}
-    return true;
-}
 static std::string stamp(){time_t now=time(nullptr);struct tm t;localtime_r(&now,&t);char b[40];strftime(b,sizeof(b),"%Y%m%d_%H%M%S",&t);return b;}
 static bool uniqueBackupDirectory(std::string &out){
     std::string root=std::string(GTX_DATA_ROOT)+"/backups";if(!mkdirs(root))return false;
@@ -128,18 +89,23 @@ bool installZip(const std::string &zipPath,const std::string &modId,StatusCallba
     results.clear();if(error)error->clear();std::string why;
     say(status,context,"فحص مسارات ORBX");if(!orbxReady(&why)){if(error)*error=why;result(results,"العثور على ORBX",false);return false;}result(results,"العثور على ORBX",true);
     say(status,context,"فتح ZIP وفحص محتوياته");mz_zip_archive zip;memset(&zip,0,sizeof(zip));if(!mz_zip_reader_init_file(&zip,zipPath.c_str(),0)){if(error)*error="تعذر فتح ZIP أو أن الملف تالف";result(results,"فتح ملف ZIP",false);return false;}result(results,"فتح ملف ZIP",true);
-    std::vector<Rule> rules;std::string xmlRel,insertBefore;
-    if(!readRules(&zip,rules,xmlRel,insertBefore,error)){mz_zip_reader_end(&zip);result(results,"قراءة JSON",false);return false;}result(results,"قراءة JSON",true);
+    std::vector<Rule> rules;
+    rules.push_back({"dlc.rpf","parent","data/orbx/gta/rpf/dlc_addon/{parent}/dlc.rpf","with_parent_folder","<Item>/data/orbx/gta/rpf/dlc_addon/{parent}/</Item>"});
+    rules.push_back({"vehicles.rpf","root","data/orbx/gta/rpf/levels/gta5/vehicles.rpf","file_only",std::string()});
+    const std::string xmlRel="data/orbx/gta/dlclist.xml";
+    say(status,context,"تحليل ملفات ZIP تلقائياً بدون JSON");
+    result(results,"قواعد التثبيت الداخلية",true);
     std::vector<Planned> planned;std::vector<std::string> dlcLines;const mz_uint count=mz_zip_reader_get_num_files(&zip);
     for(mz_uint i=0;i<count;i++){
         mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory)continue;
         std::string name=st.m_filename;if(!safeZipName(name))continue;
         std::string destinationRel;
-        if(name=="vehicles.rpf"){
+        size_t lastSlash=name.find_last_of('/');
+        std::string base=lastSlash==std::string::npos?name:name.substr(lastSlash+1);
+        if(base=="vehicles.rpf"){
             for(const Rule &r:rules)if(r.name=="vehicles.rpf"){destinationRel=r.destination;break;}
-        } else if(endsWith(name,"/dlc.rpf")){
-            size_t slash=name.find('/');if(slash==std::string::npos||name.find('/',slash+1)!=std::string::npos)continue;
-            std::string parent=name.substr(0,slash);if(!safeParent(parent))continue;
+        } else if(base=="dlc.rpf"&&lastSlash!=std::string::npos){
+            size_t parentSlash=name.find_last_of('/',lastSlash-1);std::string parent=name.substr(parentSlash==std::string::npos?0:parentSlash+1,lastSlash-(parentSlash==std::string::npos?0:parentSlash+1));if(!safeParent(parent))continue;
             for(const Rule &r:rules)if(r.name=="dlc.rpf"){destinationRel=r.destination;size_t p=destinationRel.find("{parent}");if(p!=std::string::npos)destinationRel.replace(p,8,parent);std::string line=r.xmlLine;size_t lp=line.find("{parent}");if(lp!=std::string::npos)line.replace(lp,8,parent);dlcLines.push_back(line);break;}
         }
         if(destinationRel.empty())continue;

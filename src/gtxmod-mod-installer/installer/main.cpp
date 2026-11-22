@@ -24,10 +24,10 @@
 std::stringstream debugLogStream;
 Scene2D::~Scene2D() {}
 static const int W=1920,H=1080;
-static const Color BG={3,10,25}, PANEL={8,22,49}, ROW={12,31,65};
-static const Color ACTIVE={18,102,230}, RED={255,55,65}, WHITE={242,247,255};
-static const Color MUTED={157,181,220}, GREEN={73,226,157}, BAD={255,105,124}, BLUE={36,145,255};
-static const Color DEEP={2,16,42}, NAV={7,27,61}, GLOW={22,85,181}, GOLD={255,198,45};
+static const Color BG={4,8,18}, PANEL={10,18,31}, ROW={14,27,45};
+static const Color ACTIVE={214,42,48}, RED={255,45,45}, WHITE={242,247,255};
+static const Color MUTED={157,181,205}, GREEN={73,226,157}, BAD={255,105,124}, BLUE={54,157,255};
+static const Color DEEP={8,14,26}, NAV={7,22,39}, GLOW={22,85,181}, GOLD={255,198,45};
 struct ArabicForm { uint32_t cp, iso, fin, ini, med; bool joinNext, joinPrev; };
 static const ArabicForm A[] = {
  {0x0621,0xFE80,0,0,0,0,0},{0x0622,0xFE81,0xFE82,0,0,0,1},{0x0623,0xFE83,0xFE84,0,0,0,1},{0x0625,0xFE87,0xFE88,0,0,0,1},{0x0627,0xFE8D,0xFE8E,0,0,0,1},{0x0628,0xFE8F,0xFE90,0xFE91,0xFE92,1,1},{0x0629,0xFE93,0xFE94,0,0,0,1},{0x062A,0xFE95,0xFE96,0xFE97,0xFE98,1,1},{0x062B,0xFE99,0xFE9A,0xFE9B,0xFE9C,1,1},{0x062C,0xFE9D,0xFE9E,0xFE9F,0xFEA0,1,1},{0x062D,0xFEA1,0xFEA2,0xFEA3,0xFEA4,1,1},{0x062E,0xFEA5,0xFEA6,0xFEA7,0xFEA8,1,1},{0x062F,0xFEA9,0xFEAA,0,0,0,1},{0x0630,0xFEAB,0xFEAC,0,0,0,1},{0x0631,0xFEAD,0xFEAE,0,0,0,1},{0x0632,0xFEAF,0xFEB0,0,0,0,1},{0x0633,0xFEB1,0xFEB2,0xFEB3,0xFEB4,1,1},{0x0634,0xFEB5,0xFEB6,0xFEB7,0xFEB8,1,1},{0x0635,0xFEB9,0xFEBA,0xFEBB,0xFEBC,1,1},{0x0636,0xFEBD,0xFEBE,0xFEBF,0xFEC0,1,1},{0x0637,0xFEC1,0xFEC2,0xFEC3,0xFEC4,1,1},{0x0638,0xFEC5,0xFEC6,0xFEC7,0xFEC8,1,1},{0x0639,0xFEC9,0xFECA,0xFECB,0xFECC,1,1},{0x063A,0xFECD,0xFECE,0xFECF,0xFED0,1,1},{0x0641,0xFED1,0xFED2,0xFED3,0xFED4,1,1},{0x0642,0xFED5,0xFED6,0xFED7,0xFED8,1,1},{0x0643,0xFED9,0xFEDA,0xFEDB,0xFEDC,1,1},{0x0644,0xFEDD,0xFEDE,0xFEDF,0xFEE0,1,1},{0x0645,0xFEE1,0xFEE2,0xFEE3,0xFEE4,1,1},{0x0646,0xFEE5,0xFEE6,0xFEE7,0xFEE8,1,1},{0x0647,0xFEE9,0xFEEA,0xFEEB,0xFEEC,1,1},{0x0648,0xFEED,0xFEEE,0,0,0,1},{0x0649,0xFEEF,0xFEF0,0,0,0,1},{0x064A,0xFEF1,0xFEF2,0xFEF3,0xFEF4,1,1}
@@ -75,7 +75,13 @@ static void neon(int x,int y,int w,int h,bool active){
     if(active){frame(x,y,w,h,GOLD);gScene->DrawRectangle(x+7,y+7,w-14,3,{255,220,70});}
 }
 static void logo(){text(gScene,gEn,"GTXMOD",800,67,WHITE);text(gScene,gEn,"PS4",1035,67,RED);}
-static void header(){gScene->DrawRectangle(0,0,W,94,DEEP);gScene->DrawRectangle(0,91,W,4,RED);logo();}
+static void header(){
+    gScene->DrawRectangle(0,0,W,94,DEEP);
+    gScene->DrawRectangle(0,91,W,4,RED);
+    logo();
+    gScene->DrawRectangle(1512,39,12,12,httpReady?GREEN:RED);
+    text(gScene,gEn,httpReady?"ONLINE":"OFFLINE",1540,52,httpReady?GREEN:BAD);
+}
 static void hero(){
     int x=36,y=118,w=1820,h=270;box(x,y,w,h,DEEP,{22,104,220});
     gScene->DrawRectangle(x+8,y+8,w-16,4,RED);
@@ -89,6 +95,7 @@ static void drawPreview(const gtxcatalog::Mod&m,int x,int y,int w,int h){box(x,y
 static void card(const gtxcatalog::Mod&m,int x,int y,int w,int h,bool active){
     box(x,y,w,h,Color{7,25,58},active?RED:Color{28,76,145});
     if(active)frame(x,y,w,h,RED);
+    if(active)gScene->DrawRectangle(x,y,8,h,RED);
     size_t pageStart=shown.empty()?0:((size_t)sel/3)*3;
     size_t slot=(size_t)((x-36)/610);
     size_t modIndex=(pageStart+slot<shown.size())?shown[pageStart+slot]:(size_t)-1;
