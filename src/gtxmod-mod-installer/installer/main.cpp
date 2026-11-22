@@ -215,8 +215,8 @@ static void drawStatus(const std::string &title,const std::string &body,bool sho
         else if(progSpeedBps>=1024ULL)snprintf(rate,sizeof(rate),"%.0f KB/s",(double)progSpeedBps/1024.0);
         else snprintf(rate,sizeof(rate),"%llu B/s",(unsigned long long)progSpeedBps);
         uint64_t mm=progEtaSec/60,ss=progEtaSec%60;char eta[32];snprintf(eta,sizeof(eta),"%02llu:%02llu",(unsigned long long)mm,(unsigned long long)ss);
-        text(gScene,gEn,"SPEED",190,635,GREEN);text(gScene,gEn,rate,330,635,WHITE);
-        text(gScene,gEn,"ETA",850,635,GOLD);text(gScene,gEn,eta,950,635,WHITE);
+        text(gScene,gEn,rate,190,635,GOLD);
+        smart(gScene,"المدة",930,635,GOLD);text(gScene,gEn,eta,1050,635,GOLD);
         smart(gScene,"الوقت والسرعة تقديرية وتتغير حسب قوة الإنترنت",1370,700,MUTED);
     }
     if(!appMessage.empty())smart(gScene,crop(appMessage,72),1750,690,BAD);
