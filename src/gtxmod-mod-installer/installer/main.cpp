@@ -180,7 +180,8 @@ static void drawEntryChoice(){
     gScene->FrameBufferFill(BG);header();smart(gScene,"اختر العملية",1600,220,WHITE);
     box(180,360,700,180,installedSel==0?Color{55,42,8}:PANEL,installedSel==0?GOLD:Color{27,76,145});
     box(1040,360,700,180,installedSel==1?Color{55,42,8}:PANEL,installedSel==1?GOLD:Color{27,76,145});
-    smart(gScene,"تحميل مود",760,470,installedSel==0?GOLD:WHITE);smart(gScene,"حذف المود",1620,470,installedSel==1?GOLD:WHITE);smart(gScene,"يمين/يسار اختيار   X تأكيد",1600,700,MUTED);
+    box(610,590,700,155,installedSel==2?Color{55,42,8}:PANEL,installedSel==2?GOLD:Color{27,76,145});
+    smart(gScene,"تحميل مود",760,470,installedSel==0?GOLD:WHITE);smart(gScene,"حذف المود",1620,470,installedSel==1?GOLD:WHITE);smart(gScene,"اسم الموقع",1190,685,installedSel==2?GOLD:WHITE);smart(gScene,"يمين/يسار اختيار   X تأكيد",1600,840,MUTED);
 }
 static void drawSiteName(){
     gScene->FrameBufferFill(BG);header();box(220,250,1480,420,DEEP,{29,99,208});
@@ -204,8 +205,8 @@ static void drawDeleteDetails(){
 static void drawStatus(const std::string &title,const std::string &body,bool showProgress){
     gScene->FrameBufferFill(BG); header();
     box(55,145,1465,720,DEEP,{29,99,208});
-    bool quietDownload=(title=="تنزيل المود");
-    if(!quietDownload){smart(gScene,title,1800,235,WHITE);smart(gScene,body,1750,370,WHITE);}
+    smart(gScene,title,1800,235,WHITE);
+    smart(gScene,body,1750,370,WHITE);
     if(showProgress){
         gScene->DrawRectangle(190,540,1200,34,ROW);int percent=progTotal?(int)((progNow*100)/progTotal):0;if(percent>100)percent=100;
         gScene->DrawRectangle(190,540,(1200*percent)/100,34,RED);char pc[16];snprintf(pc,sizeof(pc),"%d%%",percent);text(gScene,gEn,pc,1390,520,WHITE);
@@ -214,11 +215,11 @@ static void drawStatus(const std::string &title,const std::string &body,bool sho
         else if(progSpeedBps>=1024ULL)snprintf(rate,sizeof(rate),"%.0f KB/s",(double)progSpeedBps/1024.0);
         else snprintf(rate,sizeof(rate),"%llu B/s",(unsigned long long)progSpeedBps);
         uint64_t mm=progEtaSec/60,ss=progEtaSec%60;char eta[32];snprintf(eta,sizeof(eta),"%02llu:%02llu",(unsigned long long)mm,(unsigned long long)ss);
-        text(gScene,gEn,rate,190,635,GOLD);
-        smart(gScene,"المدة",930,635,GOLD);text(gScene,gEn,eta,1050,635,GOLD);
+        text(gScene,gEn,"SPEED",190,635,GREEN);text(gScene,gEn,rate,330,635,WHITE);
+        text(gScene,gEn,"ETA",850,635,GOLD);text(gScene,gEn,eta,950,635,WHITE);
         smart(gScene,"الوقت والسرعة تقديرية وتتغير حسب قوة الإنترنت",1370,700,MUTED);
     }
-    if(!quietDownload&&!appMessage.empty())smart(gScene,crop(appMessage,72),1750,690,BAD);
+    if(!appMessage.empty())smart(gScene,crop(appMessage,72),1750,690,BAD);
     smart(gScene,"O رجوع",1750,900,WHITE);
 }
 static void drawCancelDialog(){
@@ -306,7 +307,7 @@ static void beginInstall(){
     const gtxcatalog::Mod &m=mods[shown[sel]];cleanupDownloadCache();screen=2;progTitle="تنزيل المود";appMessage="الاتصال بموقع GTXMOD";progNow=progTotal=progStartedMs=progSpeedBps=progEtaSec=0;present();
     downloadCancelled=false;ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/downloads");std::string zip="/data/GTXMOD/downloads/"+m.id+".zip";std::string err;std::string url=gtxcatalog::resolveUrl(m.download);
     bool ok=!url.empty()&&gtxhttp::download(url,zip,progress,nullptr,&err);
-    installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");screen=6;installedSel=0;appMessage.clear();present();return;}if(!ok){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
+    installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");screen=1;appMessage.clear();present();return;}if(!ok){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
     appMessage="اكتمل التنزيل؛ جاري فحص المود";progTitle="فحص وتثبيت المود";progTotal=progNow=0;present();
     bool installedOk=gtxinstall::installZip(zip,m.id,installStatus,nullptr,installResults,&err);unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");if(!installedOk)installError=err;
     gtxinstall::listInstalled(installed,nullptr);screen=3;appMessage.clear();present();
@@ -328,9 +329,11 @@ int main(){
     PNG heroImage("/app0/assets/images/GTXMOD-header.png");gHero=&heroImage;trace("images loaded");if(scePadInit()<0){trace("scePadInit failed");return 4;}trace("scePadInit ok");OrbisUserServiceInitializeParams up;memset(&up,0,sizeof(up));up.priority=ORBIS_KERNEL_PRIO_FIFO_LOWEST;if(sceUserServiceInitialize(&up)<0){trace("user service init failed");return 5;}int uid=-1;if(sceUserServiceGetInitialUser(&uid)<0){trace("get initial user failed");return 6;}int pad=scePadOpen(uid,ORBIS_PAD_PORT_TYPE_STANDARD,0,0);if(pad<0){trace("scePadOpen failed");return 7;}gPad=pad;trace("pad opened");
     listError="جاري تحميل موقع GTXMOD";uint32_t prev=0;bool run=true;refresh();if(!offline){gtxinstall::listInstalled(installed,nullptr);screen=6;present();}trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
         if(screen==6){
-            if(pressed&ORBIS_PAD_BUTTON_LEFT){installedSel=(installedSel+1)%2;present();}
-            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){installedSel=(installedSel+1)%2;present();}
-            else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(installedSel==0){codeMode=true;searchQuery.clear();searchArabic=false;searchUpper=true;searchCursor=0;appMessage.clear();screen=5;present();}else if(installedSel==1){installedSel=0;screen=7;present();}}
+            if(pressed&ORBIS_PAD_BUTTON_LEFT){installedSel=(installedSel+2)%3;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){installedSel=(installedSel+1)%3;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_DOWN){installedSel=2;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_UP){installedSel=installedSel==2?0:installedSel;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(installedSel==0){codeMode=true;searchQuery.clear();searchArabic=false;searchUpper=true;searchCursor=0;appMessage.clear();screen=5;present();}else if(installedSel==1){installedSel=0;screen=7;present();}else{screen=10;present();}}
             else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
         }
         else if(screen==7){
@@ -358,7 +361,7 @@ int main(){
             else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
         }
         else if(screen==1){if(pressed&ORBIS_PAD_BUTTON_CIRCLE){screen=0;gDetailsPreview=nullptr;present();}else if(pressed&ORBIS_PAD_BUTTON_LEFT){detailsImage--;loadDetailsImage(true);present();}else if(pressed&ORBIS_PAD_BUTTON_RIGHT){detailsImage++;loadDetailsImage(true);present();}else if(pressed&ORBIS_PAD_BUTTON_CROSS)beginInstall();}
-        else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=6;installedSel=0;codeMode=false;present();}
+        else if(screen==3&&(pressed&ORBIS_PAD_BUTTON_CIRCLE)){screen=0;present();}
         else if(screen==4){if(pressed&ORBIS_PAD_BUTTON_TRIANGLE)refresh();else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
         else if(screen==5){
             if(pressed&ORBIS_PAD_BUTTON_R2){if(codeMode){searchUpper=!searchUpper;}else{searchArabic=!searchArabic;searchUpper=true;}searchCursor%=searchKeyCount();present();}
