@@ -105,6 +105,11 @@ bool installOrbx(const std::string &zipPath,StatusCallback status,ProgressCallba
         if(progress&&!progress(currentBytes,totalBytes,context)){mz_zip_reader_end(&zip);if(error)*error="تم إلغاء تثبيت ORBX";return false;}
     }
     mz_zip_reader_end(&zip);if(!extracted){if(error)*error="ملف ORBX لا يحتوي مجلد orbx صالحاً";result(results,"العثور على ملفات ORBX",false);return false;}
+    const std::string replacement="/app0/assets/orbx/dlclist.xml";
+    const std::string installedXml=std::string(GTX_ORBX_ROOT)+"/gta/dlclist.xml";
+    say(status,context,"استبدال ملف dlclist.xml القديم");
+    if(!fileExists(replacement)||!copyFile(replacement,installedXml)){if(error)*error="تعذر استبدال ملف dlclist.xml بالنسخة الجديدة";result(results,"استبدال dlclist.xml",false);return false;}
+    result(results,"استبدال dlclist.xml",true);
     result(results,"تثبيت محرك ORBX",true);return true;
 }
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
