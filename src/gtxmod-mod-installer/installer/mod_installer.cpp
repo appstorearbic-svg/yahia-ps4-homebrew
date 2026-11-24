@@ -192,7 +192,7 @@ bool listInstalled(std::vector<InstalledMod>&out,std::string*){
 static std::string trimXmlLine(std::string s){while(!s.empty()&&(s.back()=='\r'||s.back()==' '||s.back()=='\t'))s.pop_back();size_t p=s.find_first_not_of(" \t");return p==std::string::npos?std::string():s.substr(p);}
 static bool removeXmlLines(const std::string&path,const std::vector<std::string>&lines){
     std::vector<std::string> targets;for(const std::string&l:lines){std::string t=trimXmlLine(l);if(!t.empty())targets.push_back(t);}if(targets.empty())return false;
-    std::string raw;if(!readFile(path,raw,16*1024*1024))return false;std::string out;size_t p=0;while(p<=raw.size()){size_t e=raw.find('\n',p);std::string line=raw.substr(p,e==std::string::npos?raw.size()-p:e-p);std::string cmp=trimXmlLine(line);bool drop=false;for(const std::string&t:targets)if(cmp==t){drop=true;break;}if(!drop){out+=line;if(e!=std::string::npos)out+='\n';}if(e==std::string::npos)break;p=e+1;}return atomicWrite(path,out);
+    std::string raw;if(!readFile(path,raw,16*1024*1024))return false;std::string out;size_t p=0;while(p<=raw.size()){size_t e=raw.find('\n',p);std::string line=raw.substr(p,e==std::string::npos?raw.size()-p:e-p);std::string cmp=trimXmlLine(line);bool drop=false;for(const std::string&t:targets){if(cmp==t||(cmp.find("<Item>")!=std::string::npos&&cmp.find("</Item>")!=std::string::npos&&cmp.find(t)!=std::string::npos)){drop=true;break;}}if(!drop){out+=line;if(e!=std::string::npos)out+='\n';}if(e==std::string::npos)break;p=e+1;}return atomicWrite(path,out);
 }
 static bool xmlLineForDlcPath(const std::string&path,std::string&line){
     const std::string prefix=std::string(GTX_ORBX_ROOT)+"/gta/rpf/dlc_addon/",suffix="/dlc.rpf";

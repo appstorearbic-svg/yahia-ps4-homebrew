@@ -220,14 +220,12 @@ static void drawStatus(const std::string &title,const std::string &body,bool sho
     if(showProgress){
         gScene->DrawRectangle(190,540,1200,34,ROW);int percent=progTotal?(int)((progNow*100)/progTotal):0;if(percent>100)percent=100;
         gScene->DrawRectangle(190,540,(1200*percent)/100,34,RED);char pc[16];snprintf(pc,sizeof(pc),"%d%%",percent);text(gScene,gEn,pc,1390,520,WHITE);
-        if(progTitle=="تثبيت محرك ORBX"){
-            char rate[64];
-            if(progSpeedBps>=1024ULL*1024ULL)snprintf(rate,sizeof(rate),"%.2f MB/s",(double)progSpeedBps/(1024.0*1024.0));
-            else if(progSpeedBps>=1024ULL)snprintf(rate,sizeof(rate),"%.0f KB/s",(double)progSpeedBps/1024.0);
-            else snprintf(rate,sizeof(rate),"%llu B/s",(unsigned long long)progSpeedBps);
-            uint64_t mm=progEtaSec/60,ss=progEtaSec%60;char eta[32];snprintf(eta,sizeof(eta),"%02llu:%02llu",(unsigned long long)mm,(unsigned long long)ss);
-            text(gScene,gEn,rate,850,635,RED);text(gScene,gEn,eta,1510,635,GOLD);
-        }
+        char rate[64];
+        if(progSpeedBps>=1024ULL*1024ULL)snprintf(rate,sizeof(rate),"%.2f MB/s",(double)progSpeedBps/(1024.0*1024.0));
+        else if(progSpeedBps>=1024ULL)snprintf(rate,sizeof(rate),"%.0f KB/s",(double)progSpeedBps/1024.0);
+        else snprintf(rate,sizeof(rate),"%llu B/s",(unsigned long long)progSpeedBps);
+        uint64_t mm=progEtaSec/60,ss=progEtaSec%60;char eta[32];snprintf(eta,sizeof(eta),"%02llu:%02llu",(unsigned long long)mm,(unsigned long long)ss);
+        text(gScene,gEn,rate,850,635,RED);text(gScene,gEn,eta,1510,635,GOLD);
     }
     if(!appMessage.empty())smart(gScene,crop(appMessage,72),1750,690,BAD);
     smart(gScene,"O رجوع",1750,900,WHITE);
