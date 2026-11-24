@@ -194,9 +194,16 @@ static bool removeXmlLines(const std::string&path,const std::vector<std::string>
     std::vector<std::string> targets;for(const std::string&l:lines){std::string t=trimXmlLine(l);if(!t.empty())targets.push_back(t);}if(targets.empty())return false;
     std::string raw;if(!readFile(path,raw,16*1024*1024))return false;std::string out;size_t p=0;while(p<=raw.size()){size_t e=raw.find('\n',p);std::string line=raw.substr(p,e==std::string::npos?raw.size()-p:e-p);std::string cmp=trimXmlLine(line);bool drop=false;for(const std::string&t:targets)if(cmp==t){drop=true;break;}if(!drop){out+=line;if(e!=std::string::npos)out+='\n';}if(e==std::string::npos)break;p=e+1;}return atomicWrite(path,out);
 }
+static bool xmlLineForDlcPath(const std::string&path,std::string&line){
+    const std::string prefix=std::string(GTX_ORBX_ROOT)+"/gta/rpf/dlc_addon/",suffix="/dlc.rpf";
+    if(path.compare(0,prefix.size(),prefix)!=0||path.size()<=prefix.size()+suffix.size()||path.compare(path.size()-suffix.size(),suffix.size(),suffix)!=0)return false;
+    std::string parent=path.substr(prefix.size(),path.size()-prefix.size()-suffix.size());if(!safeParent(parent))return false;
+    line="<Item>/data/orbx/gta/rpf/dlc_addon/"+parent+"/</Item>";return true;
+}
 bool removeInstalled(const InstalledMod&mod,std::vector<Result>&results,std::string*error){
-    results.clear();bool ok=true;for(const std::string&p:mod.paths){if(p.compare(0,strlen(GTX_ORBX_ROOT),GTX_ORBX_ROOT)!=0){ok=false;result(results,"مسار غير مسموح",false);continue;}if(unlink(p.c_str())==0||errno==ENOENT){std::string parent=p.substr(0,p.find_last_of('/'));rmdir(parent.c_str());result(results,"حذف ملف المود أو أنه محذوف مسبقاً",true);}else{ok=false;result(results,"حذف ملف المود",false);}}
-    if(!mod.xmlLines.empty()){std::string xml=std::string(GTX_ORBX_ROOT)+"/gta/dlclist.xml";if(removeXmlLines(xml,mod.xmlLines))result(results,"حذف أسطر DLC",true);else{ok=false;result(results,"حذف أسطر DLC",false);}}
+    results.clear();bool ok=true;std::vector<std::string> xmlLines=mod.xmlLines;
+    for(const std::string&p:mod.paths){std::string derived;if(xmlLineForDlcPath(p,derived))xmlLines.push_back(derived);if(p.compare(0,strlen(GTX_ORBX_ROOT),GTX_ORBX_ROOT)!=0){ok=false;result(results,"مسار غير مسموح",false);continue;}if(unlink(p.c_str())==0||errno==ENOENT){std::string parent=p.substr(0,p.find_last_of('/'));rmdir(parent.c_str());result(results,"حذف ملف المود أو أنه محذوف مسبقاً",true);}else{ok=false;result(results,"حذف ملف المود",false);}}
+    if(!xmlLines.empty()){std::string xml=std::string(GTX_ORBX_ROOT)+"/gta/dlclist.xml";if(removeXmlLines(xml,xmlLines))result(results,"حذف أسطر DLC",true);else{ok=false;result(results,"حذف أسطر DLC",false);}}
     if(ok){std::vector<InstalledMod> all;listInstalled(all,nullptr);std::string db;for(const auto&m:all){bool samePath=false;for(const auto&p:m.paths)for(const auto&q:mod.paths)if(p==q)samePath=true;if(m.id==mod.id||samePath)continue;db+="MOD\t"+cleanField(m.id)+"\n";for(const auto&p:m.paths)db+="PATH\t"+cleanField(p)+"\n";for(const auto&l:m.xmlLines)db+="XML\t"+cleanField(l)+"\n";db+="END\n";}if(!atomicWrite(registryPath(),db))ok=false;}
     if(!ok&&error)*error="تعذر حذف بعض ملفات المود";return ok;
 }
