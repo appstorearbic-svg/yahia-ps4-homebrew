@@ -225,8 +225,8 @@ static void drawStatus(const std::string &title,const std::string &body,bool sho
         else if(progSpeedBps>=1024ULL)snprintf(rate,sizeof(rate),"%.0f KB/s",(double)progSpeedBps/1024.0);
         else snprintf(rate,sizeof(rate),"%llu B/s",(unsigned long long)progSpeedBps);
         uint64_t mm=progEtaSec/60,ss=progEtaSec%60;char eta[32];snprintf(eta,sizeof(eta),"%02llu:%02llu",(unsigned long long)mm,(unsigned long long)ss);
-        text(gScene,gEn,"SPEED",190,635,GREEN);text(gScene,gEn,rate,330,635,WHITE);
-        text(gScene,gEn,"ETA",850,635,GOLD);text(gScene,gEn,eta,950,635,WHITE);
+        smart(gScene,"سرعة النت",620,635,RED);text(gScene,gEn,rate,850,635,RED);
+        smart(gScene,"المدة",1370,635,GOLD);text(gScene,gEn,eta,1510,635,GOLD);
         smart(gScene,"الوقت والسرعة تقديرية وتتغير حسب قوة الإنترنت",1370,700,MUTED);
     }
     if(!appMessage.empty())smart(gScene,crop(appMessage,72),1750,690,BAD);
@@ -324,7 +324,7 @@ static void beginInstall(){
 }
 static void beginOrbxInstall(){
     const char *asset="/app0/assets/orbx/orbx.zip";screen=2;progTitle="";appMessage="";progNow=progTotal=0;installResults.clear();installError.clear();present();
-    bool ok=gtxinstall::installOrbx(asset,installStatus,nullptr,installResults,&installError);
+    bool ok=gtxinstall::installOrbx(asset,nullptr,progress,nullptr,installResults,&installError);
     if(!ok&&installError.empty())installError="تعذر تثبيت محرك ORBX";screen=3;present();
 }
 static bool beginInstallByCode(){
