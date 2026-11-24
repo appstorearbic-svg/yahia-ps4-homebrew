@@ -85,6 +85,25 @@ bool orbxReady(std::string *reason){
     std::string root=GTX_ORBX_ROOT;std::string gta=root+"/gta";std::string dlc=gta+"/dlclist.xml";std::string rpf=gta+"/rpf";
     if(!dirExists(root.c_str())||!dirExists(gta.c_str())||!dirExists(rpf.c_str())||!fileExists(dlc)){if(reason)*reason="لم يتم العثور على ORBX أو مسارات GTA المطلوبة: /data/orbx/gta";return false;}return true;
 }
+bool installOrbx(const std::string &zipPath,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
+    results.clear();if(error)error->clear();say(status,context,"فتح ملف محرك ORBX");
+    mz_zip_archive zip;memset(&zip,0,sizeof(zip));if(!mz_zip_reader_init_file(&zip,zipPath.c_str(),0)){if(error)*error="تعذر فتح ملف ORBX أو أن الملف تالف";result(results,"فتح ملف ORBX",false);return false;}
+    const mz_uint count=mz_zip_reader_get_num_files(&zip);mz_uint extracted=0;
+    for(mz_uint i=0;i<count;i++){
+        mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory)continue;
+        std::string name=st.m_filename;if(!safeZipName(name)||name.compare(0,5,"orbx/")!=0)continue;
+        std::string relative=name.substr(5);if(relative.empty())continue;
+        std::string dest=std::string(GTX_ORBX_ROOT)+"/"+relative;
+        if(dest.find("/../")!=std::string::npos||dest.compare(dest.size()>3?dest.size()-3:0,3,"/..") == 0){mz_zip_reader_end(&zip);if(error)*error="مسار غير آمن داخل ملف ORBX";result(results,"فحص مسارات ORBX",false);return false;}
+        std::string parent=dest.substr(0,dest.find_last_of('/'));if(!mkdirs(parent)){mz_zip_reader_end(&zip);if(error)*error="تعذر إنشاء مجلدات ORBX";result(results,"إنشاء مجلدات ORBX",false);return false;}
+        std::string temp=dest+".gtxorbx.tmp";unlink(temp.c_str());
+        if(st.m_uncomp_size>1024ULL*1024*1024||!mz_zip_reader_extract_to_file(&zip,i,temp.c_str(),0)){unlink(temp.c_str());mz_zip_reader_end(&zip);if(error)*error="فشل استخراج ملف من ORBX";result(results,"استخراج ملفات ORBX",false);return false;}
+        unlink(dest.c_str());if(rename(temp.c_str(),dest.c_str())<0){unlink(temp.c_str());mz_zip_reader_end(&zip);if(error)*error="فشل نقل ملف ORBX إلى وجهته";result(results,"نقل ملفات ORBX",false);return false;}
+        ++extracted;if((extracted%100)==0)say(status,context,"جاري استخراج ملفات محرك ORBX");
+    }
+    mz_zip_reader_end(&zip);if(!extracted){if(error)*error="ملف ORBX لا يحتوي مجلد orbx صالحاً";result(results,"العثور على ملفات ORBX",false);return false;}
+    result(results,"تثبيت محرك ORBX",true);return true;
+}
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
     results.clear();if(error)error->clear();std::string why;
     say(status,context,"فحص مسارات ORBX");if(!orbxReady(&why)){if(error)*error=why;result(results,"العثور على ORBX",false);return false;}result(results,"العثور على ORBX",true);
