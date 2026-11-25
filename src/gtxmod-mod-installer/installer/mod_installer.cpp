@@ -75,6 +75,21 @@ static bool atomicWrite(const std::string &path,const std::string &data){
     while(off<data.size()){ssize_t n=write(fd,data.data()+off,data.size()-off);if(n<0&&errno==EINTR)continue;if(n<=0){ok=false;break;}off+=(size_t)n;}
     if(ok&&fsync(fd)<0)ok=false;if(close(fd)<0)ok=false;if(ok&&rename(tmp.c_str(),path.c_str())<0)ok=false;if(!ok)unlink(tmp.c_str());return ok;
 }
+static std::string trimLine(std::string s){while(!s.empty()&&(s.back()=='\r'||s.back()==' '||s.back()=='\t'))s.pop_back();size_t p=s.find_first_not_of(" \t");return p==std::string::npos?std::string():s.substr(p);}
+static bool installOrbxPlugin(const std::string &asset,std::vector<Result> &results,std::string *error){
+    const std::string pluginDir="/data/GoldHEN/plugins",pluginPath=pluginDir+"/orbx.prx",iniPath="/data/GoldHEN/plugins.ini",pluginLine="/data/GoldHEN/plugins/orbx.prx",section="[CUSA00419]";
+    if(!mkdirs(pluginDir)){if(error)*error="تعذر إنشاء مجلد GoldHEN/plugins";result(results,"إنشاء مجلد GoldHEN/plugins",false);return false;}
+    mz_zip_archive zip;memset(&zip,0,sizeof(zip));if(!mz_zip_reader_init_file(&zip,asset.c_str(),0)){if(error)*error="تعذر فتح prx.zip";result(results,"فتح prx.zip",false);return false;}
+    int index=mz_zip_reader_locate_file(&zip,"orbx.prx",nullptr,0);mz_zip_archive_file_stat st;bool extracted=false;
+    if(index>=0&&mz_zip_reader_file_stat(&zip,(mz_uint)index,&st)&&!st.m_is_directory&&st.m_uncomp_size<=64ULL*1024*1024){std::string temp=pluginPath+".gtxmod.tmp";unlink(temp.c_str());if(mz_zip_reader_extract_to_file(&zip,(mz_uint)index,temp.c_str(),0)&&rename(temp.c_str(),pluginPath.c_str())==0)extracted=true;else unlink(temp.c_str());}
+    mz_zip_reader_end(&zip);if(!extracted){if(error)*error="تعذر استخراج orbx.prx";result(results,"تثبيت orbx.prx",false);return false;}result(results,"تثبيت orbx.prx داخل GoldHEN/plugins",true);
+    std::string raw;if(!readFile(iniPath,raw,4*1024*1024))raw.clear();const bool crlf=raw.find("\r\n")!=std::string::npos;const std::string nl=crlf?"\r\n":"\n";std::vector<std::string> lines;size_t p=0;while(p<=raw.size()){size_t e=raw.find('\n',p);lines.push_back(trimLine(raw.substr(p,e==std::string::npos?raw.size()-p:e-p)));if(e==std::string::npos)break;p=e+1;}
+    size_t sectionAt=lines.size(),sectionEnd=lines.size();for(size_t i=0;i<lines.size();++i){if(lines[i]==section){sectionAt=i;sectionEnd=lines.size();for(size_t j=i+1;j<lines.size();++j)if(!lines[j].empty()&&lines[j][0]=='['){sectionEnd=j;break;}break;}}
+    bool hasPlugin=false;if(sectionAt<lines.size())for(size_t i=sectionAt+1;i<sectionEnd;++i)if(lines[i]==pluginLine){hasPlugin=true;break;}
+    if(sectionAt==lines.size()){if(!raw.empty()&&raw[raw.size()-1]!='\n')raw+=nl;if(!raw.empty())raw+=nl;raw+=section+nl+pluginLine+nl;}
+    else if(!hasPlugin){size_t insertAt=sectionAt+1;while(insertAt<sectionEnd&&lines[insertAt].empty())++insertAt;lines.insert(lines.begin()+insertAt,pluginLine);raw.clear();for(size_t i=0;i<lines.size();++i){raw+=lines[i];raw+=nl;}}
+    if(!atomicWrite(iniPath,raw)){if(error)*error="تم تثبيت orbx.prx لكن تعذر تحديث plugins.ini";result(results,"تحديث plugins.ini",false);return false;}result(results,"إضافة orbx.prx إلى CUSA00419",true);return true;
+}
 static std::string registryPath(){return std::string(GTX_DATA_ROOT)+"/installed.db";}
 static std::string cleanField(std::string s){for(char &c:s)if(c=='\t'||c=='\r'||c=='\n')c=' ';return s;}
 static bool appendInstalled(const std::string&id,const std::vector<Planned>&planned,const std::vector<std::string>&xmlLines){
@@ -110,6 +125,8 @@ bool installOrbx(const std::string &zipPath,StatusCallback status,ProgressCallba
     say(status,context,"استبدال ملف dlclist.xml القديم");
     if(!fileExists(replacement)||!copyFile(replacement,installedXml)){if(error)*error="تعذر استبدال ملف dlclist.xml بالنسخة الجديدة";result(results,"استبدال dlclist.xml",false);return false;}
     result(results,"استبدال dlclist.xml",true);
+    say(status,context,"تثبيت إضافة ORBX داخل GoldHEN");
+    if(!installOrbxPlugin("/app0/assets/orbx/prx.zip",results,error))return false;
     result(results,"تثبيت محرك ORBX",true);return true;
 }
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
