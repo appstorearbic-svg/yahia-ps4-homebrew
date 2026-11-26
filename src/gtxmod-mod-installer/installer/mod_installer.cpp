@@ -1,6 +1,7 @@
 #include "mod_installer.hpp"
 #include "../third_party/miniz/miniz.h"
 #include <algorithm>
+#include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -8,6 +9,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include <un7zip.h>
 
 #ifndef GTX_ORBX_ROOT
 #define GTX_ORBX_ROOT "/data/orbx"
@@ -129,9 +131,37 @@ bool installOrbx(const std::string &zipPath,StatusCallback status,ProgressCallba
     if(!installOrbxPlugin("/app0/assets/orbx/prx.zip",results,error))return false;
     result(results,"تثبيت محرك ORBX",true);return true;
 }
+static bool removeTree(const std::string&root){DIR*d=opendir(root.c_str());if(!d)return true;struct dirent*e;bool ok=true;while((e=readdir(d))){if(!strcmp(e->d_name,".")||!strcmp(e->d_name,".."))continue;std::string p=root+"/"+e->d_name;struct stat st;if(stat(p.c_str(),&st)!=0)continue;if(S_ISDIR(st.st_mode)){if(!removeTree(p)||rmdir(p.c_str())!=0)ok=false;}else if(unlink(p.c_str())!=0)ok=false;}closedir(d);return ok&&rmdir(root.c_str())==0;}
+static bool knownPayload(const std::string&name){static const char*exts[]={".rpf",".meta",".omt",".dat",".xml",".ytd",".ydr",".yft",".ymap",".ybn",".ymt",".awc",".rel",".bik",".img"};for(const char*e:exts)if(endsWith(name,e))return true;return false;}
+static void collectTree(const std::string&root,const std::string&rel,std::vector<std::string>&files){std::string dir=rel.empty()?root:root+"/"+rel;DIR*d=opendir(dir.c_str());if(!d)return;struct dirent*e;while((e=readdir(d))){if(!strcmp(e->d_name,".")||!strcmp(e->d_name,".."))continue;std::string child=rel.empty()?e->d_name:rel+"/"+e->d_name;std::string p=root+"/"+child;struct stat st;if(stat(p.c_str(),&st)!=0)continue;if(S_ISDIR(st.st_mode))collectTree(root,child,files);else if(S_ISREG(st.st_mode))files.push_back(child);}closedir(d);}
+static std::string cleanArchiveRelative(std::string p){for(char&c:p)if(c=='\\')c='/';while(!p.empty()&&p[0]=='/')p.erase(0,1);size_t z=p.find("zip/");if(z==0)p=p.substr(4);if(p.compare(0,5,"orbx/")==0)p=p.substr(5);return p;}
+static bool genericInstallTree(const std::string&root,const std::string&modId,StatusCallback status,void*context,std::vector<Result>&results,std::string*error){
+    std::vector<std::string> files;collectTree(root,"",files);std::vector<Planned> planned;std::vector<std::string> xmlLines;
+    for(const std::string&raw:files){if(endsWith(raw,".txt"))continue;std::string rel=cleanArchiveRelative(raw),base=rel.substr(rel.find_last_of('/')==std::string::npos?0:rel.find_last_of('/')+1);if(!knownPayload(base))continue;std::string destination;
+        if(base=="dlc.rpf"){size_t slash=rel.find_last_of('/');if(slash==std::string::npos)continue;std::string parent=rel.substr(rel.find_last_of('/',slash-1)==std::string::npos?0:rel.find_last_of('/',slash-1)+1,slash-(rel.find_last_of('/',slash-1)==std::string::npos?0:rel.find_last_of('/',slash-1)+1));if(!safeParent(parent))continue;destination=std::string(GTX_ORBX_ROOT)+"/gta/rpf/dlc_addon/"+parent+"/dlc.rpf";xmlLines.push_back("<Item>/data/orbx/gta/rpf/dlc_addon/"+parent+"/</Item>");}
+        else if(base=="vehicles.rpf")destination=std::string(GTX_ORBX_ROOT)+"/gta/rpf/levels/gta5/vehicles.rpf";
+        else if(base=="rockstar_logos.bik")destination=std::string(GTX_ORBX_ROOT)+"/gta/rockstar_logos.bik";
+        else {size_t gta=rel.find("gta/");std::string inside=gta==std::string::npos?rel:rel.substr(gta);destination=std::string(GTX_ORBX_ROOT)+"/"+inside;}
+        bool duplicate=false;for(const Planned&p:planned)if(p.destination==destination)duplicate=true;if(duplicate)continue;Planned p;p.destination=destination;p.existed=fileExists(destination);p.stage=root+"/"+raw;planned.push_back(p);
+    }
+    if(planned.empty()){if(error)*error="لم يتم العثور على ملفات ORBX معروفة داخل الأرشيف";result(results,"فحص ملفات الأرشيف",false);return false;}
+    std::string xmlPath=std::string(GTX_ORBX_ROOT)+"/gta/dlclist.xml",oldXml,newXml;if(!xmlLines.empty()&&!readFile(xmlPath,oldXml,16*1024*1024)){if(error)*error="تعذر قراءة dlclist.xml";return false;}newXml=oldXml;if(!xmlLines.empty()){size_t close=newXml.rfind("</Paths>");if(close==std::string::npos){if(error)*error="لم يتم العثور على </Paths> في dlclist.xml";return false;}std::string add;for(const std::string&l:xmlLines)if(!hasXmlLine(newXml,l))add+="\t\t"+l+"\n";newXml.insert(close,add);}
+    for(Planned&p:planned){std::string parent=p.destination.substr(0,p.destination.find_last_of('/'));if(!mkdirs(parent)||!copyFile(p.stage,p.destination)){if(error)*error="فشل نقل ملف ORBX إلى مساره";return false;}std::string message="استبدال "+p.destination;result(results,message.c_str(),true);}
+    if(!xmlLines.empty()&&!atomicWrite(xmlPath,newXml)){if(error)*error="تعذر تحديث dlclist.xml";return false;}if(!xmlLines.empty())result(results,"تحديث dlclist.xml",true);if(!appendInstalled(modId,planned,xmlLines)){if(error)*error="تم التثبيت لكن تعذر حفظ سجل الحذف";return false;}result(results,"تثبيت ملفات الأرشيف",true);return true;
+}
+static bool extractZipTree(mz_zip_archive&zip,const std::string&root){const mz_uint n=mz_zip_reader_get_num_files(&zip);for(mz_uint i=0;i<n;++i){mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory||!safeZipName(st.m_filename))continue;std::string out=root+"/"+st.m_filename,parent=out.substr(0,out.find_last_of('/'));if(!mkdirs(parent)||!mz_zip_reader_extract_to_file(&zip,i,out.c_str(),0))return false;}return true;}
+static bool looks7z(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[6]={0};size_t n=fread(sig,1,6,f);fclose(f);return n==6&&sig[0]==0x37&&sig[1]==0x7A&&sig[2]==0xBC&&sig[3]==0xAF&&sig[4]==0x27&&sig[5]==0x1C;}
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
     results.clear();if(error)error->clear();std::string why;
     say(status,context,"فحص مسارات ORBX");if(!orbxReady(&why)){if(error)*error=why;result(results,"العثور على ORBX",false);return false;}result(results,"العثور على ORBX",true);
+    const bool is7z=endsWith(zipPath,".7z")||endsWith(zipPath,".7Z")||looks7z(zipPath);
+    const std::string expanded=std::string(GTX_DATA_ROOT)+"/staging/archive_"+((modId.empty()||modId.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)?"mod":modId);
+    removeTree(expanded);if(!mkdirs(expanded)){if(error)*error="تعذر إنشاء مجلد فك الأرشيف";return false;}
+    bool unpacked=false;
+    if(is7z){say(status,context,"فك ملف 7z");unpacked=un7z_ExtractArchive(zipPath.c_str(),expanded.c_str(),nullptr,0x80000)==SZ_OK;}
+    else {say(status,context,"فك ملف ZIP وفحص المجلدات الداخلية");mz_zip_archive scan;memset(&scan,0,sizeof(scan));if(mz_zip_reader_init_file(&scan,zipPath.c_str(),0)){unpacked=extractZipTree(scan,expanded);mz_zip_reader_end(&scan);}}
+    if(!unpacked){removeTree(expanded);if(error)*error=is7z?"تعذر فك ملف 7z أو أن الملف تالف":"تعذر فك ملف ZIP أو أن الملف تالف";result(results,"فك الأرشيف",false);return false;}
+    bool genericOk=genericInstallTree(expanded,modId,status,context,results,error);removeTree(expanded);return genericOk;
     say(status,context,"فتح ZIP وفحص محتوياته");mz_zip_archive zip;memset(&zip,0,sizeof(zip));if(!mz_zip_reader_init_file(&zip,zipPath.c_str(),0)){if(error)*error="تعذر فتح ZIP أو أن الملف تالف";result(results,"فتح ملف ZIP",false);return false;}result(results,"فتح ملف ZIP",true);
     std::vector<Rule> rules;
     rules.push_back({"dlc.rpf","parent","data/orbx/gta/rpf/dlc_addon/{parent}/dlc.rpf","with_parent_folder","<Item>/data/orbx/gta/rpf/dlc_addon/{parent}/</Item>"});

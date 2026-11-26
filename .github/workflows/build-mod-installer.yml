@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+      - name: Checkout libun7zip
+        uses: actions/checkout@v4
+        with:
+          repository: bucanero/libun7zip
+          path: libun7zip
       - name: Install build dependencies
         run: |
           sudo apt-get update
@@ -30,6 +35,11 @@ jobs:
           curl -L --fail --retry 3 -o /tmp/openorbis.tar.gz \
             https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
           tar -xzf /tmp/openorbis.tar.gz -C tools
+      - name: Install libun7zip
+        working-directory: libun7zip
+        env:
+          OO_PS4_TOOLCHAIN: ${{ github.workspace }}/tools/OpenOrbis/PS4Toolchain
+        run: make -f Makefile.PS4 install
       - name: Build GTXMOD Mod Installer PKG
         run: |
           export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"

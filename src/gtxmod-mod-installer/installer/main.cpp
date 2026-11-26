@@ -313,7 +313,7 @@ static void refresh(){
 static void beginInstall(){
     if(shown.empty()||sel<0||sel>=(int)shown.size()){screen=3;installError="لا يوجد مود محدد";return;}
     const gtxcatalog::Mod &m=mods[shown[sel]];cleanupDownloadCache();screen=2;progTitle="";appMessage="";progNow=progTotal=progStartedMs=progSpeedBps=progEtaSec=0;present();
-    downloadCancelled=false;ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/downloads");std::string zip="/data/GTXMOD/downloads/"+m.id+".zip";std::string err;std::string url=gtxcatalog::resolveUrl(m.download);
+    downloadCancelled=false;ensureDir("/data/GTXMOD");ensureDir("/data/GTXMOD/downloads");std::string err;std::string url=gtxcatalog::resolveUrl(m.download);std::string archiveExt=(url.find(".7z")!=std::string::npos||url.find(".7Z")!=std::string::npos)?".7z":".zip";std::string zip="/data/GTXMOD/downloads/"+m.id+archiveExt;
     bool ok=!url.empty()&&gtxhttp::download(url,zip,progress,nullptr,&err);
     installResults.clear();installError.clear();if(!ok&&downloadCancelled){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");screen=6;appMessage.clear();present();return;}if(!ok){unlink(zip.c_str());rmdir("/data/GTXMOD/downloads");installError=err.empty()?"رابط التنزيل غير صالح":err;installResults.push_back({"تنزيل ملف المود",false});screen=3;present();return;}
     appMessage="اكتمل التنزيل؛ جاري فحص المود";progTitle="فحص وتثبيت المود";progTotal=progNow=0;present();
