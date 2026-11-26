@@ -39,7 +39,22 @@ jobs:
         working-directory: libun7zip
         env:
           OO_PS4_TOOLCHAIN: ${{ github.workspace }}/tools/OpenOrbis/PS4Toolchain
-        run: make -f Makefile.PS4 install
+        run: |
+          set -e
+          mkdir -p build-ps4
+          for src in source/*.c; do
+            obj="build-ps4/$(basename "${src%.c}").o"
+            clang --target=x86_64-pc-freebsd12-elf \
+              -fPIC -funwind-tables -c "$src" -o "$obj" \
+              -Iinclude \
+              -isysroot "$OO_PS4_TOOLCHAIN" \
+              -isystem "$OO_PS4_TOOLCHAIN/include" \
+              -DLITTLE_ENDIAN -D_FILE_OFFSET_BITS=64 \
+              -D_LARGEFILE_SOURCE -DRARDLL
+          done
+          ar rcs build-ps4/libun7zip.a build-ps4/*.o
+          cp build-ps4/libun7zip.a "$OO_PS4_TOOLCHAIN/lib/libun7zip.a"
+          cp include/7zExtractor.h "$OO_PS4_TOOLCHAIN/include/un7zip.h"
       - name: Build GTXMOD Mod Installer PKG
         run: |
           export OO_PS4_TOOLCHAIN="$GITHUB_WORKSPACE/tools/OpenOrbis/PS4Toolchain"
