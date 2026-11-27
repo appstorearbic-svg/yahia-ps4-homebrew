@@ -181,7 +181,7 @@ static std::string installedName(const gtxinstall::InstalledMod&m){for(const aut
 static const Color PCYAN={56,189,248}, PBLUE={8,123,208}, PRED={239,68,68}, PGREEN={34,197,94};
 static const Color PGLOW[7]={{6,14,26},{8,20,36},{10,26,46},{12,32,56},{14,38,66},{16,44,76},{18,50,86}};
 static void animatedBG(){
-    animatedBG();
+    gScene->FrameBufferFill(BG);
     int off=(gFrame*2)%120;
     for(int x=-120;x<W+120;x+=120) box(x+off,0,2,H,Color{10,26,46},Color{10,26,46});
     for(int y=0;y<H;y+=120) box(0,y,W,2,Color{10,26,46},Color{10,26,46});
@@ -427,3 +427,5 @@ int main(){
     }if(screen==0&&hasAnimatedPreview())present();usleep(16000);}
     scePadClose(pad);if(httpReady)gtxhttp::shutdown();trace("normal shutdown");if(bootLog){fclose(bootLog);bootLog=nullptr;}return 0;
 }
+
+void gtxUiKeepalive(){(void)&header;(void)&animatedBG;(void)&proHeader;(void)&proCard;}
