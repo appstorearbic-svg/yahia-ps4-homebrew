@@ -24,7 +24,7 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang lld make curl tar libssl3 libssl-dev
+          sudo apt-get install -y libarchive-dev unar clang lld make curl tar libssl3 libssl-dev
           curl -L --fail --retry 3 -o /tmp/libssl1.1.deb \
             https://deb.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb
           sudo dpkg -i /tmp/libssl1.1.deb
