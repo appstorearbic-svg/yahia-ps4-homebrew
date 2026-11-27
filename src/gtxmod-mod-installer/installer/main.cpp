@@ -82,9 +82,9 @@ static const Color PGLOW[7]={{6,14,26},{8,20,36},{10,26,46},{12,32,56},{14,38,66
 static void animatedBG(){
     gScene->FrameBufferFill(BG);
     int off=(gFrame*2)%120;
-    for(int x=-120;x<W+120;x+=120) box(x+off,0,2,H,Color{10,26,46},Color{10,26,46});
-    for(int y=0;y<H;y+=120) box(0,y,W,2,Color{10,26,46},Color{10,26,46});
-    int gx=(gFrame*3)%(W+400)-200, gy=(gFrame*2)%(H+400)-200;
+    for(int k=0;k<20;k++){int xx=(off+k*120)%(W+120)-60;if(xx<0||xx>W-2)continue;box(xx,0,2,H,Color{10,26,46},Color{10,26,46});}
+    for(int y=120;y<H;y+=120) box(0,y,W,2,Color{10,26,46},Color{10,26,46});
+    int gx=200+(gFrame*3)%(W-400), gy=200+(gFrame*2)%(H-400);
     for(int i=6;i>=0;i--){int r=20*(i+1);box(gx-r,gy-r,r*2,r*2,PGLOW[i],PGLOW[i]);}
     box(0,0,W,4,PCYAN);
 }
