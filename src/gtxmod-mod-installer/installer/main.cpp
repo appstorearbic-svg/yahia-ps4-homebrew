@@ -93,7 +93,7 @@ static void proHeader(){
     box(0,116,W,4,PCYAN);
     box(60,30,10,60,PCYAN,PCYAN); box(78,30,10,60,PBLUE,PBLUE);
     smart(gScene,"GTXMOD PS4",560,80,WHITE);
-    smart(gScene,"مدير مودات GTA V",1860,80,MUTED);
+    smart(gScene,"مدير مودات",1860,80,MUTED);text(gScene,gEn,"GTA V",1560,80,MUTED);
 }
 static void proCard(int x,int y,int w,int h,bool sel,const char*label,const char*sub,const Color&accent,int idx){
     box(x,y,w,h,sel?Color{16,48,92}:Color{10,25,47},sel?accent:Color{27,76,145});
@@ -291,7 +291,19 @@ static void drawResult(){
     if(!installError.empty())smart(gScene,crop(installError,75),1750,770,BAD);else smart(gScene,"تم حفظ سجل المود للحذف في /data/GTXMOD/installed.db",1750,770,BLUE);
     smart(gScene,"O رجوع إلى شاشة الخيارات",1750,900,WHITE);
 }
-static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2)drawStatus(progTitle.c_str(),progTitle.empty()?"جاري الاتصال بالموقع، رجاءً انتظر...":"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else if(screen==4)drawOffline();else if(screen==5)drawSearch();else if(screen==6)drawEntryChoice();else if(screen==7)drawInstalledList();else if(screen==8)drawDeleteDetails();else if(screen==9)drawOrbxConfirm();else if(screen==10)drawSiteName();else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
+static const int PDX[8]={0,1,1,1,0,-1,-1,-1}, PDY[8]={-1,-1,0,1,1,1,0,-1};
+static void drawConnecting(){
+    animatedBG();proHeader();
+    int cx=W/2, cy=H/2-60, act=(gFrame/5)%8;
+    for(int i=0;i<8;i++){
+        Color c=(i==act)?PCYAN:Color{20,50,90};
+        box(cx+PDX[i]*70-10, cy+PDY[i]*70-10, 20,20, c,c);
+    }
+    box(cx-160,cy+120,320,8,Color{13,37,71},Color{13,37,71});
+    box(cx-160,cy+120,(int)((gFrame%60)*5.33f),8,PCYAN,PCYAN);
+    smart(gScene,"يرجى انتظار تحميل الموقع",cx+320,cy+200,WHITE);
+}
+static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2){if(progTotal==0&&progNow==0&&progTitle.empty())drawConnecting();else drawStatus(progTitle.c_str(),"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);}else if(screen==4)drawOffline();else if(screen==5)drawSearch();else if(screen==6)drawEntryChoice();else if(screen==7)drawInstalledList();else if(screen==8)drawDeleteDetails();else if(screen==9)drawOrbxConfirm();else if(screen==10)drawSiteName();else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
 static void rebuildShown(){
     shown.clear();
     for(size_t i=0;i<mods.size();++i){
