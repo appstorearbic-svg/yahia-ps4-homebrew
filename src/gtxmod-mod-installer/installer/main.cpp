@@ -167,7 +167,7 @@ static void drawSearch(){
         box(x,y,kw,kh,a?Color{16,48,92}:Color{10,25,47},a?PCYAN:Color{27,76,145});
         if(a)frame(x-3,y-3,kw+6,kh+6,PCYAN);
         std::string k=searchKey(i);
-        text(gScene,gEn,k.c_str(),x+kw/2-14,y+kh/2+16,a?PCYAN:WHITE);
+        text(gScene,gEn,k.c_str(),x+kw/2-14,y+kh/2+16,WHITE);
     }
     box(100,740,420,70,Color{10,25,47},Color{27,76,145});smart(gScene,"X اضافة حرف",500,785,WHITE);
     box(540,740,340,70,Color{10,25,47},Color{27,76,145});smart(gScene,"O رجوع",860,785,WHITE);
@@ -391,7 +391,7 @@ static bool beginInstallByCode(){
 }
 int main(){
     setvbuf(stdout,0,_IONBF,0);trace("main entered");Scene2D scene(W,H,4);if(!scene.Init(0xC000000,2)){trace("Scene2D init failed");return 1;}scene.SetActiveFrameBuffer(0);gScene=&scene;trace("Scene2D init ok");
-    if(!scene.InitFont(&gEn,"/app0/assets/fonts/Gontserrat-Regular.ttf",52)){trace("English font init failed");return 2;}trace("English font init ok");if(!scene.InitFont(&gAr,"/app0/assets/fonts/NotoSansArabic-Regular.ttf",43)){trace("Arabic font init failed");return 3;}trace("Arabic font init ok");
+    if(!scene.InitFont(&gEn,"/app0/assets/fonts/GameStation-Regular.otf",52)){trace("English font init failed");return 2;}trace("English font init ok");if(!scene.InitFont(&gAr,"/app0/assets/fonts/NotoSansArabic-Regular.ttf",43)){trace("Arabic font init failed");return 3;}trace("Arabic font init ok");
     PNG left("/app0/assets/images/GTX-side.png"),right("/app0/assets/images/GTX-side.png");gLeft=&left;gRight=&right;
     PNG heroImage("/app0/assets/images/GTXMOD-header.png");gHero=&heroImage;trace("images loaded");if(scePadInit()<0){trace("scePadInit failed");return 4;}trace("scePadInit ok");OrbisUserServiceInitializeParams up;memset(&up,0,sizeof(up));up.priority=ORBIS_KERNEL_PRIO_FIFO_LOWEST;if(sceUserServiceInitialize(&up)<0){trace("user service init failed");return 5;}int uid=-1;if(sceUserServiceGetInitialUser(&uid)<0){trace("get initial user failed");return 6;}int pad=scePadOpen(uid,ORBIS_PAD_PORT_TYPE_STANDARD,0,0);if(pad<0){trace("scePadOpen failed");return 7;}gPad=pad;trace("pad opened");
     listError="جاري تحميل موقع GTXMOD";uint32_t prev=0;bool run=true;refresh();if(!offline){gtxinstall::listInstalled(installed,nullptr);screen=6;present();}trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
