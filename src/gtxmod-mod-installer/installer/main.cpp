@@ -76,6 +76,36 @@ static void neon(int x,int y,int w,int h,bool active){
     if(active){frame(x,y,w,h,GOLD);gScene->DrawRectangle(x+7,y+7,w-14,3,{255,220,70});}
 }
 static void logo(){text(gScene,gEn,"GTXMOD",800,67,WHITE);text(gScene,gEn,"PS4",1035,67,RED);}
+// ===== GTXMOD PRO UI (visual only - functions untouched) =====
+static const Color PCYAN={56,189,248}, PBLUE={8,123,208}, PRED={239,68,68}, PGREEN={34,197,94};
+static const Color PGLOW[7]={{6,14,26},{8,20,36},{10,26,46},{12,32,56},{14,38,66},{16,44,76},{18,50,86}};
+static void animatedBG(){
+    gScene->FrameBufferFill(BG);
+    int off=(gFrame*2)%120;
+    for(int x=-120;x<W+120;x+=120) box(x+off,0,2,H,Color{10,26,46},Color{10,26,46});
+    for(int y=0;y<H;y+=120) box(0,y,W,2,Color{10,26,46},Color{10,26,46});
+    int gx=(gFrame*3)%(W+400)-200, gy=(gFrame*2)%(H+400)-200;
+    for(int i=6;i>=0;i--){int r=20*(i+1);box(gx-r,gy-r,r*2,r*2,PGLOW[i],PGLOW[i]);}
+    box(0,0,W,4,PCYAN);
+}
+static void proHeader(){
+    box(0,0,W,120,Color{10,30,58},Color{10,30,58});
+    box(0,116,W,4,PCYAN);
+    box(60,30,10,60,PCYAN,PCYAN); box(78,30,10,60,PBLUE,PBLUE);
+    smart(gScene,"GTXMOD PS4",560,80,WHITE);
+    smart(gScene,"مدير مودات GTA V",1860,80,MUTED);
+}
+static void proCard(int x,int y,int w,int h,bool sel,const char*label,const char*sub,const Color&accent,int idx){
+    box(x,y,w,h,sel?Color{16,48,92}:Color{10,25,47},sel?accent:Color{27,76,145});
+    box(x,y,6,h,accent,accent);
+    box(x,y,w,3,sel?accent:Color{20,50,90},sel?accent:Color{20,50,90});
+    if(sel) frame(x-4,y-4,w+8,h+8,accent);
+    box(x+w-90,y+(h/2)-28,56,56,sel?accent:Color{20,50,90},sel?accent:Color{27,76,145});
+    char n[8];snprintf(n,sizeof(n),"%d",idx+1);
+    smart(gScene,n,x+w-40,y+(h/2)+12,sel?Color{4,8,18}:WHITE);
+    smart(gScene,label,x+w-120,y+(h/2)-6,sel?accent:WHITE);
+    smart(gScene,sub,x+w-120,y+(h/2)+40,MUTED);
+}
 static void header(){
     gScene->DrawRectangle(0,0,W,94,DEEP);
     gScene->DrawRectangle(0,91,W,4,RED);
@@ -177,36 +207,6 @@ static void drawOffline(){
 }
 static std::string installedName(const gtxinstall::InstalledMod&m){for(const auto&x:mods)if(x.id==m.id)return x.name;return m.id;}
 
-// ===== GTXMOD PRO UI (visual only - functions untouched) =====
-static const Color PCYAN={56,189,248}, PBLUE={8,123,208}, PRED={239,68,68}, PGREEN={34,197,94};
-static const Color PGLOW[7]={{6,14,26},{8,20,36},{10,26,46},{12,32,56},{14,38,66},{16,44,76},{18,50,86}};
-static void animatedBG(){
-    gScene->FrameBufferFill(BG);
-    int off=(gFrame*2)%120;
-    for(int x=-120;x<W+120;x+=120) box(x+off,0,2,H,Color{10,26,46},Color{10,26,46});
-    for(int y=0;y<H;y+=120) box(0,y,W,2,Color{10,26,46},Color{10,26,46});
-    int gx=(gFrame*3)%(W+400)-200, gy=(gFrame*2)%(H+400)-200;
-    for(int i=6;i>=0;i--){int r=20*(i+1);box(gx-r,gy-r,r*2,r*2,PGLOW[i],PGLOW[i]);}
-    box(0,0,W,4,PCYAN);
-}
-static void proHeader(){
-    box(0,0,W,120,Color{10,30,58},Color{10,30,58});
-    box(0,116,W,4,PCYAN);
-    box(60,30,10,60,PCYAN,PCYAN); box(78,30,10,60,PBLUE,PBLUE);
-    smart(gScene,"GTXMOD PS4",560,80,WHITE);
-    smart(gScene,"مدير مودات GTA V",1860,80,MUTED);
-}
-static void proCard(int x,int y,int w,int h,bool sel,const char*label,const char*sub,const Color&accent,int idx){
-    box(x,y,w,h,sel?Color{16,48,92}:Color{10,25,47},sel?accent:Color{27,76,145});
-    box(x,y,6,h,accent,accent);
-    box(x,y,w,3,sel?accent:Color{20,50,90},sel?accent:Color{20,50,90});
-    if(sel) frame(x-4,y-4,w+8,h+8,accent);
-    box(x+w-90,y+(h/2)-28,56,56,sel?accent:Color{20,50,90},sel?accent:Color{27,76,145});
-    char n[8];snprintf(n,sizeof(n),"%d",idx+1);
-    smart(gScene,n,x+w-40,y+(h/2)+12,sel?Color{4,8,18}:WHITE);
-    smart(gScene,label,x+w-120,y+(h/2)-6,sel?accent:WHITE);
-    smart(gScene,sub,x+w-120,y+(h/2)+40,MUTED);
-}
 static void drawEntryChoice(){
     animatedBG();proHeader();
     smart(gScene,"اختر العملية",1740,250,WHITE);
