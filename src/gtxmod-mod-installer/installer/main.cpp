@@ -430,8 +430,15 @@ int main(){
             else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(orbxChoice==0)beginOrbxInstall();else{screen=6;present();}}
         }
         else if(screen==4){if(pressed&ORBIS_PAD_BUTTON_TRIANGLE)refresh();else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
-        else if(screen==5){
-            if(pressed&ORBIS_PAD_BUTTON_R2){if(codeMode){searchUpper=!searchUpper;}else{searchArabic=!searchArabic;searchUpper=true;}searchCursor%=searchKeyCount();present();}
+                else if(screen==5){
+            if(pressed&ORBIS_PAD_BUTTON_DOWN){searchCursor=(searchCursor+cols)%searchKeyCount();present();}
+            else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor-cols+searchKeyCount())%searchKeyCount();present();}
+            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){searchCursor=(searchCursor+1)%searchKeyCount();present();}
+            else if(pressed&ORBIS_PAD_BUTTON_LEFT){searchCursor=(searchCursor-1+searchKeyCount())%searchKeyCount();present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CROSS){searchQuery+=searchKey(searchCursor);present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){if(!searchQuery.empty()){searchQuery.pop_back();present();}}
+            else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){if(codeMode){screen=6;searchQuery.clear();}else{screen=savedCategory==category?0:0;category=savedCategory;sel=savedSel;focus=savedFocus;searchQuery=savedSearchQuery;rebuildShown();}present();}
+        }else{searchArabic=!searchArabic;searchUpper=true;}searchCursor%=searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_LEFT){searchCursor=(searchCursor+searchKeyCount()-1)%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_RIGHT){searchCursor=(searchCursor+1)%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor+searchKeyCount()-10)%searchKeyCount();present();}
