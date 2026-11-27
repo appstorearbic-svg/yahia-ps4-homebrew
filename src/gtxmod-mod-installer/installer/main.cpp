@@ -45,12 +45,6 @@ static void arabic(Scene2D*s,FT_Face face,const std::string&str,int right,int ba
         else{v.push_back(raw[i]);++i;}
     }
     int pen=right;
-    for(size_t i=0;i<v.size();){
-        if(form(v[i])){++i;continue;}
-        size_t j=i;while(j<v.size()&&!form(v[j]))++j;
-        for(size_t a=i,b=j-1;a<b;++a,--b){uint32_t t=v[a];v[a]=v[b];v[b]=t;}
-        i=j;
-    }
     for(size_t i=0;i<v.size();++i){
         uint32_t original=v[i],cp=shaped(v,i);const ArabicForm*af=form(original);
         FT_Face use=af?face:gEn;FT_UInt gi=FT_Get_Char_Index(use,cp);
@@ -98,8 +92,9 @@ static void proHeader(){
     box(0,0,W,120,Color{10,30,58},Color{10,30,58});
     box(0,116,W,4,PCYAN);
     box(60,30,10,60,PCYAN,PCYAN); box(78,30,10,60,PBLUE,PBLUE);
-    smart(gScene,"GTXMOD PS4",560,80,WHITE);
-    smart(gScene,"مدير مودات",1860,80,MUTED);text(gScene,gEn,"GTA V",1560,80,MUTED);
+    text(gScene,gEn,"GTXMOD PS4",100,55,WHITE);
+    smart(gScene,"مدير مودات",1860,80,MUTED);
+    text(gScene,gEn,"GTA V",1720,55,Color{100,240,180});
 }
 static void proCard(int x,int y,int w,int h,bool sel,const char*label,const char*sub,const Color&accent,int idx){
     box(x,y,w,h,sel?Color{16,48,92}:Color{10,25,47},sel?accent:Color{27,76,145});
@@ -162,7 +157,7 @@ static void drawSearch(){
     animatedBG();proHeader();
     box(100,150,1720,110,Color{10,25,47},PCYAN);
     box(100,150,6,110,PCYAN,PCYAN);
-    smart(gScene,searchQuery.empty()?"اكتب اسم المود أو الكود":searchQuery,1780,220,searchQuery.empty()?MUTED:WHITE);
+    if(searchQuery.empty())smart(gScene,"اكتب اسم المود أو الكود",1780,220,MUTED);else text(gScene,gEn,searchQuery.c_str(),120,185,WHITE);
     int cols=9,kw=180,kh=92,gx=100,gy=300;
     for(int i=0;i<searchKeyCount();++i){
         int r=i/cols,c=i%cols;
@@ -173,7 +168,7 @@ static void drawSearch(){
         std::string k=searchKey(i);
         text(gScene,gEn,k.c_str(),x+kw/2-14,y+kh/2+16,a?PCYAN:WHITE);
     }
-    smart(gScene,"X إدخال الحرف   O مسح   مثلث رجوع",1780,780,MUTED);
+    text(gScene,gEn,"X إدخال الحرف   O مسح   مثلث رجوع",120,780,MUTED);
 }
 static void drawList(){
     animatedBG();proHeader();hero();categories();
