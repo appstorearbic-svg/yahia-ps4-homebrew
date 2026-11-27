@@ -58,6 +58,7 @@ static bool hasArabic(const std::string&s){for(size_t i=0;i<s.size();++i)if((uns
 static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;arabic(s,gAr,str,right,base,c);}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
 static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr,*gDetailsPreview=nullptr;static int gFrame=0;static int media=0,focus=0,detailsImage=0;static std::string previewPath;
+static const int searchCols=9;
 static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,orbxChoice=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,searchUpper=true,codeMode=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0,progStartedMs=0,progSpeedBps=0,progEtaSec=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
 static FILE *bootLog=nullptr;static int gPad=-1;static bool downloadCancelled=false;static int cancelChoice=0;
 static void trace(const char *stage){if(!bootLog){mkdir("/data/GTXMOD",0777);bootLog=fopen("/data/GTXMOD/boot.log","w");}if(bootLog){fprintf(bootLog,"%s\n",stage);fflush(bootLog);}}
@@ -158,9 +159,9 @@ static void drawSearch(){
     box(100,150,1720,110,Color{10,25,47},PCYAN);
     box(100,150,6,110,PCYAN,PCYAN);
     if(searchQuery.empty())smart(gScene,"اكتب اسم المود أو الكود",1780,220,MUTED);else text(gScene,gEn,searchQuery.c_str(),120,185,WHITE);
-    int cols=searchCols,kw=180,kh=92,gx=100,gy=300;
+    int cols=9,kw=180,kh=92,gx=100,gy=300;
     for(int i=0;i<searchKeyCount();++i){
-        int r=i/searchCols,c=i%searchCols;
+        int r=i/cols,c=i%cols;
         int x=gx+c*(kw+10), y=gy+r*(kh+10);
         bool a=(i==searchCursor);
         box(x,y,kw,kh,a?Color{16,48,92}:Color{10,25,47},a?PCYAN:Color{27,76,145});
@@ -430,24 +431,17 @@ int main(){
             else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(orbxChoice==0)beginOrbxInstall();else{screen=6;present();}}
         }
         else if(screen==4){if(pressed&ORBIS_PAD_BUTTON_TRIANGLE)refresh();else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
-                else if(screen==5){
-            if(pressed&ORBIS_PAD_BUTTON_DOWN){searchCursor=(searchCursor+searchCols)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor-searchCols+searchKeyCount())%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){searchCursor=(searchCursor+1)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_LEFT){searchCursor=(searchCursor-1+searchKeyCount())%searchKeyCount();present();}
+        else if(screen==5){
+            int cnt=searchKeyCount(),rows=(cnt+searchCols-1)/searchCols;
+            int r=searchCursor/searchCols,c=searchCursor%searchCols,idx=searchCursor;
+            if(pressed&ORBIS_PAD_BUTTON_DOWN){r=(r+1)%rows;idx=r*searchCols+c;if(idx>=cnt)idx=cnt-1;searchCursor=idx;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_UP){r=(r-1+rows)%rows;idx=r*searchCols+c;if(idx>=cnt)idx=cnt-1;searchCursor=idx;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){c=(c+1)%searchCols;idx=r*searchCols+c;if(idx>=cnt)idx=cnt-1;searchCursor=idx;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_LEFT){c=(c-1+searchCols)%searchCols;idx=r*searchCols+c;if(idx>=cnt)idx=cnt-1;searchCursor=idx;present();}
             else if(pressed&ORBIS_PAD_BUTTON_CROSS){searchQuery+=searchKey(searchCursor);present();}
             else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){if(!searchQuery.empty()){searchQuery.pop_back();present();}}
-            else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){if(codeMode){screen=6;searchQuery.clear();}else{screen=savedCategory==category?0:0;category=savedCategory;sel=savedSel;focus=savedFocus;searchQuery=savedSearchQuery;rebuildShown();}present();}
-        }else{searchArabic=!searchArabic;searchUpper=true;}searchCursor%=searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_LEFT){searchCursor=(searchCursor+searchKeyCount()-1)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){searchCursor=(searchCursor+1)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor+searchKeyCount()-10)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_DOWN){searchCursor=(searchCursor+10)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_CROSS){searchQuery+=searchKey(searchCursor);present();}
-            else if(pressed&ORBIS_PAD_BUTTON_L2){searchQuery+=" ";present();}
-            else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){if(!searchQuery.empty())searchQuery.erase(searchQuery.size()-1);present();}
-            else if(pressed&ORBIS_PAD_BUTTON_SQUARE){if(codeMode){beginInstallByCode();present();}else{sel=0;focus=1;category=0;rebuildShown();preloadVisiblePreviews();screen=0;present();}}
-            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){if(codeMode){codeMode=false;searchArabic=true;searchQuery.clear();screen=6;present();}else{category=savedCategory;sel=savedSel;focus=savedFocus;searchQuery=savedSearchQuery;rebuildShown();preloadVisiblePreviews();screen=0;present();}}
+            else if(pressed&ORBIS_PAD_BUTTON_SQUARE){if(codeMode){beginInstallByCode();}else{savedSearchQuery=searchQuery;screen=0;category=savedCategory;sel=savedSel;focus=savedFocus;rebuildShown();loadPreview(false);}present();}
+            else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){searchQuery=savedSearchQuery;if(codeMode){screen=6;}else{screen=0;category=savedCategory;sel=savedSel;focus=savedFocus;rebuildShown();loadPreview(false);}present();}
         }
     }if(screen==0&&hasAnimatedPreview())present();usleep(16000);}
     scePadClose(pad);if(httpReady)gtxhttp::shutdown();trace("normal shutdown");if(bootLog){fclose(bootLog);bootLog=nullptr;}return 0;
