@@ -45,6 +45,12 @@ static void arabic(Scene2D*s,FT_Face face,const std::string&str,int right,int ba
         else{v.push_back(raw[i]);++i;}
     }
     int pen=right;
+    for(size_t i=0;i<v.size();){
+        if(form(v[i])){++i;continue;}
+        size_t j=i;while(j<v.size()&&!form(v[j]))++j;
+        for(size_t a=i,b=j-1;a<b;++a,--b){uint32_t t=v[a];v[a]=v[b];v[b]=t;}
+        i=j;
+    }
     for(size_t i=0;i<v.size();++i){
         uint32_t original=v[i],cp=shaped(v,i);const ArabicForm*af=form(original);
         FT_Face use=af?face:gEn;FT_UInt gi=FT_Get_Char_Index(use,cp);
@@ -55,7 +61,7 @@ static void arabic(Scene2D*s,FT_Face face,const std::string&str,int right,int ba
     }
 }
 static bool hasArabic(const std::string&s){for(size_t i=0;i<s.size();++i)if((unsigned char)s[i]>=0xD8&&(unsigned char)s[i]<=0xDF)return true;return false;}
-static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;if(hasArabic(str))arabic(s,gAr,str,right,base,c);else{std::string t=str;s->DrawText((char*)t.c_str(),gEn,right-(int)t.size()*23,base,BG,c);}}
+static void smart(Scene2D*s,const std::string&str,int right,int base,Color c){if(str.empty())return;arabic(s,gAr,str,right,base,c);}
 static void text(Scene2D*s,FT_Face f,const char*t,int x,int y,Color c){s->DrawText((char*)t,f,x,y,BG,c);}
 static Scene2D *gScene=nullptr;static PNG *gLeft=nullptr,*gRight=nullptr,*gHero=nullptr;static PreviewImage *gPreview=nullptr,*gDetailsPreview=nullptr;static int gFrame=0;static int media=0,focus=0,detailsImage=0;static std::string previewPath;
 static std::vector<gtxcatalog::Mod> mods;static std::vector<size_t> shown;static std::vector<gtxinstall::InstalledMod> installed;static std::vector<PreviewImage*> previewCache;static std::string appMessage,listError,searchQuery,savedSearchQuery;static int screen=0,category=0,sel=0,searchCursor=0,installedSel=0,orbxChoice=0,savedCategory=0,savedSel=0,savedFocus=1;static bool searchArabic=true,searchUpper=true,codeMode=false,httpReady=false,offline=false;static uint64_t progNow=0,progTotal=0,progStartedMs=0,progSpeedBps=0,progEtaSec=0;static std::string progTitle="";static std::vector<gtxinstall::Result> installResults;static std::string installError;
@@ -150,19 +156,24 @@ static bool fuzzyMatch(const gtxcatalog::Mod&m){
     return false;
 }
 static const char *AR_KEYS[]={"ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ي"};
-static int searchKeyCount(){return searchArabic?28:36;}
-static std::string searchKey(int i){if(searchArabic)return AR_KEYS[i];const char upper[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";const char lower[]="abcdefghijklmnopqrstuvwxyz0123456789";return std::string(1,(searchUpper?upper:lower)[i]);}
+static int searchKeyCount(){return 36;}
+static std::string searchKey(int i){const char upper[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";return std::string(1,upper[i%36]);}
 static void drawSearch(){
-    gScene->FrameBufferFill(Color{0,0,0});proHeader();
-    box(100,135,1720,790,DEEP,{29,99,208});
-    smart(gScene,codeMode?"تحميل مود بالكود":"البحث عن مودات",1640,215,WHITE);
-    if(codeMode)text(gScene,gEn,searchUpper?"ABC":"abc",1740,255,searchUpper?GOLD:GREEN);
-    box(180,255,1560,70,Color{4,12,25},RED);
-    smart(gScene,searchQuery.empty()?(codeMode?"اكتب الكود الأحمر هنا":"اكتب اسم المود أو كلمة قريبة"):searchQuery,1680,300,searchQuery.empty()?MUTED:WHITE);
-    int cols=10;
-    for(int i=0;i<searchKeyCount();++i){int x=250+(i%cols)*135,y=390+(i/cols)*85;bool active=i==searchCursor;box(x,y,100,58,active?ACTIVE:ROW,active?RED:Color{27,76,145});smart(gScene,searchKey(i),x+70,y+42,WHITE);if(active)frame(x,y,100,58,RED);}
-    if(codeMode&&!appMessage.empty())smart(gScene,appMessage,1660,760,BAD);
-    smart(gScene,codeMode?"X إضافة الحرف   R2 كبير/صغير   مربع بدء التحميل   مثلث حذف   O رجوع":"X إضافة الحرف   R2 عربي/إنكليزي   مربع بحث   مثلث حذف   O رجوع",1660,840,WHITE);
+    animatedBG();proHeader();
+    box(100,150,1720,110,Color{10,25,47},PCYAN);
+    box(100,150,6,110,PCYAN,PCYAN);
+    smart(gScene,searchQuery.empty()?"اكتب اسم المود أو الكود":searchQuery,1780,220,searchQuery.empty()?MUTED:WHITE);
+    int cols=9,kw=180,kh=92,gx=100,gy=300;
+    for(int i=0;i<searchKeyCount();++i){
+        int r=i/cols,c=i%cols;
+        int x=gx+c*(kw+10), y=gy+r*(kh+10);
+        bool a=(i==searchCursor);
+        box(x,y,kw,kh,a?Color{16,48,92}:Color{10,25,47},a?PCYAN:Color{27,76,145});
+        if(a)frame(x-3,y-3,kw+6,kh+6,PCYAN);
+        std::string k=searchKey(i);
+        text(gScene,gEn,k.c_str(),x+kw/2-14,y+kh/2+16,a?PCYAN:WHITE);
+    }
+    smart(gScene,"X إدخال الحرف   O مسح   مثلث رجوع",1780,780,MUTED);
 }
 static void drawList(){
     animatedBG();proHeader();hero();categories();
@@ -213,7 +224,7 @@ static void drawEntryChoice(){
     proCard(180,300,1560,150,installedSel==0,"تحميل مود","تنزيل وتثبيت مود جديد من الموقع",PCYAN,0);
     proCard(180,480,1560,150,installedSel==1,"حذف المود","إزالة مود مثبت وتحديث dlclist.xml",PRED,1);
     proCard(180,660,1560,150,installedSel==2,"تحميل ORBX","تثبيت محرك المودات وتفعيل الإضافة",PGREEN,2);
-    smart(gScene,"يمين/يسار اختيار   X تأكيد",1740,900,MUTED);
+    smart(gScene,"فوق/تحت اختيار   X تأكيد",1740,900,MUTED);
 }
 static void drawOrbxConfirm(){
     animatedBG();proHeader();box(170,170,1580,650,DEEP,{29,99,208});frame(170,170,1580,650,GOLD);
@@ -386,8 +397,8 @@ int main(){
     PNG heroImage("/app0/assets/images/GTXMOD-header.png");gHero=&heroImage;trace("images loaded");if(scePadInit()<0){trace("scePadInit failed");return 4;}trace("scePadInit ok");OrbisUserServiceInitializeParams up;memset(&up,0,sizeof(up));up.priority=ORBIS_KERNEL_PRIO_FIFO_LOWEST;if(sceUserServiceInitialize(&up)<0){trace("user service init failed");return 5;}int uid=-1;if(sceUserServiceGetInitialUser(&uid)<0){trace("get initial user failed");return 6;}int pad=scePadOpen(uid,ORBIS_PAD_PORT_TYPE_STANDARD,0,0);if(pad<0){trace("scePadOpen failed");return 7;}gPad=pad;trace("pad opened");
     listError="جاري تحميل موقع GTXMOD";uint32_t prev=0;bool run=true;refresh();if(!offline){gtxinstall::listInstalled(installed,nullptr);screen=6;present();}trace("first screen presented");while(run){OrbisPadData d;memset(&d,0,sizeof(d));if(scePadReadState(pad,&d)>=0){uint32_t cur=d.buttons,pressed=cur&~prev;prev=cur;
         if(screen==6){
-            if(pressed&ORBIS_PAD_BUTTON_LEFT){installedSel=(installedSel+2)%3;present();}
-            else if(pressed&ORBIS_PAD_BUTTON_RIGHT){installedSel=(installedSel+1)%3;present();}
+            if(pressed&ORBIS_PAD_BUTTON_UP){installedSel=(installedSel+2)%3;present();}
+            else if(pressed&ORBIS_PAD_BUTTON_DOWN){installedSel=(installedSel+1)%3;present();}
             else if(pressed&ORBIS_PAD_BUTTON_CROSS){if(installedSel==0){codeMode=true;searchQuery.clear();searchArabic=false;searchUpper=true;searchCursor=0;appMessage.clear();screen=5;present();}else if(installedSel==1){installedSel=0;screen=7;present();}else{orbxChoice=0;screen=9;present();}}
             else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){present();}
         }
