@@ -158,9 +158,9 @@ static void drawSearch(){
     box(100,150,1720,110,Color{10,25,47},PCYAN);
     box(100,150,6,110,PCYAN,PCYAN);
     if(searchQuery.empty())smart(gScene,"اكتب اسم المود أو الكود",1780,220,MUTED);else text(gScene,gEn,searchQuery.c_str(),120,185,WHITE);
-    int cols=9,kw=180,kh=92,gx=100,gy=300;
+    int cols=searchCols,kw=180,kh=92,gx=100,gy=300;
     for(int i=0;i<searchKeyCount();++i){
-        int r=i/cols,c=i%cols;
+        int r=i/searchCols,c=i%searchCols;
         int x=gx+c*(kw+10), y=gy+r*(kh+10);
         bool a=(i==searchCursor);
         box(x,y,kw,kh,a?Color{16,48,92}:Color{10,25,47},a?PCYAN:Color{27,76,145});
@@ -431,8 +431,8 @@ int main(){
         }
         else if(screen==4){if(pressed&ORBIS_PAD_BUTTON_TRIANGLE)refresh();else if(pressed&ORBIS_PAD_BUTTON_CIRCLE)run=false;}
                 else if(screen==5){
-            if(pressed&ORBIS_PAD_BUTTON_DOWN){searchCursor=(searchCursor+cols)%searchKeyCount();present();}
-            else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor-cols+searchKeyCount())%searchKeyCount();present();}
+            if(pressed&ORBIS_PAD_BUTTON_DOWN){searchCursor=(searchCursor+searchCols)%searchKeyCount();present();}
+            else if(pressed&ORBIS_PAD_BUTTON_UP){searchCursor=(searchCursor-searchCols+searchKeyCount())%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_RIGHT){searchCursor=(searchCursor+1)%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_LEFT){searchCursor=(searchCursor-1+searchKeyCount())%searchKeyCount();present();}
             else if(pressed&ORBIS_PAD_BUTTON_CROSS){searchQuery+=searchKey(searchCursor);present();}
