@@ -169,7 +169,10 @@ static void drawSearch(){
         std::string k=searchKey(i);
         text(gScene,gEn,k.c_str(),x+kw/2-14,y+kh/2+16,a?PCYAN:WHITE);
     }
-    text(gScene,gEn,"X إدخال الحرف   O مسح   مثلث رجوع",120,780,MUTED);
+    box(100,740,420,70,Color{10,25,47},Color{27,76,145});smart(gScene,"X اضافة حرف",500,785,WHITE);
+    box(540,740,340,70,Color{10,25,47},Color{27,76,145});smart(gScene,"O رجوع",860,785,WHITE);
+    box(900,740,420,70,Color{10,25,47},Color{27,76,145});smart(gScene,"مثلث حذف الحرف",1300,785,WHITE);
+    box(1340,740,380,70,Color{10,25,47},PCYAN);smart(gScene,"مربع بحث",1700,785,PCYAN);
 }
 static void drawList(){
     animatedBG();proHeader();hero();categories();
@@ -439,9 +442,9 @@ int main(){
             else if(pressed&ORBIS_PAD_BUTTON_RIGHT){c=(c+1)%searchCols;idx=r*searchCols+c;if(idx>=cnt)idx=cnt-1;searchCursor=idx;present();}
             else if(pressed&ORBIS_PAD_BUTTON_LEFT){c=(c-1+searchCols)%searchCols;idx=r*searchCols+c;if(idx>=cnt)idx=cnt-1;searchCursor=idx;present();}
             else if(pressed&ORBIS_PAD_BUTTON_CROSS){searchQuery+=searchKey(searchCursor);present();}
-            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){if(!searchQuery.empty()){searchQuery.pop_back();present();}}
-            else if(pressed&ORBIS_PAD_BUTTON_SQUARE){if(codeMode){beginInstallByCode();}else{savedSearchQuery=searchQuery;screen=0;category=savedCategory;sel=savedSel;focus=savedFocus;rebuildShown();loadPreview(false);}present();}
-            else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){searchQuery=savedSearchQuery;if(codeMode){screen=6;}else{screen=0;category=savedCategory;sel=savedSel;focus=savedFocus;rebuildShown();loadPreview(false);}present();}
+            else if(pressed&ORBIS_PAD_BUTTON_TRIANGLE){if(!searchQuery.empty()){searchQuery.pop_back();present();}}
+            else if(pressed&ORBIS_PAD_BUTTON_SQUARE){if(codeMode){beginInstallByCode();}else{savedSearchQuery=searchQuery;screen=0;category=savedCategory;sel=savedSel;focus=savedFocus;rebuildShown();if(shown.empty())listError="خطأ لم يتم العثور على المود";else listError.clear();loadPreview(false);}present();}
+            else if(pressed&ORBIS_PAD_BUTTON_CIRCLE){searchQuery=savedSearchQuery;if(codeMode){screen=6;}else{screen=0;category=savedCategory;sel=savedSel;focus=savedFocus;rebuildShown();loadPreview(false);}present();}
         }
     }if(screen==0&&hasAnimatedPreview())present();usleep(16000);}
     scePadClose(pad);if(httpReady)gtxhttp::shutdown();trace("normal shutdown");if(bootLog){fclose(bootLog);bootLog=nullptr;}return 0;
