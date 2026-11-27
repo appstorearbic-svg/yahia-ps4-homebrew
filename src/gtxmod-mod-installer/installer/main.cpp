@@ -28,7 +28,7 @@ static const int W=1920,H=1080;
 static const Color BG={4,8,18}, PANEL={10,18,31}, ROW={14,27,45};
 static const Color ACTIVE={214,42,48}, RED={255,45,45}, WHITE={242,247,255};
 static const Color MUTED={157,181,205}, GREEN={73,226,157}, BAD={255,105,124}, BLUE={54,157,255};
-static const Color DEEP={8,14,26}, NAV={7,22,39}, GLOW={22,85,181}, GOLD={255,198,45};
+static const Color DEEP={8,14,26}, NAV={7,22,39}, GLOW={22,85,181}, GOLD={56,189,248};
 struct ArabicForm { uint32_t cp, iso, fin, ini, med; bool joinNext, joinPrev; };
 static const ArabicForm A[] = {
  {0x0621,0xFE80,0,0,0,0,0},{0x0622,0xFE81,0xFE82,0,0,0,1},{0x0623,0xFE83,0xFE84,0,0,0,1},{0x0625,0xFE87,0xFE88,0,0,0,1},{0x0627,0xFE8D,0xFE8E,0,0,0,1},{0x0628,0xFE8F,0xFE90,0xFE91,0xFE92,1,1},{0x0629,0xFE93,0xFE94,0,0,0,1},{0x062A,0xFE95,0xFE96,0xFE97,0xFE98,1,1},{0x062B,0xFE99,0xFE9A,0xFE9B,0xFE9C,1,1},{0x062C,0xFE9D,0xFE9E,0xFE9F,0xFEA0,1,1},{0x062D,0xFEA1,0xFEA2,0xFEA3,0xFEA4,1,1},{0x062E,0xFEA5,0xFEA6,0xFEA7,0xFEA8,1,1},{0x062F,0xFEA9,0xFEAA,0,0,0,1},{0x0630,0xFEAB,0xFEAC,0,0,0,1},{0x0631,0xFEAD,0xFEAE,0,0,0,1},{0x0632,0xFEAF,0xFEB0,0,0,0,1},{0x0633,0xFEB1,0xFEB2,0xFEB3,0xFEB4,1,1},{0x0634,0xFEB5,0xFEB6,0xFEB7,0xFEB8,1,1},{0x0635,0xFEB9,0xFEBA,0xFEBB,0xFEBC,1,1},{0x0636,0xFEBD,0xFEBE,0xFEBF,0xFEC0,1,1},{0x0637,0xFEC1,0xFEC2,0xFEC3,0xFEC4,1,1},{0x0638,0xFEC5,0xFEC6,0xFEC7,0xFEC8,1,1},{0x0639,0xFEC9,0xFECA,0xFECB,0xFECC,1,1},{0x063A,0xFECD,0xFECE,0xFECF,0xFED0,1,1},{0x0641,0xFED1,0xFED2,0xFED3,0xFED4,1,1},{0x0642,0xFED5,0xFED6,0xFED7,0xFED8,1,1},{0x0643,0xFED9,0xFEDA,0xFEDB,0xFEDC,1,1},{0x0644,0xFEDD,0xFEDE,0xFEDF,0xFEE0,1,1},{0x0645,0xFEE1,0xFEE2,0xFEE3,0xFEE4,1,1},{0x0646,0xFEE5,0xFEE6,0xFEE7,0xFEE8,1,1},{0x0647,0xFEE9,0xFEEA,0xFEEB,0xFEEC,1,1},{0x0648,0xFEED,0xFEEE,0,0,0,1},{0x0649,0xFEEF,0xFEF0,0,0,0,1},{0x064A,0xFEF1,0xFEF2,0xFEF3,0xFEF4,1,1}
@@ -123,7 +123,7 @@ static const char *AR_KEYS[]={"ا","ب","ت","ث","ج","ح","خ","د","ذ","ر",
 static int searchKeyCount(){return searchArabic?28:36;}
 static std::string searchKey(int i){if(searchArabic)return AR_KEYS[i];const char upper[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";const char lower[]="abcdefghijklmnopqrstuvwxyz0123456789";return std::string(1,(searchUpper?upper:lower)[i]);}
 static void drawSearch(){
-    gScene->FrameBufferFill(Color{0,0,0});header();
+    gScene->FrameBufferFill(Color{0,0,0});proHeader();
     box(100,135,1720,790,DEEP,{29,99,208});
     smart(gScene,codeMode?"تحميل مود بالكود":"البحث عن مودات",1640,215,WHITE);
     if(codeMode)text(gScene,gEn,searchUpper?"ABC":"abc",1740,255,searchUpper?GOLD:GREEN);
@@ -135,7 +135,7 @@ static void drawSearch(){
     smart(gScene,codeMode?"X إضافة الحرف   R2 كبير/صغير   مربع بدء التحميل   مثلث حذف   O رجوع":"X إضافة الحرف   R2 عربي/إنكليزي   مربع بحث   مثلث حذف   O رجوع",1660,840,WHITE);
 }
 static void drawList(){
-    gScene->FrameBufferFill(BG);header();hero();categories();
+    animatedBG();proHeader();hero();categories();
     box(36,490,620,48,Color{4,12,25},searchQuery.empty()?Color{27,76,145}:RED);
     smart(gScene,searchQuery.empty()?"اضغط مربع للبحث":("بحث: "+searchQuery),610,522,searchQuery.empty()?MUTED:WHITE);
     smart(gScene,category==1?"الأحدث":(searchQuery.empty()?"الأحدث":"نتائج البحث"),1850,535,WHITE);
@@ -146,7 +146,7 @@ static void drawList(){
     gScene->DrawRectangle(0,H-70,W,4,RED);text(gScene,gEn,"GTXMOD PS4",38,H-25,WHITE);smart(gScene,"L1/R1 التصنيف   ←/→ اختيار   🔍 اضغط مربع للبحث   X معلومات   O خروج",1850,H-25,WHITE);
 }
 static void drawDetails(){
-    gScene->FrameBufferFill(BG);header();
+    animatedBG();proHeader();
     if(shown.empty()||sel<0||sel>=(int)shown.size()){smart(gScene,"لا يوجد منشور محدد",1760,300,BAD);smart(gScene,"O رجوع",1760,900,WHITE);return;}
     const gtxcatalog::Mod&m=mods[shown[(size_t)sel]];
     box(45,130,1830,805,DEEP,{29,99,208});
@@ -176,15 +176,47 @@ static void drawOffline(){
     smart(gScene,"O خروج",1510,820,MUTED);
 }
 static std::string installedName(const gtxinstall::InstalledMod&m){for(const auto&x:mods)if(x.id==m.id)return x.name;return m.id;}
+
+// ===== GTXMOD PRO UI (visual only - functions untouched) =====
+static const Color PCYAN={56,189,248}, PBLUE={8,123,208}, PRED={239,68,68}, PGREEN={34,197,94};
+static const Color PGLOW[7]={{6,14,26},{8,20,36},{10,26,46},{12,32,56},{14,38,66},{16,44,76},{18,50,86}};
+static void animatedBG(){
+    animatedBG();
+    int off=(gFrame*2)%120;
+    for(int x=-120;x<W+120;x+=120) box(x+off,0,2,H,Color{10,26,46},Color{10,26,46});
+    for(int y=0;y<H;y+=120) box(0,y,W,2,Color{10,26,46},Color{10,26,46});
+    int gx=(gFrame*3)%(W+400)-200, gy=(gFrame*2)%(H+400)-200;
+    for(int i=6;i>=0;i--){int r=20*(i+1);box(gx-r,gy-r,r*2,r*2,PGLOW[i],PGLOW[i]);}
+    box(0,0,W,4,PCYAN);
+}
+static void proHeader(){
+    box(0,0,W,120,Color{10,30,58},Color{10,30,58});
+    box(0,116,W,4,PCYAN);
+    box(60,30,10,60,PCYAN,PCYAN); box(78,30,10,60,PBLUE,PBLUE);
+    smart(gScene,"GTXMOD PS4",560,80,WHITE);
+    smart(gScene,"مدير مودات GTA V",1860,80,MUTED);
+}
+static void proCard(int x,int y,int w,int h,bool sel,const char*label,const char*sub,const Color&accent,int idx){
+    box(x,y,w,h,sel?Color{16,48,92}:Color{10,25,47},sel?accent:Color{27,76,145});
+    box(x,y,6,h,accent,accent);
+    box(x,y,w,3,sel?accent:Color{20,50,90},sel?accent:Color{20,50,90});
+    if(sel) frame(x-4,y-4,w+8,h+8,accent);
+    box(x+w-90,y+(h/2)-28,56,56,sel?accent:Color{20,50,90},sel?accent:Color{27,76,145});
+    char n[8];snprintf(n,sizeof(n),"%d",idx+1);
+    smart(gScene,n,x+w-40,y+(h/2)+12,sel?Color{4,8,18}:WHITE);
+    smart(gScene,label,x+w-120,y+(h/2)-6,sel?accent:WHITE);
+    smart(gScene,sub,x+w-120,y+(h/2)+40,MUTED);
+}
 static void drawEntryChoice(){
-    gScene->FrameBufferFill(BG);header();smart(gScene,"اختر العملية",1600,220,WHITE);
-    box(180,360,700,220,installedSel==0?Color{55,42,8}:PANEL,installedSel==0?GOLD:Color{27,76,145});
-    box(1040,360,700,220,installedSel==1?Color{55,42,8}:PANEL,installedSel==1?GOLD:Color{27,76,145});
-    box(610,650,700,150,installedSel==2?Color{55,42,8}:PANEL,installedSel==2?GOLD:Color{27,76,145});
-    smart(gScene,"تحميل مود",760,485,installedSel==0?GOLD:WHITE);smart(gScene,"حذف المود",1620,485,installedSel==1?GOLD:WHITE);smart(gScene,"تحميل ORBX",1190,735,installedSel==2?GOLD:WHITE);smart(gScene,"يمين/يسار اختيار   X تأكيد",1600,880,MUTED);
+    animatedBG();proHeader();
+    smart(gScene,"اختر العملية",1740,250,WHITE);
+    proCard(180,300,1560,150,installedSel==0,"تحميل مود","تنزيل وتثبيت مود جديد من الموقع",PCYAN,0);
+    proCard(180,480,1560,150,installedSel==1,"حذف المود","إزالة مود مثبت وتحديث dlclist.xml",PRED,1);
+    proCard(180,660,1560,150,installedSel==2,"تحميل ORBX","تثبيت محرك المودات وتفعيل الإضافة",PGREEN,2);
+    smart(gScene,"يمين/يسار اختيار   X تأكيد",1740,900,MUTED);
 }
 static void drawOrbxConfirm(){
-    gScene->FrameBufferFill(BG);header();box(170,170,1580,650,DEEP,{29,99,208});frame(170,170,1580,650,GOLD);
+    animatedBG();proHeader();box(170,170,1580,650,DEEP,{29,99,208});frame(170,170,1580,650,GOLD);
     smart(gScene,"هل تريد تحميل محرك ORBX؟",1650,295,WHITE);
     smart(gScene,"هو محرك مودات جاهز لجهاز PS4",1650,390,MUTED);
     smart(gScene,"سيتم نقل ملفات ORBX إلى /data/orbx",1650,455,MUTED);
@@ -194,18 +226,18 @@ static void drawOrbxConfirm(){
     smart(gScene,"يمين/يسار اختيار   X تأكيد   O رجوع",1600,790,WHITE);
 }
 static void drawSiteName(){
-    gScene->FrameBufferFill(BG);header();box(220,250,1480,420,DEEP,{29,99,208});
+    animatedBG();proHeader();box(220,250,1480,420,DEEP,{29,99,208});
     smart(gScene,"الموقع هذا:",1500,390,WHITE);text(gScene,gEn,"https://gtxmod-ps4.pages.dev",560,500,RED);
     smart(gScene,"O رجوع",1650,790,WHITE);
 }
 static void drawInstalledList(){
-    gScene->FrameBufferFill(BG);header();smart(gScene,"المودات المثبتة",1700,210,WHITE);
+    animatedBG();proHeader();smart(gScene,"المودات المثبتة",1700,210,WHITE);
     if(installed.empty()){smart(gScene,"لا توجد مودات مثبتة",1700,460,MUTED);smart(gScene,"O رجوع",1700,850,WHITE);return;}
-    for(size_t i=0;i<installed.size()&&i<6;++i){int y=285+(int)i*90;bool a=(int)i==installedSel;box(180,y,1500,64,a?Color{55,42,8}:PANEL,a?GOLD:Color{27,76,145});smart(gScene,installedName(installed[i]),1600,y+42,a?GOLD:WHITE);}
+    for(size_t i=0;i<installed.size()&&i<6;++i){int y=285+(int)i*90;bool a=(int)i==installedSel;box(180,y,1500,64,a?Color{12,42,74}:PANEL,a?GOLD:Color{27,76,145});smart(gScene,installedName(installed[i]),1600,y+42,a?GOLD:WHITE);}
     smart(gScene,"X عرض المود   O رجوع",1700,870,WHITE);
 }
 static void drawDeleteDetails(){
-    gScene->FrameBufferFill(BG);header();box(180,180,1560,620,DEEP,{29,99,208});smart(gScene,"المود المثبت",1650,270,WHITE);
+    animatedBG();proHeader();box(180,180,1560,620,DEEP,{29,99,208});smart(gScene,"المود المثبت",1650,270,WHITE);
     if(installedSel>=0&&installedSel<(int)installed.size()){
         const auto&m=installed[(size_t)installedSel];smart(gScene,installedName(m),1650,380,GOLD);smart(gScene,"المسارات المسجلة للحذف",1650,470,MUTED);char n[64];snprintf(n,sizeof(n),"%d ملفات",(int)m.paths.size());smart(gScene,n,1650,530,WHITE);
         box(760,650,800,72,BAD,RED);smart(gScene,"حذف المود من لعبة",1490,698,WHITE);
@@ -213,7 +245,7 @@ static void drawDeleteDetails(){
     smart(gScene,"X حذف   O رجوع",1650,850,WHITE);
 }
 static void drawStatus(const std::string &title,const std::string &body,bool showProgress){
-    gScene->FrameBufferFill(BG); header();
+    animatedBG(); proHeader();
     box(55,145,1465,720,DEEP,{29,99,208});
     if(!title.empty())smart(gScene,title,1800,235,WHITE);
     if(!body.empty())smart(gScene,body,1750,370,WHITE);
@@ -252,14 +284,14 @@ static bool confirmCancel(){
     }
 }
 static void drawResult(){
-    gScene->FrameBufferFill(BG); header();
+    animatedBG(); proHeader();
     box(55,145,1465,720,DEEP,{29,99,208});
     smart(gScene,installError.empty()?"اكتمل التثبيت":"تعذر إكمال التثبيت",1800,235,WHITE);
     int y=330;for(const auto&r:installResults){box(190,y-38,1200,62,ROW,r.ok?GREEN:BAD);smart(gScene,r.text,1700,y,r.ok?GREEN:BAD);y+=78;if(y>710)break;}
     if(!installError.empty())smart(gScene,crop(installError,75),1750,770,BAD);else smart(gScene,"تم حفظ سجل المود للحذف في /data/GTXMOD/installed.db",1750,770,BLUE);
     smart(gScene,"O رجوع إلى شاشة الخيارات",1750,900,WHITE);
 }
-static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2)drawStatus(progTitle.c_str(),progTitle.empty()?"":"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else if(screen==4)drawOffline();else if(screen==5)drawSearch();else if(screen==6)drawEntryChoice();else if(screen==7)drawInstalledList();else if(screen==8)drawDeleteDetails();else if(screen==9)drawOrbxConfirm();else if(screen==10)drawSiteName();else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
+static void present(){if(screen==0)drawList();else if(screen==1)drawDetails();else if(screen==2)drawStatus(progTitle.c_str(),progTitle.empty()?"جاري الاتصال بالموقع، رجاءً انتظر...":"يرجى الانتظار، لا تغلق التطبيق",progTotal>0);else if(screen==4)drawOffline();else if(screen==5)drawSearch();else if(screen==6)drawEntryChoice();else if(screen==7)drawInstalledList();else if(screen==8)drawDeleteDetails();else if(screen==9)drawOrbxConfirm();else if(screen==10)drawSiteName();else drawResult();gScene->SubmitFlip(gFrame);gScene->FrameWait(gFrame);gScene->FrameBufferSwap();++gFrame;}
 static void rebuildShown(){
     shown.clear();
     for(size_t i=0;i<mods.size();++i){
