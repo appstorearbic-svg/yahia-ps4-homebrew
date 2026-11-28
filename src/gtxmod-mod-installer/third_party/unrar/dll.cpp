@@ -319,6 +319,8 @@ static int ReadHeader(HANDLE hArcData,RARHeaderDataEx *D,bool &RepeatRead)
       D->Flags|=RHDF_SOLID;
     if (hd->Dir)
       D->Flags|=RHDF_DIRECTORY;
+    if (hd->SubBlock)
+      D->Flags|=RHDF_SERVICE;
 
     D->PackSize=uint(hd->PackSize & 0xffffffff);
     D->PackSizeHigh=uint(hd->PackSize>>32);

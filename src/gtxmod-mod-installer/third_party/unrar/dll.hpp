@@ -54,6 +54,7 @@
 #define RHDF_ENCRYPTED   0x04
 #define RHDF_SOLID       0x10
 #define RHDF_DIRECTORY   0x20
+#define RHDF_SERVICE     0x40
 
 
 struct RARHeaderData

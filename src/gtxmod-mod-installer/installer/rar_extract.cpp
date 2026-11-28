@@ -147,6 +147,23 @@ bool extractRarArchive(const std::string &archivePath,
             return false;
         }
 
+        // RAR5 may include service records such as the Quick Open index (QO).
+        // They are archive metadata, not payload files, and can have names that
+        // are not valid filesystem paths. Skip these records without extracting.
+        if ((header.Flags & RHDF_SERVICE) != 0)
+        {
+            const int skipResult = RARProcessFile(archive, RAR_SKIP, NULL, NULL);
+            if (skipResult != ERAR_SUCCESS)
+            {
+                setError(error, "تعذر تجاوز سجل خدمة داخل أرشيف RAR");
+                RARCloseArchive(archive);
+                return false;
+            }
+            memset(&header, 0, sizeof(header));
+            code = RARReadHeaderEx(archive, &header);
+            continue;
+        }
+
         if ((header.Flags & (RHDF_SPLITBEFORE | RHDF_SPLITAFTER)) != 0)
         {
             setError(error, "الأرشيف متعدد الأجزاء؛ انقل جميع الأجزاء ثم أعد المحاولة");
