@@ -1,5 +1,4 @@
-#include <archive.h>
-#include <archive_entry.h>
+#include "unrar_mini.h"
 #include "mod_installer.hpp"
 #include "../third_party/miniz/miniz.h"
 #include <algorithm>
@@ -154,23 +153,7 @@ static bool genericInstallTree(const std::string&root,const std::string&modId,St
 static bool extractZipTree(mz_zip_archive&zip,const std::string&root){const mz_uint n=mz_zip_reader_get_num_files(&zip);for(mz_uint i=0;i<n;++i){mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory||!safeZipName(st.m_filename))continue;std::string out=root+"/"+st.m_filename,parent=out.substr(0,out.find_last_of('/'));if(!mkdirs(parent)||!mz_zip_reader_extract_to_file(&zip,i,out.c_str(),0))return false;}return true;}
 
 static bool looksRar(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[7]={0};size_t n=fread(sig,1,7,f);fclose(f);return n>=4&&sig[0]==0x52&&sig[1]==0x61&&sig[2]==0x72&&sig[3]==0x21;}
-static bool extractRarTree(const std::string&path,const std::string&root){
-    struct archive*a=archive_read_new();archive_read_support_format_rar(a);archive_read_support_format_rar5(a);archive_read_support_filter_all(a);
-    if(archive_read_open_filename(a,path.c_str(),10240)!=ARCHIVE_OK){archive_read_free(a);return false;}
-    struct archive_entry*e;bool ok=true;
-    while(archive_read_next_header(a,&e)==ARCHIVE_OK){
-        const char*name=archive_entry_pathname(e);
-        if(!name||!safeZipName(name)){archive_read_data_skip(a);continue;}
-        if(archive_entry_filetype(e)==AE_IFDIR){archive_read_data_skip(a);continue;}
-        std::string out=root+"/"+name,parent=out.substr(0,out.find_last_of('/'));
-        if(!mkdirs(parent)){ok=false;break;}
-        FILE*f=fopen(out.c_str(),"wb");if(!f){ok=false;break;}
-        const void*buf;size_t len;la_int64_t off;
-        while(archive_read_data_block(a,&buf,&len,&off)==ARCHIVE_OK)fwrite(buf,1,len,f);
-        fclose(f);
-    }
-    archive_read_free(a);return ok;
-}
+static bool extractRarTree(const std::string&path,const std::string&root){return unrar_mini_extract(path.c_str(),root.c_str())==0;}
 static bool looks7z(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[6]={0};size_t n=fread(sig,1,6,f);fclose(f);return n==6&&sig[0]==0x37&&sig[1]==0x7A&&sig[2]==0xBC&&sig[3]==0xAF&&sig[4]==0x27&&sig[5]==0x1C;}
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
     results.clear();if(error)error->clear();std::string why;

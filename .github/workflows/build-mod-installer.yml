@@ -53,20 +53,6 @@ jobs:
               if t in f: del f[t]
           f.save(out);print("converted",out)
           EOF
-      - name: Build libarchive for PS4
-        run: |
-          git clone --depth 1 https://github.com/libarchive/libarchive.git /tmp/libarchive-ps4
-          cd /tmp/libarchive-ps4
-          mkdir -p build && cd build
-          CC="$OO_PS4_TOOLCHAIN/bin/clang" CXX="$OO_PS4_TOOLCHAIN/bin/clang++" \
-          cmake .. -DCMAKE_SYSTEM_NAME=Generic -DCMAKE_C_COMPILER="$OO_PS4_TOOLCHAIN/bin/clang" \
-            -DCMAKE_C_FLAGS="--target=x86_64-pc-freebsd12-elf -isysroot $OO_PS4_TOOLCHAIN -D_GNU_SOURCE" \
-            -DENABLE_OPENSSL=OFF -DENABLE_LIBXML2=OFF -DENABLE_EXPAT=OFF -DENABLE_ICONV=OFF \
-            -DENABLE_LZMA=OFF -DENABLE_ZSTD=OFF -DENABLE_LZ4=OFF -DENABLE_BZip2=OFF -DENABLE_ZLIB=OFF \
-            -DENABLE_TAR=OFF -DENABLE_CPIO=OFF -DENABLE_CAT=OFF -DENABLE_TEST=OFF -DBUILD_SHARED_LIBS=OFF || true
-          make -j2 archive_static || true
-          cp libarchive/libarchive.a "$OO_PS4_TOOLCHAIN/lib/libarchive.a" 2>/dev/null || true
-          cp ../libarchive/archive.h ../libarchive/archive_entry.h "$OO_PS4_TOOLCHAIN/include/" 2>/dev/null || true
       - name: Install libun7zip
         working-directory: libun7zip
         env:
