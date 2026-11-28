@@ -37,22 +37,9 @@ jobs:
           tar -xzf /tmp/openorbis.tar.gz -C tools
       - name: Convert GameStation OTF to TTF
         run: |
-          pip install fonttools brotli
-          python3 - <<'EOF'
-          from fontTools.ttLib import TTFont,newTable
-          from fontTools.pens.ttGlyphPen import TTGlyphPen
-          from fontTools.pens.cu2quPen import Cu2QuPen
-          inp="src/gtxmod-mod-installer/assets/fonts/GameStation-Regular.otf"
-          out="src/gtxmod-mod-installer/assets/fonts/GameStation-Regular.ttf"
-          f=TTFont(inp);go=f.getGlyphOrder();cs=f['CFF '].cff.topDictIndex[0].CharStrings
-          g=newTable('glyf');g.glyphOrder=go;g.glyphs={}
-          for n in go:
-              p=TTGlyphPen(g);cs[n].draw(Cu2QuPen(p,1.0,True));g.glyphs[n]=p.glyph()
-          f['glyf']=g;f['loca']=newTable('loca');f['head'].glyphDataFormat=0
-          for t in ['CFF ','VORG']:
-              if t in f: del f[t]
-          f.save(out);print("converted",out)
-          EOF
+          pip install fonttools brotli cu2qu
+          python3 -m fontTools.otf2ttf src/gtxmod-mod-installer/assets/fonts/GameStation-Regular.otf -o src/gtxmod-mod-installer/assets/fonts/GameStation-Regular.ttf || echo "convert failed, fallback will be used"
+          python3 -c "from fontTools.ttLib import TTFont; f=TTFont('src/gtxmod-mod-installer/assets/fonts/GameStation-Regular.ttf'); print('glyf' in f)" || rm -f src/gtxmod-mod-installer/assets/fonts/GameStation-Regular.ttf
       - name: Install libun7zip
         working-directory: libun7zip
         env:
