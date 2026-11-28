@@ -1,3 +1,5 @@
+#include <archive.h>
+#include <archive_entry.h>
 #include "mod_installer.hpp"
 #include "../third_party/miniz/miniz.h"
 #include <algorithm>
@@ -150,17 +152,38 @@ static bool genericInstallTree(const std::string&root,const std::string&modId,St
     if(!xmlLines.empty()&&!atomicWrite(xmlPath,newXml)){if(error)*error="تعذر تحديث dlclist.xml";return false;}if(!xmlLines.empty())result(results,"تحديث dlclist.xml",true);if(!appendInstalled(modId,planned,xmlLines)){if(error)*error="تم التثبيت لكن تعذر حفظ سجل الحذف";return false;}result(results,"تثبيت ملفات الأرشيف",true);return true;
 }
 static bool extractZipTree(mz_zip_archive&zip,const std::string&root){const mz_uint n=mz_zip_reader_get_num_files(&zip);for(mz_uint i=0;i<n;++i){mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory||!safeZipName(st.m_filename))continue;std::string out=root+"/"+st.m_filename,parent=out.substr(0,out.find_last_of('/'));if(!mkdirs(parent)||!mz_zip_reader_extract_to_file(&zip,i,out.c_str(),0))return false;}return true;}
+
+static bool looksRar(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[7]={0};size_t n=fread(sig,1,7,f);fclose(f);return n>=4&&sig[0]==0x52&&sig[1]==0x61&&sig[2]==0x72&&sig[3]==0x21;}
+static bool extractRarTree(const std::string&path,const std::string&root){
+    struct archive*a=archive_read_new();archive_read_support_format_rar(a);archive_read_support_format_rar5(a);archive_read_support_filter_all(a);
+    if(archive_read_open_filename(a,path.c_str(),10240)!=ARCHIVE_OK){archive_read_free(a);return false;}
+    struct archive_entry*e;bool ok=true;
+    while(archive_read_next_header(a,&e)==ARCHIVE_OK){
+        const char*name=archive_entry_pathname(e);
+        if(!name||!safeZipName(name)){archive_read_data_skip(a);continue;}
+        if(archive_entry_filetype(e)==AE_IFDIR){archive_read_data_skip(a);continue;}
+        std::string out=root+"/"+name,parent=out.substr(0,out.find_last_of('/'));
+        if(!mkdirs(parent)){ok=false;break;}
+        FILE*f=fopen(out.c_str(),"wb");if(!f){ok=false;break;}
+        const void*buf;size_t len;la_int64_t off;
+        while(archive_read_data_block(a,&buf,&len,&off)==ARCHIVE_OK)fwrite(buf,1,len,f);
+        fclose(f);
+    }
+    archive_read_free(a);return ok;
+}
 static bool looks7z(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[6]={0};size_t n=fread(sig,1,6,f);fclose(f);return n==6&&sig[0]==0x37&&sig[1]==0x7A&&sig[2]==0xBC&&sig[3]==0xAF&&sig[4]==0x27&&sig[5]==0x1C;}
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
     results.clear();if(error)error->clear();std::string why;
     say(status,context,"فحص مسارات ORBX");if(!orbxReady(&why)){if(error)*error=why;result(results,"العثور على ORBX",false);return false;}result(results,"العثور على ORBX",true);
     const bool is7z=endsWith(zipPath,".7z")||endsWith(zipPath,".7Z")||looks7z(zipPath);
+    const bool isRar=endsWith(zipPath,".rar")||endsWith(zipPath,".RAR")||looksRar(zipPath);
     const std::string expanded=std::string(GTX_DATA_ROOT)+"/staging/archive_"+((modId.empty()||modId.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)?"mod":modId);
     removeTree(expanded);if(!mkdirs(expanded)){if(error)*error="تعذر إنشاء مجلد فك الأرشيف";return false;}
     bool unpacked=false;
-    if(is7z){say(status,context,"فك ملف 7z");unpacked=un7z_ExtractArchive(zipPath.c_str(),expanded.c_str(),nullptr,0x80000)==SZ_OK;}
+    if(isRar){say(status,context,"فك ملف RAR");unpacked=extractRarTree(zipPath,expanded);}
+    else if(is7z){say(status,context,"فك ملف 7z");unpacked=un7z_ExtractArchive(zipPath.c_str(),expanded.c_str(),nullptr,0x80000)==SZ_OK;}
     else {say(status,context,"فك ملف ZIP وفحص المجلدات الداخلية");mz_zip_archive scan;memset(&scan,0,sizeof(scan));if(mz_zip_reader_init_file(&scan,zipPath.c_str(),0)){unpacked=extractZipTree(scan,expanded);mz_zip_reader_end(&scan);}}
-    if(!unpacked){removeTree(expanded);if(error)*error=is7z?"تعذر فك ملف 7z أو أن الملف تالف":"تعذر فك ملف ZIP أو أن الملف تالف";result(results,"فك الأرشيف",false);return false;}
+    if(!unpacked){removeTree(expanded);if(error)*error=isRar?"تعذر فك ملف RAR أو أن الملف تالف":(is7z?"تعذر فك ملف 7z أو أن الملف تالف":"تعذر فك ملف ZIP أو أن الملف تالف");result(results,"فك الأرشيف",false);return false;}
     bool genericOk=genericInstallTree(expanded,modId,status,context,results,error);removeTree(expanded);return genericOk;
     say(status,context,"فتح ZIP وفحص محتوياته");mz_zip_archive zip;memset(&zip,0,sizeof(zip));if(!mz_zip_reader_init_file(&zip,zipPath.c_str(),0)){if(error)*error="تعذر فتح ZIP أو أن الملف تالف";result(results,"فتح ملف ZIP",false);return false;}result(results,"فتح ملف ZIP",true);
     std::vector<Rule> rules;
