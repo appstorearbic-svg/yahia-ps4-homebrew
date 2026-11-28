@@ -1,0 +1,16 @@
+GTXMOD Mod Installer vendor note
+
+Upstream project: https://github.com/pmachapman/unrar
+Pinned upstream commit: cacdcb8cbe1813b6151e3f92f2ccec7afe4d6a41
+
+This directory contains the upstream UnRAR source files used by the installer.
+The build compiles the RARDLL interface into the PS4 application; it supports
+RAR extraction only and does not create RAR archives. The upstream license is
+included here as license.txt and is also shipped with the application at
+assets/licenses/UnRAR-license.txt. The required license permission paragraph
+is reproduced in installer/rar_extract.cpp.
+
+The installer currently accepts only single-volume, unencrypted RAR archives.
+It rejects unsafe member paths, symbolic links/redirections, split entries,
+and archives exceeding the entry/file/total uncompressed-size limits in
+installer/rar_extract.cpp.
