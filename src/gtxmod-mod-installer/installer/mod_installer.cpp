@@ -1,4 +1,4 @@
-#include "rar.hpp"
+
 #include "mod_installer.hpp"
 #include "../third_party/miniz/miniz.h"
 #include <algorithm>
@@ -153,89 +153,7 @@ static bool genericInstallTree(const std::string&root,const std::string&modId,St
 static bool extractZipTree(mz_zip_archive&zip,const std::string&root){const mz_uint n=mz_zip_reader_get_num_files(&zip);for(mz_uint i=0;i<n;++i){mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory||!safeZipName(st.m_filename))continue;std::string out=root+"/"+st.m_filename,parent=out.substr(0,out.find_last_of('/'));if(!mkdirs(parent)||!mz_zip_reader_extract_to_file(&zip,i,out.c_str(),0))return false;}return true;}
 
 static bool looksRar(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[7]={0};size_t n=fread(sig,1,7,f);fclose(f);return n>=4&&sig[0]==0x52&&sig[1]==0x61&&sig[2]==0x72&&sig[3]==0x21;}
-static bool extractRarTree(const std::string&path,const std::string&root){(void)path;(void)root;return false;}
-static bool looks7z(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[6]={0};size_t n=fread(sig,1,6,f);fclose(f);return n==6&&sig[0]==0x37&&sig[1]==0x7A&&sig[2]==0xBC&&sig[3]==0xAF&&sig[4]==0x27&&sig[5]==0x1C;}
-bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
-    results.clear();if(error)error->clear();std::string why;
-    say(status,context,"فحص مسارات ORBX");if(!orbxReady(&why)){if(error)*error=why;result(results,"العثور على ORBX",false);return false;}result(results,"العثور على ORBX",true);
-    const bool is7z=endsWith(zipPath,".7z")||endsWith(zipPath,".7Z")||looks7z(zipPath);
-    const bool isRar=endsWith(zipPath,".rar")||endsWith(zipPath,".RAR")||looksRar(zipPath);
-    const std::string expanded=std::string(GTX_DATA_ROOT)+"/staging/archive_"+((modId.empty()||modId.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_")!=std::string::npos)?"mod":modId);
-    removeTree(expanded);if(!mkdirs(expanded)){if(error)*error="تعذر إنشاء مجلد فك الأرشيف";return false;}
-    bool unpacked=false;
-    if(isRar){say(status,context,"فك ملف RAR");unpacked=extractRarTree(zipPath,expanded);}
-    else if(is7z){say(status,context,"فك ملف 7z");unpacked=un7z_ExtractArchive(zipPath.c_str(),expanded.c_str(),nullptr,0x80000)==SZ_OK;}
-    else {say(status,context,"فك ملف ZIP وفحص المجلدات الداخلية");mz_zip_archive scan;memset(&scan,0,sizeof(scan));if(mz_zip_reader_init_file(&scan,zipPath.c_str(),0)){unpacked=extractZipTree(scan,expanded);mz_zip_reader_end(&scan);}}
-    if(!unpacked){removeTree(expanded);if(error)*error=isRar?"تعذر فك ملف RAR أو أن الملف تالف":(is7z?"تعذر فك ملف 7z أو أن الملف تالف":"تعذر فك ملف ZIP أو أن الملف تالف");result(results,"فك الأرشيف",false);return false;}
-    bool genericOk=genericInstallTree(expanded,modId,status,context,results,error);removeTree(expanded);return genericOk;
-    say(status,context,"فتح ZIP وفحص محتوياته");mz_zip_archive zip;memset(&zip,0,sizeof(zip));if(!mz_zip_reader_init_file(&zip,zipPath.c_str(),0)){if(error)*error="تعذر فتح ZIP أو أن الملف تالف";result(results,"فتح ملف ZIP",false);return false;}result(results,"فتح ملف ZIP",true);
-    std::vector<Rule> rules;
-    rules.push_back({"dlc.rpf","parent","data/orbx/gta/rpf/dlc_addon/{parent}/dlc.rpf","with_parent_folder","<Item>/data/orbx/gta/rpf/dlc_addon/{parent}/</Item>"});
-    rules.push_back({"vehicles.rpf","root","data/orbx/gta/rpf/levels/gta5/vehicles.rpf","file_only",std::string()});
-    const std::string xmlRel="data/orbx/gta/dlclist.xml";
-    say(status,context,"تحليل ملفات ZIP تلقائياً بدون JSON");
-    result(results,"قواعد التثبيت الداخلية",true);
-    std::vector<Planned> planned;std::vector<std::string> dlcLines;const mz_uint count=mz_zip_reader_get_num_files(&zip);
-    for(mz_uint i=0;i<count;i++){
-        mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory)continue;
-        std::string name=st.m_filename;if(!safeZipName(name))continue;
-        std::string destinationRel;
-        size_t lastSlash=name.find_last_of('/');
-        std::string base=lastSlash==std::string::npos?name:name.substr(lastSlash+1);
-        if(base=="vehicles.rpf"){
-            for(const Rule &r:rules)if(r.name=="vehicles.rpf"){destinationRel=r.destination;break;}
-        } else if(base=="dlc.rpf"&&lastSlash!=std::string::npos){
-            size_t parentSlash=name.find_last_of('/',lastSlash-1);std::string parent=name.substr(parentSlash==std::string::npos?0:parentSlash+1,lastSlash-(parentSlash==std::string::npos?0:parentSlash+1));if(!safeParent(parent))continue;
-            for(const Rule &r:rules)if(r.name=="dlc.rpf"){destinationRel=r.destination;size_t p=destinationRel.find("{parent}");if(p!=std::string::npos)destinationRel.replace(p,8,parent);std::string line=r.xmlLine;size_t lp=line.find("{parent}");if(lp!=std::string::npos)line.replace(lp,8,parent);dlcLines.push_back(line);break;}
-        }
-        if(destinationRel.empty())continue;
-        std::string dest=actualPath(destinationRel);if(dest.empty()){mz_zip_reader_end(&zip);if(error)*error="وجهة ملف غير مسموحة";return false;}
-        if(st.m_uncomp_size==0||st.m_uncomp_size>1024ULL*1024*1024){mz_zip_reader_end(&zip);if(error)*error="حجم ملف المود غير مقبول";return false;}
-        for(const Planned &p:planned)if(p.destination==dest){mz_zip_reader_end(&zip);if(error)*error="أكثر من ملف يطابق وجهة واحدة؛ أوقف التثبيت لحماية الملفات";return false;}
-        Planned p;p.index=i;p.destination=dest;p.existed=fileExists(dest);planned.push_back(p);
-    }
-    if(planned.empty()){mz_zip_reader_end(&zip);if(error)*error="لم يتم العثور على dlc.rpf أو vehicles.rpf مطابق للقواعد";result(results,"العثور على ملفات مدعومة",false);return false;}
-    result(results,"مطابقة ملفات المود",true);
-    std::string xmlPath=actualPath(xmlRel),oldXml;bool xmlNeedsWrite=false;
-    for(const std::string &line:dlcLines)if(!hasXmlLine(oldXml,line))xmlNeedsWrite=true;
-    if(!dlcLines.empty()){
-        if(!readFile(xmlPath,oldXml,16*1024*1024)){mz_zip_reader_end(&zip);if(error)*error="تعذر قراءة dlclist.xml";return false;}
-        xmlNeedsWrite=false;for(const std::string &line:dlcLines)if(!hasXmlLine(oldXml,line))xmlNeedsWrite=true;
-        if(xmlNeedsWrite&&oldXml.rfind("</Paths>")==std::string::npos){mz_zip_reader_end(&zip);if(error)*error="لم يتم العثور على وسم </Paths> في dlclist.xml";return false;}
-    }
-    std::string staging=std::string(GTX_DATA_ROOT)+"/staging/"+((modId.empty()||modId.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_" )!=std::string::npos)?"mod":modId);
-    if(!mkdirs(staging)){mz_zip_reader_end(&zip);if(error)*error="تعذر إنشاء مجلد التجهيز";return false;}
-    for(size_t k=0;k<planned.size();k++){
-        Planned &p=planned[k];p.stage=staging+"/file_"+std::to_string(k)+".part";unlink(p.stage.c_str());
-        say(status,context,"استخراج الملف المطابق من ZIP");
-        if(!mz_zip_reader_extract_to_file(&zip,p.index,p.stage.c_str(),0)){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="فشل استخراج ملف RPF من ZIP";return false;}
-        if(p.existed&&p.destination!=std::string(GTX_ORBX_ROOT)+"/gta/rpf/levels/gta5/vehicles.rpf"){for(const Planned &x:planned)unlink(x.stage.c_str());mz_zip_reader_end(&zip);if(error)*error="الوجهة موجودة مسبقاً؛ مود DLC موجود ولم يتم استبداله بدون نسخة احتياطية";return false;}
-    }
-    mz_zip_reader_end(&zip);
-    std::string xmlStage=xmlPath+".gtxmod.tmp";
-    std::string newXml=oldXml;
-    if(xmlNeedsWrite){
-        const bool crlf=oldXml.find("\r\n")!=std::string::npos;const std::string nl=crlf?"\r\n":"\n";size_t close=oldXml.rfind("</Paths>");
-        std::string additions;for(const std::string &line:dlcLines)if(!hasXmlLine(newXml,line)){additions+="\t\t"+line+nl;}
-        newXml.insert(close,additions);
-        if(!atomicWrite(xmlStage,newXml)){if(error)*error="تعذر تجهيز نسخة dlclist.xml المعدلة";return false;}
-    }
-    size_t committed=0;bool commitOk=true;
-    for(Planned &p:planned){
-        std::string parent=p.destination.substr(0,p.destination.find_last_of('/'));
-        if(!mkdirs(parent)||rename(p.stage.c_str(),p.destination.c_str())<0){commitOk=false;break;}++committed;
-    }
-    if(commitOk&&xmlNeedsWrite&&rename(xmlStage.c_str(),xmlPath.c_str())<0)commitOk=false;
-    if(!commitOk){
-        for(size_t i=0;i<committed;i++){Planned &p=planned[i];unlink(p.destination.c_str());}
-        if(xmlNeedsWrite)unlink(xmlStage.c_str());if(error)*error="فشل إتمام النقل؛ أزيلت الملفات التي نُقلت في هذه المحاولة";result(results,"نقل ملفات المود",false);return false;
-    }
-    for(const Planned &p:planned)result(results,p.destination.find("dlc_addon")!=std::string::npos?"نقل dlc.rpf إلى مجلده":"نقل vehicles.rpf إلى gta5",true);
-    result(results,"تحديث dlclist.xml",!xmlNeedsWrite||fileExists(xmlPath));
-    bool recorded=appendInstalled(modId,planned,dlcLines);result(results,"حفظ سجل المود للمسح لاحقاً",recorded);
-    if(!recorded){if(error)*error="تم التثبيت لكن تعذر حفظ سجل الحذف في /data/GTXMOD/installed.db";return false;}
-    result(results,"اكتمل التثبيت",true);return true;
-}
+static bool extractRarTree(const std::string&,const std::string&){return false;}
 bool listInstalled(std::vector<InstalledMod>&out,std::string*){
     out.clear();FILE*f=fopen(registryPath().c_str(),"rb");char line[2048];InstalledMod cur;bool open=false;
     if(f){

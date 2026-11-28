@@ -2,8 +2,6 @@ TITLE       := GTXMOD Mod Installer
 VERSION     := 01.00
 TITLE_ID    := YAHI00003
 CONTENT_ID  := IV0000-YAHI00003_00-GTXMODINSTAL0001
-UNRAR_SRC := $(wildcard third_party/unrar/*.cpp)
-UNRAR_OBJ := $(UNRAR_SRC:.cpp=.o)
 LIBS        := -lc -lkernel -lc++ -lSceVideoOut -lScePad -lSceUserService -lSceSysmodule -lSceFreeType -lSceNet -lSceSsl -lSceHttp -lun7zip
 TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
 PROJDIR     := installer
@@ -16,8 +14,8 @@ COBJS       := $(patsubst $(PROJDIR)/%.c,$(INTDIR)/c_installer_%.o,$(filter $(PR
 CPPOBJS     := $(patsubst $(PROJDIR)/%.cpp,$(INTDIR)/cpp_%.o,$(CPPFILES))
 OBJS        := $(COBJS) $(CPPOBJS) $(INTDIR)/graphics_common.o $(INTDIR)/png_common.o
 CFLAGS      := --target=x86_64-pc-freebsd12-elf -D_GNU_SOURCE -fPIC -funwind-tables -c -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include
-CXXFLAGS    := $(CFLAGS) -std=c++11 -DGRAPHICS_USES_FONT -isystem $(TOOLCHAIN)/include/c++/v1 -I$(TOOLCHAIN)/samples/_common -Ithird_party/miniz -Ithird_party/unrar
-LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS) $(UNRAR_OBJ) $(TOOLCHAIN)/lib/crt1.o
+CXXFLAGS    := $(CFLAGS) -std=c++11 -DGRAPHICS_USES_FONT -isystem $(TOOLCHAIN)/include/c++/v1 -I$(TOOLCHAIN)/samples/_common -Ithird_party/miniz
+LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 TOOLS       := $(TOOLCHAIN)/bin/linux
 all: $(CONTENT_ID).pkg
 $(CONTENT_ID).pkg: pkg.gp4
