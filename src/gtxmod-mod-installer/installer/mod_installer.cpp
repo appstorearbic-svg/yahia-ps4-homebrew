@@ -1,4 +1,3 @@
-
 #include "mod_installer.hpp"
 #include "../third_party/miniz/miniz.h"
 #include <algorithm>
