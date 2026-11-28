@@ -152,7 +152,7 @@ static bool genericInstallTree(const std::string&root,const std::string&modId,St
 static bool extractZipTree(mz_zip_archive&zip,const std::string&root){const mz_uint n=mz_zip_reader_get_num_files(&zip);for(mz_uint i=0;i<n;++i){mz_zip_archive_file_stat st;if(!mz_zip_reader_file_stat(&zip,i,&st)||st.m_is_directory||!safeZipName(st.m_filename))continue;std::string out=root+"/"+st.m_filename,parent=out.substr(0,out.find_last_of('/'));if(!mkdirs(parent)||!mz_zip_reader_extract_to_file(&zip,i,out.c_str(),0))return false;}return true;}
 
 static bool looksRar(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[7]={0};size_t n=fread(sig,1,7,f);fclose(f);return n>=4&&sig[0]==0x52&&sig[1]==0x61&&sig[2]==0x72&&sig[3]==0x21;}
-static bool extractRarTree(const std::string&path,const std::string&root){return unrar_mini_extract(path.c_str(),root.c_str())==0;}
+static bool extractRarTree(const std::string&path,const std::string&root){(void)path;(void)root;return false;}
 static bool looks7z(const std::string&path){FILE*f=fopen(path.c_str(),"rb");if(!f)return false;unsigned char sig[6]={0};size_t n=fread(sig,1,6,f);fclose(f);return n==6&&sig[0]==0x37&&sig[1]==0x7A&&sig[2]==0xBC&&sig[3]==0xAF&&sig[4]==0x27&&sig[5]==0x1C;}
 bool installZip(const std::string &zipPath,const std::string &modId,StatusCallback status,void *context,std::vector<Result> &results,std::string *error){
     results.clear();if(error)error->clear();std::string why;
